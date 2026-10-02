@@ -28,8 +28,8 @@ jobs:
     env:
       SCOUT_UPDATE_REPOSITORY: ${{ github.repository }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '22.18.0'
           cache: npm
@@ -49,7 +49,7 @@ jobs:
       - run: npm run dist:portable
       - name: Verify release payload
         run: node scripts/verify-release.mjs
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: SCOUT-Windows-${{ steps.version.outputs.version }}
           path: |
@@ -65,7 +65,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: SCOUT-Windows-${{ needs.build.outputs.version }}
           path: release

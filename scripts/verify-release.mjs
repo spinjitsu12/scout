@@ -22,7 +22,8 @@ const identity = await executableIdentity(executable);
 assert.equal(identity.product, 'SCOUT');
 assert.equal(identity.version, metadata.version);
 const bundle = path.join(release, 'win-unpacked', 'resources', 'app.asar');
-const entries = new Set(asar.listPackage(bundle).map(name => name.replace(/^\//, '')));
+// ASAR lists paths with the host separator, including backslashes on Windows.
+const entries = new Set(asar.listPackage(bundle).map(name => name.replaceAll('\\', '/').replace(/^\/+/, '')));
 for (const file of ['electron/main.cjs', 'electron/preload.cjs', 'electron/save-store.cjs',
   'electron/update-manager.cjs', 'electron/update-worker.ps1', 'electron/update-config.json',
   'electron/game-engine.cjs', 'dist/index.html', 'dist/fonts/PixelifySans.ttf',

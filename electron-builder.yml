@@ -1,0 +1,52 @@
+appId: com.scout.talentsimulator
+productName: SCOUT
+asar: true
+npmRebuild: false
+compression: maximum
+afterPack: electron/after-pack.cjs
+afterAllArtifactBuild: electron/after-artifacts.cjs
+toolsets:
+  wine: 1.0.1
+  nsis: 1.2.1
+  winCodeSign: 1.1.0
+directories:
+  output: release
+files:
+  - dist/**
+  - electron/main.cjs
+  - electron/preload.cjs
+  - electron/save-store.cjs
+  - electron/game-engine.cjs
+  - electron/update-manager.cjs
+  - electron/update-worker.ps1
+  - electron/update-config.json
+  - build/icon.png
+  - package.json
+  - '!electron/tests/**'
+  - '!**/*.map'
+win:
+  target:
+    - target: portable
+      arch: [x64]
+    - target: nsis
+      arch: [x64]
+  icon: build/icon.ico
+  signAndEditExecutable: false
+  signExecutable: false
+forceCodeSigning: false
+portable:
+  requestExecutionLevel: user
+  artifactName: SCOUT-${version}-Windows-Portable.${ext}
+nsis:
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
+  artifactName: SCOUT-${version}-Windows-Setup.${ext}
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  allowElevation: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: SCOUT
+  deleteAppDataOnUninstall: false
+publish: null

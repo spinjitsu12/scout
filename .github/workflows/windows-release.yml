@@ -1,0 +1,80 @@
+name: Build Windows game
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_release:
+        description: Publish this version to the public update channel
+        type: boolean
+        default: false
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scout-windows-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
+    env:
+      SCOUT_UPDATE_REPOSITORY: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.18.0'
+          cache: npm
+      - name: Validate version
+        id: version
+        shell: pwsh
+        run: |
+          $version = node -p "require('./package.json').version"
+          if ($version -notmatch '^(0|[1-9]\d{0,3})\.(0|[1-9]\d{0,3})\.(0|[1-9]\d{0,3})$') { throw 'Invalid stable version.' }
+          $tag = "v$version"
+          if ($env:GITHUB_REF_TYPE -eq 'tag' -and $env:GITHUB_REF_NAME -ne $tag) { throw 'The tag and package version must match.' }
+          "version=$version" >> $env:GITHUB_OUTPUT
+          "tag=$tag" >> $env:GITHUB_OUTPUT
+      - run: npm ci
+      - run: npm test
+      - run: npm run test:desktop
+      - run: npm run dist:portable
+      - name: Verify release payload
+        run: node scripts/verify-release.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SCOUT-Windows-${{ steps.version.outputs.version }}
+          path: |
+            release/SCOUT-*-Windows-Portable.exe
+            release/SCOUT-update.json
+          if-no-files-found: error
+          retention-days: 30
+
+  publish:
+    if: github.ref_type == 'tag' || inputs.publish_release == true
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: SCOUT-Windows-${{ needs.build.outputs.version }}
+          path: release
+      - name: Publish immutable release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ needs.build.outputs.tag }}
+          RELEASE_VERSION: ${{ needs.build.outputs.version }}
+        run: |
+          gh release create "$RELEASE_TAG" release/SCOUT-*-Windows-Portable.exe release/SCOUT-update.json \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --title "SCOUT $RELEASE_VERSION" --generate-notes --latest

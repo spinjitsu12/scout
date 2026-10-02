@@ -1,0 +1,165 @@
+.scout-prologue {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  min-height: 480px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #111b24;
+  color: #f7e9c9;
+  font-family: var(--font-game, ScoutPixel, monospace);
+}
+.prologue-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; image-rendering: pixelated; touch-action: none; }
+.prologue-paused .prologue-phone,.prologue-paused .prologue-room-target>i{animation-play-state:paused}.prologue-paused .prologue-canvas{cursor:default}
+.prologue-topbar { position: absolute; z-index: 10; top: 18px; left: 22px; right: 22px; display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; pointer-events: none; }
+.prologue-topbar > span { display: flex; flex-direction: column; padding: 7px 13px; background: #13202ce8; border-left: 3px solid #e6c882; }
+.prologue-topbar > span b { font-size: 28px; font-weight: 700; letter-spacing: 3px; line-height: 1.1; color: #f8e4ae; text-shadow: 2px 2px 0 #0b1420; }
+.prologue-topbar small { font-size: 14px; color: #d1d9ca; margin-top: 3px; }
+.prologue-topbar > div { display: flex; gap: 8px; pointer-events: auto; }
+.prologue-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; padding: 10px 17px; font: inherit; font-size: 16px; font-weight: 500; line-height: 1.3; color: #f8edd1; background: #243743; border: 3px solid #0c1824; border-radius: 0; box-shadow: inset 0 2px 0 #75858a, inset 0 -3px 0 #182632, 3px 3px 0 #0c132380; cursor: pointer; touch-action: manipulation; }
+.prologue-button:hover { background: #3a515b; color: #fff7dc; }
+.prologue-button:focus-visible { outline: 3px solid #efdb9d; outline-offset: 4px; }
+.prologue-button.prologue-primary { background: #ebd193; color: #1b3037; box-shadow: inset 0 2px 0 #fff2c5, inset 0 -3px 0 #ac955b, 3px 3px 0 #0c132380; }
+.prologue-button.prologue-primary:hover { background: #fae6b2; }
+.prologue-button.prologue-quiet { background: #13202dd9; box-shadow: inset 0 1px 0 #677980, 2px 2px 0 #0c132370; font-size: 14px; min-height: 40px; padding: 8px 12px; }
+.scout-prologue kbd { display: inline-grid; place-items: center; min-width: 21px; height: 24px; margin: 0 1px; font: inherit; font-size: 14px; color: #dce5cd; background: #10202c; border: 1px solid #728186; box-shadow: 0 2px 0 #0d1822; }
+.prologue-kicker { display: block; font-size: 14px; font-weight: 500; letter-spacing: 1.5px; color: #e9d194; line-height: 1.5; }
+.prologue-title-screen { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; background: #10213066; text-align: center; padding: 100px 25px 45px; }
+.prologue-title-screen h1 { font-size: clamp(68px, 11vw, 140px); line-height: .9; font-weight: 700; letter-spacing: 12px; color: #fff0c1; text-shadow: 5px 5px 0 #172a36; }
+.prologue-title-screen > p { font-size: 22px; color: #f6efd5; text-shadow: 2px 2px 0 #102331; }
+.prologue-title-screen > .prologue-button { margin-top: 13px; min-width: 220px; min-height: 54px; font-size: 20px; }
+.prologue-title-screen > small { margin-top: -7px; font-size: 14px; color: #e1dfcb; background: #142732be; padding: 3px 9px; }
+.prologue-cinematic-caption { position: absolute; left: 24px; right: 24px; bottom: 12%; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.prologue-cinematic-caption > span { font-size: 14px; letter-spacing: 2px; color: #ffedb4; padding: 4px 8px; background: #15232bd9; }
+.prologue-cinematic-caption > p { font-size: 18px; text-shadow: 2px 2px 0 #12202b; background: #172832d9; padding: 5px 10px; }
+.prologue-cinematic-caption > button { margin-top: 5px; }
+.prologue-route-card, .prologue-wake-card { position: absolute; top: 108px; left: 22px; width: 275px; padding: 17px 19px; background: #132432ee; border: 3px solid #0d1822; box-shadow: inset 0 0 0 1px #698081, 4px 4px 0 #0c182270; }
+.prologue-route-card h2, .prologue-wake-card h2 { font-size: 26px; line-height: 1.2; margin-top: 6px; color: #fff0c7; font-weight: 500; }
+.prologue-route-card > p { font-size: 16px; color: #d7e1ce; line-height: 1.4; margin-top: 6px; }
+.prologue-route-card > small, .prologue-wake-card > small { display: block; font-size: 14px; color: #b9ccbf; line-height: 1.5; margin-top: 12px; }
+.prologue-route-meter { height: 10px; margin: 15px 0 8px; border: 2px solid #667d7e; background: #0c1b29; }
+.prologue-route-meter > i { display: block; height: 100%; background: #ead193; }
+.prologue-route-label { display: block; color: #e9d6a5; font-size: 14px; }
+.prologue-driving-hud { position: absolute; right: 22px; top: 104px; display: flex; align-items: center; gap: 8px; }
+.prologue-driving-hud > span { display: flex; flex-direction: column; align-items: center; padding: 8px 14px; font-size: 14px; line-height: 1.1; color: #d5e4d0; background: #102030e8; border: 2px solid #60777a; }
+.prologue-driving-hud > span b { font-size: 32px; color: #f0d99a; font-weight: 500; }
+.prologue-driving-hud > button { min-height: 52px; }
+.prologue-drive-controls { position: absolute; bottom: 19px; left: 22px; right: 22px; display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap; background: #12222be8; padding: 11px 14px; border: 2px solid #657674; box-shadow: 3px 3px 0 #0b1522; }
+.prologue-drive-controls > div { margin-right: auto; display: flex; flex-direction: column; gap: 5px; }
+.prologue-drive-controls > div > span { font-size: 14px; }
+.prologue-drive-controls > div > small { font-size: 14px; color: #bac7c2; }
+.prologue-drive-controls > button { user-select: none; }
+.prologue-dialogue { position: absolute; z-index: 5; bottom: 24px; left: 50%; transform: translateX(-50%); width: min(820px, calc(100% - 48px)); max-height: calc(100% - 132px); overflow: auto; overscroll-behavior: contain; padding: 21px 25px 24px; background: #152834f5; border: 4px solid #0b1825; box-shadow: inset 0 0 0 2px #8a8b72, 5px 5px 0 #0b142490; }
+.prologue-speaker { display: flex; align-items: center; gap: 16px; }
+.prologue-speaker .pixel-character { background: #233d43; border-bottom: 3px solid #c9bd8b; }
+.prologue-speaker h2 { font-size: 28px; line-height: 1.1; font-weight: 500; margin: 5px 0; color: #ffedbf; }
+.prologue-speaker small { font-size: 14px; color: #b9d0c2; }
+.prologue-quote { font-size: 18px; line-height: 1.55; margin: 15px 0 18px; color: #f2edd6; padding-left: 14px; border-left: 3px solid #afaa79; }
+.prologue-pitches { display: flex; flex-direction: column; gap: 9px; }
+.prologue-pitches > button { justify-content: flex-start; text-align: left; }
+.prologue-pitches > button > span { display: grid; place-items: center; width: 28px; height: 27px; flex-shrink: 0; color: #f5d995; background: #122636; border: 1px solid #839186; font-size: 14px; }
+.prologue-rejection { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-top: 5px; }
+.prologue-rejection > span { font-size: 16px; color: #d7c9b8; }
+.prologue-phone-stage { position: absolute; top: 95px; bottom: 24px; left: 0; right: 0; display: flex; align-items: center; justify-content: center; padding: 10px; }
+.prologue-phone { position: relative; width: 305px; max-height: 100%; overflow: auto; display: flex; flex-direction: column; align-items: center; padding: 33px 19px 35px; gap: 10px; background: #1e3340; border: 9px solid #0e1725; outline: 3px solid #6d8085; box-shadow: 9px 9px 0 #0b142390, inset 0 0 0 2px #476473; text-align: center; clip-path: polygon(9px 0, calc(100% - 9px) 0, calc(100% - 9px) 4px, 100% 4px, 100% calc(100% - 4px), calc(100% - 9px) calc(100% - 4px), calc(100% - 9px) 100%, 9px 100%, 9px calc(100% - 4px), 0 calc(100% - 4px), 0 4px, 9px 4px); }
+.prologue-phone-notch { position: absolute; width: 74px; height: 8px; top: 0; left: 50%; transform: translateX(-50%); background: #0e1725; }
+.prologue-phone-status { display: flex; justify-content: space-between; width: 100%; font-size: 12px; color: #b6cdca; position: absolute; left: 13px; right: 13px; top: 9px; width: calc(100% - 26px); }
+.prologue-phone > .prologue-kicker { margin: 8px 0 4px; }
+.prologue-phone h2 { font-size: 28px; font-weight: 500; color: #fbebbd; }
+.prologue-phone > span:not(.prologue-kicker) { font-size: 14px; color: #c1d2c3; margin-top: -5px; }
+.prologue-phone > p { font-size: 16px; line-height: 1.5; color: #e0e5d4; }
+.prologue-phone > button { width: 100%; margin-top: 9px; }
+.prologue-phone-home { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 54px; height: 3px; background: #9badac; }
+.prologue-phone.is-ringing { animation: prologue-phone-ring 1.8s steps(1) infinite; }
+.prologue-phone-buzz { padding: 19px 0 8px; }
+.prologue-fired { padding: 12px 11px; margin: 2px 0; background: #513b42; border: 2px solid #c08273; display: flex; flex-direction: column; gap: 7px; width: 100%; }
+.prologue-fired > small { font-size: 12px; color: #e2b9a5; letter-spacing: 2px; }
+.prologue-fired > b { font-weight: 500; font-size: 18px; line-height: 1.25; color: #ffb6a1; }
+.prologue-fired > span { font-size: 14px; color: #ecd5ca; }
+.prologue-wake-card { top: 107px; width: 260px; background: #1c2c35ed; }
+.prologue-wake-card > p { font-size: 17px; margin-top: 7px; color: #edddba; }
+.prologue-apartment-targets { position: absolute; inset: 0; pointer-events: none; }
+.prologue-room-target { position: absolute; pointer-events: auto; transform: translate(-50%, -50%); display: flex; align-items: center; flex-direction: column; padding: 0; background: transparent; border: 0; color: #f7e8c4; font: inherit; cursor: pointer; }
+.scout-prologue .prologue-room-target:active:not(:disabled) { transform: translate(-50%, -50%); }
+.prologue-room-target > i { width: 14px; height: 14px; border: 3px solid #172b37; outline: 1px solid #e5dfad; background: #d8ddb0; box-shadow: 2px 2px 0 #152433; }
+.prologue-room-target > span { font-size: 14px; padding: 3px 7px; border: 1px solid #9a9d80; margin-top: 5px; background: #1c2d37ed; white-space: nowrap; }
+.prologue-room-target:hover > span { background: #3b504a; color: #fff4c8; border-color: #f2db93; }
+.prologue-room-target > small { font-size: 12px; background: #cbe3a0; color: #213537; padding: 3px 7px; line-height: 1.1; letter-spacing: 1px; }
+.prologue-room-target.is-objective > i { background: #dbefac; outline-color: #fbefb7; animation: prologue-laptop-marker 2s steps(1) infinite; }
+.prologue-apartment-thought { position: absolute; z-index: 15; bottom: 103px; left: 50%; transform: translateX(-50%); width: min(780px, calc(100% - 44px)); display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 22px; background: #192b37f5; border: 3px solid #0d1926; box-shadow: inset 0 0 0 1px #a0a188, 4px 4px 0 #0b152490; }
+.prologue-apartment-thought p { margin-top: 6px; font-size: 18px; line-height: 1.45; }
+.prologue-apartment-thought small { display: block; margin-top: 10px; font-size: 14px; color: #bad3bb; line-height: 1.4; }
+.prologue-apartment-thought > button { flex-shrink: 0; max-width: 185px; }
+.prologue-apartment-controls { position: absolute; bottom: 19px; left: 22px; right: 22px; display: flex; justify-content: space-between; align-items: center; gap: 15px; background: #172a34eb; border: 2px solid #6f8179; padding: 10px 14px; }
+.prologue-apartment-controls > span { font-size: 14px; color: #d7dfc7; }
+@keyframes prologue-phone-ring { 0%, 19%, 35%, 100% { transform: translateX(0); } 5%, 25% { transform: translateX(-3px); } 12%, 31% { transform: translateX(3px); } }
+@keyframes prologue-laptop-marker { 0%, 100% { background: #dbefac; } 50% { background: #f4d994; } }
+@media (max-width: 1100px) {
+  .prologue-drive-controls > div { width: 100%; margin: 0; text-align: center; }
+  .prologue-route-card { width: 225px; padding: 14px 16px; }
+  .prologue-route-card > small { display: none; }
+  .prologue-driving-hud { flex-wrap: wrap; max-width: 240px; justify-content: flex-end; }
+  .prologue-wake-card { top: 97px; width: 225px; padding: 14px 16px; }
+}
+@media (max-width: 700px) {
+  .prologue-topbar { top: 12px; left: 12px; right: 12px; gap: 8px; }
+  .prologue-topbar > span { padding: 7px 9px; }
+  .prologue-topbar > span b { font-size: 22px; }
+  .prologue-topbar small { font-size: 12px; }
+  .prologue-topbar > div { gap: 4px; flex-direction: column; }
+  .prologue-topbar .prologue-button { min-height: 32px; font-size: 12px; padding: 5px 8px; }
+  .prologue-title-screen { gap: 17px; }
+  .prologue-title-screen h1 { font-size: 76px; letter-spacing: 7px; }
+  .prologue-title-screen > p { font-size: 18px; }
+  .prologue-title-screen > small { font-size: 12px; }
+  .prologue-cinematic-caption { left: 14px; right: 14px; bottom: 14%; }
+  .prologue-cinematic-caption > span { font-size: 12px; }
+  .prologue-cinematic-caption > p { font-size: 16px; }
+  .prologue-route-card { top: 100px; left: 12px; width: min(218px, calc(100% - 160px)); padding: 11px 12px; }
+  .prologue-route-card .prologue-kicker { font-size: 12px; letter-spacing: .5px; }
+  .prologue-route-card h2 { font-size: 21px; }
+  .prologue-route-card > p { font-size: 14px; }
+  .prologue-route-label { font-size: 12px; }
+  .prologue-driving-hud { top: 103px; right: 12px; gap: 5px; max-width: 145px; }
+  .prologue-driving-hud > span { padding: 6px 9px; }
+  .prologue-driving-hud > span b { font-size: 26px; }
+  .prologue-driving-hud > button { font-size: 14px; min-height: 39px; padding: 7px 8px; }
+  .prologue-driving-hud kbd { display: none; }
+  .prologue-drive-controls { left: 10px; right: 10px; bottom: 12px; gap: 7px; padding: 9px; }
+  .prologue-drive-controls > div > span { font-size: 12px; }
+  .prologue-drive-controls > div > small { display: none; }
+  .prologue-drive-controls > button { font-size: 14px; padding: 8px 11px; }
+  .prologue-drive-controls > .prologue-quiet { width: 100%; min-height: 31px; padding: 5px; font-size: 12px; }
+  .prologue-dialogue { bottom: 14px; width: calc(100% - 24px); padding: 17px 16px; max-height: calc(100% - 117px); }
+  .prologue-speaker { gap: 10px; }
+  .prologue-speaker .pixel-character { width: 65px !important; height: 72px !important; }
+  .prologue-speaker .prologue-kicker { font-size: 12px; letter-spacing: .6px; }
+  .prologue-speaker h2 { font-size: 24px; }
+  .prologue-speaker small { font-size: 12px; }
+  .prologue-quote { font-size: 16px; padding-left: 10px; margin: 12px 0 14px; }
+  .prologue-pitches > button { font-size: 14px; padding: 9px; }
+  .prologue-rejection { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .prologue-rejection > button { width: 100%; }
+  .prologue-rejection > span { font-size: 14px; }
+  .prologue-phone-stage { top: 100px; bottom: 17px; }
+  .prologue-phone { width: 285px; padding-top: 27px; gap: 8px; }
+  .prologue-phone .pixel-character { width: 94px !important; height: 94px !important; }
+  .prologue-phone h2 { font-size: 24px; }
+  .prologue-wake-card { top: 102px; left: 12px; width: 210px; padding: 10px 12px; }
+  .prologue-wake-card > .prologue-kicker { font-size: 12px; letter-spacing: .4px; }
+  .prologue-wake-card h2 { font-size: 22px; }
+  .prologue-wake-card > p { font-size: 14px; }
+  .prologue-wake-card > small { display: none; }
+  .prologue-room-target > span { font-size: 12px; padding: 2px 5px; }
+  .prologue-room-target > small { font-size: 10px; padding: 2px 5px; }
+  .prologue-room-target > i { width: 11px; height: 11px; border-width: 2px; }
+  .prologue-apartment-controls { bottom: 12px; left: 10px; right: 10px; flex-direction: column; gap: 8px; padding: 8px; }
+  .prologue-apartment-controls > span { font-size: 12px; text-align: center; }
+  .prologue-apartment-controls > button { font-size: 14px; min-height: 37px; padding: 7px 12px; }
+  .prologue-apartment-thought { bottom: 124px; width: calc(100% - 24px); padding: 14px 15px; flex-direction: column; align-items: stretch; gap: 12px; }
+  .prologue-apartment-thought p { font-size: 16px; }
+  .prologue-apartment-thought > button { width: 100%; max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prologue-phone.is-ringing, .prologue-room-target.is-objective > i { animation: none; }
+}

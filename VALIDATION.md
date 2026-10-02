@@ -6,8 +6,9 @@ Checked on October 2, 2026. Save schema remains version 1.
 
 - `npm run build`: TypeScript, production renderer, and desktop save validator built successfully.
 - `npm test`: 30 complete three-chapter careers; 180 assisted road trips across every chapter and vehicle; physical scouting, parking, interviews, offers, assignments, payroll, fuel, roadside assistance, customization, prestige, save migration, and prologue navigation passed.
-- `npm run test:desktop`: all 33 checks passed. Coverage includes durable writes, previous-save recovery, interrupted writes, offline checks, absolute network deadlines, cancellation, interrupted downloads, manifest and executable integrity, retained verified updates, and the update worker acknowledgement protocol.
+- `npm run test:desktop`: all 36 checks passed. Coverage includes durable writes, previous-save recovery, interrupted writes, offline checks, absolute network deadlines, cancellation, interrupted downloads, manifest and executable integrity, retained verified updates, and the update worker acknowledgement protocol. Three archive regressions exercise nested CSS, JavaScript, fonts, artwork, and missing files using the installed ASAR implementation with native and Windows directory rules.
 - `npm run verify:release`: the portable executable identity, version, size, and SHA-256 match its manifest. Packaged updater, save validator, and every production renderer asset match the current source build. Pixel artwork and fonts are included locally; music is synthesized from bundled original scores.
+- The complete release verifier passes against the packaged game with Windows ASAR traversal rules. The previous verifier fails on nested renderer asset lookup. Missing artwork, corrupted CSS, and an unsupported update manifest schema still fail verification. This exercises Windows archive behavior on Linux; the next GitHub run validates the full workflow on its native Windows runner.
 
 ## Running-app checks
 

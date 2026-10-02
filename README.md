@@ -18,9 +18,9 @@ The renderer retains a local backup as well. If the main save is damaged, the ga
 
 ## Development
 
-Requires Node 22.18 or later. Install dependencies with `npm ci`. `npm run desktop` builds the renderer and opens the desktop app. `npm run dist:win` builds the Windows portable executable and installer into `release`. Windows builds use Electron 44.5.1 and electron-builder 26.15.3. Linux cross-builds require Wine.
+Requires Node 22.18 or later, below Node 25. Install dependencies with `npm ci`. `npm run desktop` builds the renderer and opens the desktop app. `npm run dist:win` builds the Windows portable executable and installer into `release`. Windows builds use Electron 44.5.1 and electron-builder 26.15.3. Portable cross-builds on Linux do not require Wine.
 
-`npm test` checks the simulator. `npm run test:desktop` checks durable saves, backup recovery, interrupted writes, offline startup, network timeouts, canceled and interrupted downloads, release integrity and staged-update retention. `npm run verify:release` verifies the packaged portable build and its offline assets. The renderer can be inspected during development with `npm run dev`.
+`npm test` checks the simulator. `npm run test:desktop` checks durable saves, backup recovery, interrupted writes, offline startup, network timeouts, canceled and interrupted downloads, release integrity and staged-update retention. It also tests nested archive reads with native and Windows path rules before packaging. `npm run verify:release` verifies the packaged portable build and every bundled renderer asset. The renderer can be inspected during development with `npm run dev`.
 
 ## Asset credits
 

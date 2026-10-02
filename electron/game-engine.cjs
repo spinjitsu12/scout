@@ -1,5 +1,170 @@
 // Generated from src/lib/game.ts. Run npm run build to refresh; edit the shared TypeScript engine instead.
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+//#region src/lib/immersive-locations.ts
+const HOME_CENTER = {
+	x: 220,
+	z: 480
+};
+const HOME_SPAWN = {
+	x: 219,
+	z: 482
+};
+const HOME_CAR_SPAWN$1 = {
+	x: 220,
+	z: 510
+};
+/** The only geometry contract used by gameplay, renderer and collision tests. All dimensions are metres. */
+function getImmersiveLocations(tier) {
+	const themes = tier === 0 ? [
+		"studio",
+		"workshop",
+		"gallery",
+		"cafe"
+	] : tier === 1 ? [
+		"institute",
+		"archive",
+		"observatory",
+		"pavilion"
+	] : [
+		"headquarters",
+		"signal",
+		"station",
+		"market"
+	];
+	const locations = FIELD_LOCATIONS[tier].map((location) => {
+		const north = location.id < 2, parking = {
+			x: location.point.x,
+			z: location.point.y
+		};
+		const center = location.id === 4 ? {
+			x: 850,
+			z: 595
+		} : {
+			x: location.point.x,
+			z: location.point.y + (north ? -63 : 63)
+		};
+		const width = location.id === 0 ? 60 : location.id === 4 ? 24 : 68, depth = location.id === 0 ? 42 : location.id === 4 ? 16 : 46;
+		const door = {
+			x: center.x,
+			z: center.z + (north || location.id === 4 ? depth / 2 : -depth / 2)
+		};
+		const footprint = {
+			minX: center.x - width / 2,
+			maxX: center.x + width / 2,
+			minZ: center.z - depth / 2,
+			maxZ: center.z + depth / 2
+		};
+		const candidateSpawns = Array.from({ length: 12 }, (_, slot) => ({
+			x: center.x - 23 + slot % 6 * 8.5,
+			z: center.z + (slot < 6 ? -4 : 7)
+		}));
+		const make = (id, type, label, px, pz, range = 2.8, detail) => ({
+			id,
+			type,
+			label,
+			position: {
+				x: px,
+				z: pz
+			},
+			range,
+			locationId: location.id,
+			detail
+		});
+		const pointsOfInterest = location.id === 4 ? [make("fuel", "fuel", "Refuel at the pump", parking.x, parking.z, 4)] : location.id === 0 ? [
+			make("office-missions", "missions", "Read the assignments board", center.x + 14, center.z - 12),
+			make("office-career", "career", "Review your career notebook", center.x - 14, center.z - 12),
+			make("office-team", "team", "Check the team lounge", center.x + 17, center.z + 10, 3),
+			make("office-week", "week", "Finish the scouting week", center.x - 15, center.z + 10)
+		] : [make(`venue-${location.id}-sources`, "sources", `Ask about the ${location.name} community`, center.x + 24, center.z - 13, 3), make(`venue-${location.id}-notice`, "thought", "Read the local noticeboard", center.x - 24, center.z + 14, 2.5, location.id === 1 ? "The best discoveries begin with listening. Members share their projects here; walk around and get to know them." : location.id === 2 ? "Take your time with the exhibits. A portfolio tells you what someone makes; a conversation tells you why." : "People return here for the quiet corners, the conversations, and the familiar faces. Take a little time before asking for an introduction.")];
+		return {
+			id: location.id,
+			name: location.name,
+			subtitle: location.subtitle,
+			center,
+			door,
+			parking,
+			interiorSpawn: {
+				x: door.x,
+				z: door.z + (north || location.id === 4 ? -3 : 3)
+			},
+			footprint,
+			candidateSpawns,
+			pointsOfInterest,
+			theme: themes[location.id] ?? "fuel"
+		};
+	});
+	locations.push({
+		id: 5,
+		name: "Home",
+		subtitle: "Your apartment",
+		center: { ...HOME_CENTER },
+		door: {
+			x: 220,
+			z: 488.5
+		},
+		parking: { ...HOME_CAR_SPAWN$1 },
+		interiorSpawn: {
+			x: 220,
+			z: 485.8
+		},
+		footprint: {
+			minX: 210,
+			maxX: 230,
+			minZ: 471.5,
+			maxZ: 488.5
+		},
+		candidateSpawns: [],
+		theme: "home",
+		pointsOfInterest: [
+			{
+				id: "home-laptop",
+				type: "laptop",
+				label: "Sit at your laptop",
+				position: {
+					x: 225.8,
+					z: 476.2
+				},
+				range: 1.6,
+				locationId: 5
+			},
+			{
+				id: "home-rest",
+				type: "week",
+				label: "Wind down for the week",
+				position: {
+					x: 212.4,
+					z: 480.8
+				},
+				range: 2,
+				locationId: 5
+			},
+			{
+				id: "home-window",
+				type: "thought",
+				label: "Take a moment by the window",
+				position: {
+					x: 228.8,
+					z: 483.2
+				},
+				range: 1.7,
+				locationId: 5,
+				detail: "The town is in no rush. Neither are you. One thoughtful conversation can be worth an entire day of chasing leads."
+			}
+		]
+	});
+	return locations;
+}
+function candidateAnchor(tier, id) {
+	const index = Math.max(0, Number(id.split("-")[1]) || 0);
+	return { ...getImmersiveLocations(tier)[index % 3 + 1].candidateSpawns[Math.floor(index / 3) % 12] };
+}
+function publicInteriorContains(tier, locationId, point, margin = 0) {
+	const location = getImmersiveLocations(tier).find((item) => item.id === locationId);
+	if (!location) return false;
+	const b = location.footprint;
+	return point.x >= b.minX + margin && point.x <= b.maxX - margin && point.z >= b.minZ + margin && point.z <= b.maxZ - margin;
+}
+//#endregion
 //#region src/lib/expedition.ts
 const DISTRICT_WIDTH = 1536;
 const DISTRICT_HEIGHT = 1024;
@@ -228,9 +393,9 @@ const DEFAULT_STYLE = {
 	name: "Scout",
 	avatar: 0,
 	car: "compact",
-	paint: "mint",
+	paint: "slate",
 	plate: "SCOUT",
-	camera: "overhead",
+	camera: "cockpit",
 	radio: false,
 	station: 0,
 	music: true,
@@ -263,6 +428,13 @@ function candidateLocation(id) {
 	return Math.max(0, Number(id.split("-")[1]) || 0) % 3 + 1;
 }
 function candidatePosition(game, id) {
+	if (game.immersion) {
+		const anchor = candidateAnchor(game.tier, id);
+		return {
+			x: anchor.x,
+			y: anchor.z
+		};
+	}
 	const location = FIELD_LOCATIONS[game.tier][candidateLocation(id)];
 	const index = Math.max(0, Number(id.split("-")[1]) || 0);
 	const slot = Math.floor(index / 3) % 12;
@@ -274,6 +446,12 @@ function candidatePosition(game, id) {
 }
 const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 function atVenue(game, locationId) {
+	if (game.immersion) {
+		const state = game.immersion, place = getImmersiveLocations(game.tier).find((item) => item.id === locationId);
+		if (!place || state.mode !== "foot" || !state.parkedAt.includes(locationId) || Math.hypot(state.vehicle.x - place.parking.x, state.vehicle.z - place.parking.z) > 25) return false;
+		if (locationId === 4) return Math.hypot(state.player.x - place.parking.x, state.player.z - place.parking.z) <= 6;
+		return state.interior === locationId && publicInteriorContains(game.tier, locationId, state.player, .3);
+	}
 	const location = FIELD_LOCATIONS[game.tier].find((place) => place.id === locationId);
 	const field = fieldOf(game);
 	return !!location && field.scene === "district" && !field.driving && distance(field.player, location.door) <= 110;
@@ -281,17 +459,22 @@ function atVenue(game, locationId) {
 function canMeet(game, id) {
 	const contact = game.candidates.find((candidate) => candidate.id === id);
 	const field = fieldOf(game);
+	if (game.immersion) {
+		const anchor = candidateAnchor(game.tier, id);
+		return !!contact && contact.discovered && contact.status === "available" && atVenue(game, candidateLocation(id)) && Math.hypot(game.immersion.player.x - anchor.x, game.immersion.player.z - anchor.z) <= 3.6;
+	}
 	return !!contact && contact.discovered && contact.status === "available" && field.scene === "district" && !field.driving && distance(field.player, candidatePosition(game, id)) <= 90;
 }
 function canRefuel(game) {
 	const field = fieldOf(game);
+	if (game.immersion) return atVenue(game, 4) && Math.hypot(game.immersion.player.x - game.immersion.vehicle.x, game.immersion.player.z - game.immersion.vehicle.z) <= 6;
 	return atVenue(game, 4) && distance(field.car, FIELD_LOCATIONS[game.tier][4].point) <= 100;
 }
-const record = (value) => !!value && typeof value === "object" && !Array.isArray(value);
-const finite = (value) => typeof value === "number" && Number.isFinite(value);
-const validPoint = (value, bounded) => record(value) && finite(value.x) && finite(value.y) && (!bounded || value.x >= 0 && value.x <= 1536 && value.y >= 0 && value.y <= 1024);
+const record$1 = (value) => !!value && typeof value === "object" && !Array.isArray(value);
+const finite$1 = (value) => typeof value === "number" && Number.isFinite(value);
+const validPoint = (value, bounded) => record$1(value) && finite$1(value.x) && finite$1(value.y) && (!bounded || value.x >= 0 && value.x <= 1536 && value.y >= 0 && value.y <= 1024);
 function validScoutStyle(value) {
-	return record(value) && typeof value.name === "string" && value.name.length >= 1 && value.name.length <= 24 && value.name.trim().length > 0 && !/[\u0000-\u001f\u007f]/u.test(value.name) && Number.isInteger(value.avatar) && value.avatar >= 0 && value.avatar <= 15 && typeof value.car === "string" && Object.hasOwn(CAR_NAMES, value.car) && typeof value.paint === "string" && Object.hasOwn(PAINTS, value.paint) && typeof value.plate === "string" && /^[A-Z0-9-]{1,8}$/u.test(value.plate) && (value.camera === void 0 || typeof value.camera === "string" && [
+	return record$1(value) && typeof value.name === "string" && value.name.length >= 1 && value.name.length <= 24 && value.name.trim().length > 0 && !/[\u0000-\u001f\u007f]/u.test(value.name) && Number.isInteger(value.avatar) && value.avatar >= 0 && value.avatar <= 15 && typeof value.car === "string" && Object.hasOwn(CAR_NAMES, value.car) && typeof value.paint === "string" && Object.hasOwn(PAINTS, value.paint) && typeof value.plate === "string" && /^[A-Z0-9-]{1,8}$/u.test(value.plate) && (value.camera === void 0 || typeof value.camera === "string" && [
 		"overhead",
 		"cockpit",
 		"chase",
@@ -299,7 +482,7 @@ function validScoutStyle(value) {
 	].includes(value.camera)) && (value.radio === void 0 || typeof value.radio === "boolean") && (value.music === void 0 || typeof value.music === "boolean") && (value.sound === void 0 || typeof value.sound === "boolean") && (value.engine === void 0 || typeof value.engine === "boolean") && (value.station === void 0 || Number.isInteger(value.station) && value.station >= 0 && value.station <= 2);
 }
 function validField(value, bounded = true, legacyFuel = false) {
-	if (!record(value) || !["office", "district"].includes(value.scene) || !validPoint(value.player, bounded) || !validPoint(value.car, bounded) || !finite(value.heading) || bounded && (value.heading < 0 || value.heading >= FULL_TURN) || typeof value.driving !== "boolean" || value.scene === "office" && value.driving || !(legacyFuel && value.fuel === void 0) && (!finite(value.fuel) || bounded && (value.fuel < 0 || value.fuel > 12)) || !Array.isArray(value.visited) || value.visited.length > 5 || new Set(value.visited).size !== value.visited.length || !value.visited.every((id) => Number.isInteger(id) && id >= 0 && id <= 4) || !Array.isArray(value.met) || value.met.length > 200 || new Set(value.met).size !== value.met.length || !value.met.every((id) => typeof id === "string" && id.length > 0 && id.length <= 100) || value.destination !== null && (!Number.isInteger(value.destination) || value.destination < 0 || value.destination > 4)) return false;
+	if (!record$1(value) || !["office", "district"].includes(value.scene) || !validPoint(value.player, bounded) || !validPoint(value.car, bounded) || !finite$1(value.heading) || bounded && (value.heading < 0 || value.heading >= FULL_TURN) || typeof value.driving !== "boolean" || value.scene === "office" && value.driving || !(legacyFuel && value.fuel === void 0) && (!finite$1(value.fuel) || bounded && (value.fuel < 0 || value.fuel > 12)) || !Array.isArray(value.visited) || value.visited.length > 5 || new Set(value.visited).size !== value.visited.length || !value.visited.every((id) => Number.isInteger(id) && id >= 0 && id <= 4) || !Array.isArray(value.met) || value.met.length > 200 || new Set(value.met).size !== value.met.length || !value.met.every((id) => typeof id === "string" && id.length > 0 && id.length <= 100) || value.destination !== null && (!Number.isInteger(value.destination) || value.destination < 0 || value.destination > 4)) return false;
 	return true;
 }
 function boundedField(field) {
@@ -353,6 +536,76 @@ function validPrologue(value) {
 	if (!value || typeof value !== "object" || Array.isArray(value)) return false;
 	const state = value;
 	return PROLOGUE_PHASES.includes(state.phase) && (state.choice === null || DREAM_PITCHES.some((pitch) => pitch.id === state.choice)) && (!["sky", "cruise"].includes(state.phase) || state.choice === null);
+}
+//#endregion
+//#region src/lib/immersive-runtime.ts
+const DREAM_CAR_SPAWN = {
+	x: 500,
+	z: 870,
+	heading: 0
+};
+const HOME_CAR_SPAWN = {
+	...HOME_CAR_SPAWN$1,
+	heading: Math.PI
+};
+const finite = (value) => typeof value === "number" && Number.isFinite(value);
+const record = (value) => !!value && typeof value === "object" && !Array.isArray(value);
+const point = (value) => record(value) && finite(value.x) && finite(value.z) && value.x >= 0 && value.x <= 1536 && value.z >= 0 && value.z <= 1024;
+function validImmersion(value) {
+	if (!record(value) || value.schema !== 1 || ![
+		0,
+		1,
+		2
+	].includes(value.tier) || !["foot", "driving"].includes(value.mode) || !point(value.player) || !point(value.vehicle) || !record(value.player) || !record(value.vehicle)) return false;
+	const player = value.player, vehicle = value.vehicle;
+	const id = (value) => value === null || Number.isInteger(value) && value >= 0 && value <= 5;
+	return finite(player.yaw) && Math.abs(player.yaw) <= Math.PI + .001 && finite(player.pitch) && Math.abs(player.pitch) <= 1.4 && finite(vehicle.heading) && Math.abs(vehicle.heading) <= Math.PI + .001 && finite(vehicle.speed) && Math.abs(vehicle.speed) <= 65 && finite(vehicle.steering) && Math.abs(vehicle.steering) <= 1 && finite(vehicle.distance) && vehicle.distance >= 0 && vehicle.distance < 1e9 && finite(vehicle.fuel) && vehicle.fuel >= 0 && vehicle.fuel <= 12 && ["D", "R"].includes(vehicle.gear) && id(value.interior) && id(value.destination) && Array.isArray(value.parkedAt) && value.parkedAt.length <= 6 && new Set(value.parkedAt).size === value.parkedAt.length && value.parkedAt.every((id) => Number.isInteger(id) && id >= 0 && id <= 5) && [
+		"accelerate",
+		"brake",
+		"steer",
+		"complete"
+	].includes(value.tutorial) && Array.isArray(value.thoughtsSeen) && value.thoughtsSeen.length <= 100 && value.thoughtsSeen.every((id) => typeof id === "string" && id.length <= 120) && typeof value.homeReviewed === "boolean";
+}
+function freshImmersion(game) {
+	const waking = game.story?.phase === "wake", dream = game.story && !["wake", "complete"].includes(game.story.phase);
+	const headquarters = getImmersiveLocations(game.tier)[0];
+	const parking = dream ? DREAM_CAR_SPAWN : waking ? HOME_CAR_SPAWN : {
+		...headquarters.parking,
+		heading: Math.PI
+	};
+	return {
+		schema: 1,
+		tier: game.tier,
+		interior: dream ? null : waking ? 5 : 0,
+		player: dream ? {
+			x: parking.x,
+			z: parking.z,
+			yaw: 0,
+			pitch: 0
+		} : waking ? {
+			...HOME_SPAWN,
+			yaw: -Math.PI / 2,
+			pitch: 0
+		} : {
+			...headquarters.interiorSpawn,
+			yaw: 0,
+			pitch: 0
+		},
+		vehicle: {
+			...parking,
+			speed: 0,
+			steering: 0,
+			distance: 0,
+			fuel: game.field?.fuel ?? 12,
+			gear: "D"
+		},
+		mode: dream ? "driving" : "foot",
+		destination: dream ? 1 : waking ? 0 : null,
+		parkedAt: dream ? [] : waking ? [5] : [0],
+		tutorial: dream || waking ? "accelerate" : "complete",
+		thoughtsSeen: [],
+		homeReviewed: !waking
+	};
 }
 //#endregion
 //#region src/lib/game.ts
@@ -1498,7 +1751,42 @@ function act(original, action) {
 	};
 	if (action.type === "story") {
 		if (!validPrologue(action.state)) throw new Error("The prologue could not be saved.");
+		const wasWaking = g.story?.phase === "wake";
 		g.story = { ...action.state };
+		if (g.immersion && action.state.phase === "wake" && !wasWaking) {
+			g.field.fuel = 12;
+			g.immersion = freshImmersion(g);
+		}
+		return g;
+	}
+	if (action.type === "immersionSnapshot") {
+		if (!validImmersion(action.snapshot) || action.snapshot.tier !== g.tier) throw new Error("Your position could not be saved.");
+		const snapshot = structuredClone(action.snapshot);
+		const locations = getImmersiveLocations(g.tier);
+		snapshot.parkedAt = [...new Set(g.immersion?.parkedAt ?? [])];
+		if (Math.abs(snapshot.vehicle.speed) < .65) {
+			for (const location of locations) if (Math.hypot(snapshot.vehicle.x - location.parking.x, snapshot.vehicle.z - location.parking.z) <= 25 && !snapshot.parkedAt.includes(location.id)) snapshot.parkedAt.push(location.id);
+		}
+		if (snapshot.interior !== null && !publicInteriorContains(g.tier, snapshot.interior, snapshot.player)) snapshot.interior = null;
+		snapshot.vehicle.fuel = Math.min(g.field.fuel, snapshot.vehicle.fuel);
+		g.immersion = snapshot;
+		g.field = boundedField({
+			...g.field,
+			scene: snapshot.interior === 0 ? "office" : "district",
+			player: {
+				x: snapshot.mode === "driving" ? snapshot.vehicle.x : snapshot.player.x,
+				y: snapshot.mode === "driving" ? snapshot.vehicle.z : snapshot.player.z
+			},
+			car: {
+				x: snapshot.vehicle.x,
+				y: snapshot.vehicle.z
+			},
+			heading: snapshot.vehicle.heading,
+			driving: snapshot.mode === "driving",
+			fuel: snapshot.vehicle.fuel,
+			destination: snapshot.destination !== null && snapshot.destination <= 4 ? snapshot.destination : null
+		});
+		for (const location of locations) if (location.id <= 4 && atVenue(g, location.id) && !g.field.visited.includes(location.id)) g.field.visited.push(location.id);
 		return g;
 	}
 	if (action.type === "customize") {
@@ -1525,6 +1813,7 @@ function act(original, action) {
 		return g;
 	}
 	if (action.type === "fieldEnter") {
+		if (g.immersion) return g;
 		if (g.field.scene === "district") return g;
 		g.field = boundedField({
 			...g.field,
@@ -1538,6 +1827,10 @@ function act(original, action) {
 		return g;
 	}
 	if (action.type === "fieldReturn") {
+		if (g.immersion) {
+			if (!atVenue(g, 0)) throw new Error("Drive to headquarters, park, and walk through the entrance.");
+			return g;
+		}
 		if (g.field.scene === "office") return g;
 		if (!atVenue(g, 0)) throw new Error("Park and walk to the headquarters entrance to go inside.");
 		const headquarters = FIELD_LOCATIONS[g.tier][0].point;
@@ -1556,13 +1849,15 @@ function act(original, action) {
 		return g;
 	}
 	if (action.type === "setDestination") {
-		if (g.field.scene !== "district") throw new Error("Head outside to set a driving destination.");
+		if (!g.immersion && g.field.scene !== "district") throw new Error("Head outside to set a driving destination.");
 		if (action.destination !== null && (!Number.isInteger(action.destination) || !FIELD_LOCATIONS[g.tier].some((location) => location.id === action.destination))) throw new Error("Choose a destination on the district map.");
 		g.field.destination = action.destination;
+		if (g.immersion) g.immersion.destination = action.destination;
 		return g;
 	}
 	if (action.type === "fieldSnapshot") {
 		if (!validField(action.field, false)) throw new Error("The scouting position could not be saved.");
+		if (g.immersion) return g;
 		if (action.field.scene !== g.field.scene) throw new Error("Use the headquarters entrance to change locations.");
 		const field = boundedField(action.field);
 		field.met = [...g.field.met];
@@ -1588,6 +1883,7 @@ function act(original, action) {
 		need(0, cost);
 		g.cash = Math.round(g.cash * 100) / 100;
 		g.field.fuel = Math.min(12, g.field.fuel + gallons);
+		if (g.immersion) g.immersion.vehicle.fuel = g.field.fuel;
 		log(g, `Bought ${gallons.toFixed(2)} gallons at $${GAS_PRICES[g.tier].toFixed(2)} per gallon ($${cost.toFixed(2)} total).`);
 		return g;
 	}
@@ -1608,6 +1904,29 @@ function act(original, action) {
 			visited: [...new Set([...g.field.visited, 4])]
 		};
 		log(g, "Roadside assistance brought your vehicle to the fuel station for $150. Fuel is sold separately.", "warn");
+		if (g.immersion) {
+			g.immersion.vehicle = {
+				...g.immersion.vehicle,
+				x: station.point.x,
+				z: station.point.y,
+				speed: 0,
+				fuel: 0,
+				heading: 0
+			};
+			g.immersion.player = {
+				...g.immersion.player,
+				x: station.point.x + 2.5,
+				z: station.point.y
+			};
+			g.immersion.interior = null;
+			g.immersion.mode = "foot";
+			g.immersion.destination = 4;
+			g.immersion.parkedAt = [...new Set([...g.immersion.parkedAt, 4])];
+			g.field.player = {
+				x: g.immersion.player.x,
+				y: g.immersion.player.z
+			};
+		}
 		return g;
 	}
 	if (action.type === "meet") {
@@ -1915,6 +2234,7 @@ function act(original, action) {
 		g.field = freshField(g.tier);
 		g.candidates = [];
 		g.candidates = Array.from({ length: 12 }, (_, i) => createCandidate(g, i));
+		if (g.immersion) g.immersion = freshImmersion(g);
 		log(g, action.type === "prestige" ? `Your next chapter begins at ${next.employer}. ${TIERS[old].perk}` : `A fresh recruiting season begins at ${next.employer}.`, "good");
 	}
 	return g;
@@ -1968,6 +2288,12 @@ function validGame(value) {
 	if (g.style !== void 0 && !validScoutStyle(g.style)) return false;
 	if (g.story !== void 0 && !validPrologue(g.story)) return false;
 	if (g.field !== void 0 && (!validField(g.field, true, true) || !g.field.met.every((id) => ids.has(id)))) return false;
+	if (g.immersion !== void 0 && (!validImmersion(g.immersion) || g.immersion.tier !== g.tier)) return false;
+	if (g.playerProfile !== void 0 && (!record(g.playerProfile) || ![
+		"observer",
+		"connector",
+		"analyst"
+	].includes(g.playerProfile.background))) return false;
 	return true;
 }
 //#endregion

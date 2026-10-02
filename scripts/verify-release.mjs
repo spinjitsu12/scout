@@ -24,7 +24,7 @@ assert.equal(identity.product, 'SCOUT');
 assert.equal(identity.version, metadata.version);
 const bundle = path.join(release, 'win-unpacked', 'resources', 'app.asar');
 const entries = listArchiveEntries(bundle);
-for (const file of ['electron/main.cjs', 'electron/preload.cjs', 'electron/save-store.cjs',
+for (const file of ['electron/main.cjs', 'electron/preload.cjs', 'electron/save-store.cjs', 'electron/display-mode.cjs', 'electron/credit-links.cjs', 'electron/desktop-options.cjs', 'electron/mac-updates.cjs',
   'electron/update-manager.cjs', 'electron/update-worker.ps1', 'electron/update-config.json',
   'electron/game-engine.cjs', 'dist/index.html', 'dist/fonts/PixelifySans.ttf',
   'dist/pixel/characters.png', 'dist/pixel/apartment.png', 'dist/pixel/company-district.png',
@@ -33,7 +33,7 @@ for (const file of ['electron/main.cjs', 'electron/preload.cjs', 'electron/save-
 }
 const packagedMetadata = JSON.parse(readArchiveFile(bundle, 'package.json').toString('utf8'));
 assert.equal(packagedMetadata.version, metadata.version);
-for (const file of ['main.cjs', 'preload.cjs', 'save-store.cjs', 'game-engine.cjs',
+for (const file of ['main.cjs', 'preload.cjs', 'save-store.cjs', 'display-mode.cjs', 'credit-links.cjs', 'desktop-options.cjs', 'mac-updates.cjs', 'game-engine.cjs',
   'update-manager.cjs', 'update-worker.ps1', 'update-config.json']) {
   assert.deepEqual(readArchiveFile(bundle, `electron/${file}`),
     await fs.readFile(path.join(root, 'electron', file)), `The release must contain the current ${file}`);

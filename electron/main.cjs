@@ -1,16 +1,20 @@
 "use strict";
 
-const { app, BrowserWindow, Menu, ipcMain, dialog, session } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain, dialog, session, screen, shell } = require("electron");
 const path = require("node:path");
 const fs = require("node:fs/promises");
 const { pathToFileURL } = require("node:url");
 const { randomUUID } = require("node:crypto");
-const { SaveStore, validateCareerJSON, MAX_SAVE_BYTES } = require("./save-store.cjs");
+const { SaveSlots, validateCareerJSON, writeAtomic, MAX_SAVE_BYTES } = require("./save-store.cjs");
+const { DisplayPreferences, DisplayController, windowedBoundsFor } = require("./display-mode.cjs");
+const { creditWindowHandler } = require("./credit-links.cjs");
 const { UpdateManager } = require("./update-manager.cjs");
+const { MacUpdateManager } = require("./mac-updates.cjs");
+const { titleBarOptions, applicationMenu } = require("./desktop-options.cjs");
 const updateConfig = require("./update-config.json");
 
 app.setName("SCOUT");
-app.setAppUserModelId("com.scout.talentsimulator");
+if (process.platform === "win32") app.setAppUserModelId("com.scout.talentsimulator");
 // A stable directory keeps saves when installing a newer build or moving the
 // portable executable. Chromium also retains its local backup in this profile.
 app.setPath("userData", path.join(app.getPath("appData"), "SCOUT"));
@@ -23,6 +27,9 @@ let updates = null;
 let exiting = false;
 let readyToExit = false;
 let closeCheckpoint = null;
+let displayPreferences = null;
+let display = null;
+let initialDisplay = { mode: "borderless" };
 
 async function requestExit() {
   if (exiting) return;
@@ -32,7 +39,7 @@ async function requestExit() {
     if (mainWindow && !mainWindow.isDestroyed() && !mainWindow.webContents.isDestroyed()) {
       const token = randomUUID();
       waitForRenderer = new Promise((resolve) => {
-        const timer = setTimeout(resolve, 1500);
+        const timer = setTimeout(resolve, 5000);
         closeCheckpoint = { token, resolve: () => { clearTimeout(timer); resolve(); } };
       });
       mainWindow.webContents.send("scout:before-close", token);
@@ -42,7 +49,10 @@ async function requestExit() {
   // flushed live driving state. A crashed renderer cannot stall exit forever.
   await waitForRenderer;
   closeCheckpoint = null;
-  try { if (store) await store.flush(); }
+  try {
+    if (store) await store.flush();
+    if (display) await display.checkpoint().catch(() => {});
+  }
   finally { readyToExit = true; app.quit(); }
 }
 
@@ -67,10 +77,11 @@ function registerBridge() {
     catch { return; }
     if (closeCheckpoint && closeCheckpoint.token === token) closeCheckpoint.resolve();
   });
-  handle("scout:load-career", () => store.load());
-  handle("scout:load-backup", () => store.loadBackup());
-  handle("scout:save-career", async (json) => {
-    try { await store.save(json); return { ok: true }; }
+  handle("scout:list-save-slots", () => store.list());
+  handle("scout:load-career", (slot) => store.load(slot));
+  handle("scout:load-backup", (slot) => store.loadBackup(slot));
+  handle("scout:save-career", async (json, slot) => {
+    try { await store.save(json, slot); return { ok: true }; }
     catch (error) { return { ok: false, error: error.message }; }
   });
   handle("scout:export-career", async (json) => {
@@ -82,7 +93,7 @@ function registerBridge() {
         filters: [{ name: "SCOUT career backup", extensions: ["json"] }],
       });
       if (result.canceled || !result.filePath) return { ok: false, canceled: true };
-      await fs.writeFile(result.filePath, json, { encoding: "utf8", mode: 0o600 });
+      await writeAtomic(result.filePath, json);
       return { ok: true };
     } catch (error) { return { ok: false, error: error.message }; }
   });
@@ -121,21 +132,22 @@ function registerBridge() {
       return result;
     } catch (error) { return { ok: false, error: error.message }; }
   });
-  handle("scout:toggle-fullscreen", () => {
-    mainWindow.setFullScreen(!mainWindow.isFullScreen());
-    return mainWindow.isFullScreen();
-  });
+  handle("scout:get-display-mode", () => display.getMode());
+  handle("scout:set-display-mode", (mode) => display.setMode(mode));
+  handle("scout:toggle-fullscreen", () => display.toggleFullscreen());
   handle("scout:quit", () => { setImmediate(() => app.quit()); });
 }
 
 function createWindow() {
+  const monitor = screen.getDisplayNearestPoint(screen.getCursorScreenPoint());
+  const bounds = initialDisplay.mode === "windowed" ? windowedBoundsFor(monitor, initialDisplay.windowedBounds) : { ...monitor.bounds };
   mainWindow = new BrowserWindow({
     title: "SCOUT",
     icon: path.join(__dirname, "..", "build", "icon.png"),
-    width: 1280,
-    height: 800,
-    minWidth: 960,
-    minHeight: 640,
+    ...bounds,
+    minWidth: 640,
+    minHeight: 480,
+    ...titleBarOptions(),
     backgroundColor: "#111b28",
     show: false,
     autoHideMenuBar: true,
@@ -150,8 +162,16 @@ function createWindow() {
       spellcheck: false,
     },
   });
+  display = new DisplayController({
+    window: mainWindow, screen, preferences: displayPreferences, initial: initialDisplay,
+    onChange: mode => {
+      initialDisplay.mode = mode;
+      if (mainWindow && !mainWindow.isDestroyed() && !mainWindow.webContents.isDestroyed()) mainWindow.webContents.send("scout:display-mode", mode);
+    },
+  });
+  const displayReady = display.apply(initialDisplay.mode, false).catch(() => {});
   mainWindow.setMenuBarVisibility(false);
-  mainWindow.webContents.setWindowOpenHandler(() => ({ action: "deny" }));
+  mainWindow.webContents.setWindowOpenHandler(creditWindowHandler(url => shell.openExternal(url)));
   mainWindow.webContents.on("will-navigate", (event, destination) => {
     if (destination.split("#")[0] !== entryURL) event.preventDefault();
   });
@@ -159,10 +179,11 @@ function createWindow() {
   mainWindow.webContents.on("before-input-event", (event, input) => {
     if (input.type === "keyDown" && input.key === "F11" && !input.isAutoRepeat) {
       event.preventDefault();
-      mainWindow.setFullScreen(!mainWindow.isFullScreen());
+      void display.toggleFullscreen().catch(() => {});
     }
   });
-  mainWindow.once("ready-to-show", () => {
+  mainWindow.once("ready-to-show", async () => {
+    await displayReady;
     mainWindow.show();
     // No remote request is part of window creation or career loading. An
     // offline or stalled release service only changes the optional update HUD.
@@ -176,6 +197,13 @@ function createWindow() {
     await dialog.showMessageBox({ type: "error", title: "SCOUT could not start", message: "The game files could not be loaded.", detail: error.message });
     app.quit();
   });
+  const updateBounds = () => { if (display && mainWindow && !mainWindow.isDestroyed()) void display.refreshBounds().catch(() => {}); };
+  screen.on("display-metrics-changed", updateBounds);
+  screen.on("display-removed", updateBounds);
+  mainWindow.once("closed", () => {
+    screen.removeListener("display-metrics-changed", updateBounds);
+    screen.removeListener("display-removed", updateBounds);
+  });
 }
 
 if (!app.requestSingleInstanceLock()) {
@@ -188,15 +216,20 @@ if (!app.requestSingleInstanceLock()) {
     mainWindow.focus();
   });
   app.whenReady().then(async () => {
-    Menu.setApplicationMenu(null);
-    store = new SaveStore(path.join(app.getPath("userData"), "save"));
-    updates = new UpdateManager({
+    const menu = applicationMenu(process.platform, () => { void display?.toggleFullscreen().catch(() => {}); });
+    Menu.setApplicationMenu(menu ? Menu.buildFromTemplate(menu) : null);
+    store = new SaveSlots(path.join(app.getPath("userData"), "save"));
+    displayPreferences = new DisplayPreferences(app.getPath("userData"));
+    initialDisplay = await displayPreferences.load();
+    const PlatformUpdates = process.platform === "darwin" ? MacUpdateManager : UpdateManager;
+    updates = new PlatformUpdates({
       version: app.getVersion(),
       userData: app.getPath("userData"),
       packaged: app.isPackaged,
       portablePath: process.env.PORTABLE_EXECUTABLE_FILE,
       executablePath: process.execPath,
       repository: updateConfig.repository,
+      openExternal: url => shell.openExternal(url),
       onStatus: (status) => {
         try {
           if (mainWindow && !mainWindow.isDestroyed() && !mainWindow.webContents.isDestroyed()) {

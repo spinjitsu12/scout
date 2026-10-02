@@ -1,4 +1,5 @@
 import type { Game, Tier } from "./game";
+import { candidateAnchor, getImmersiveLocations, publicInteriorContains } from "./immersive-locations.ts";
 
 export type Point = { x: number; y: number };
 export type ScoutStyle = { name: string; avatar: number; car: "compact" | "wagon" | "coupe"; paint: "mint" | "coral" | "gold" | "violet" | "slate"; plate: string; camera?: "overhead" | "cockpit" | "chase" | "far"; radio?: boolean; station?: 0 | 1 | 2; music?: boolean; sound?: boolean; engine?: boolean };
@@ -36,7 +37,7 @@ export const FIELD_LOCATIONS: Record<Tier, FieldLocation[]> = {
 };
 export const PAINTS = { mint: "#86cfb3", coral: "#ed8b7b", gold: "#edc76c", violet: "#b6a0e3", slate: "#91a4b4" } as const;
 export const CAR_NAMES = { compact: "City compact", wagon: "Field wagon", coupe: "Scout coupe" } as const;
-export const DEFAULT_STYLE: ScoutStyle = { name: "Scout", avatar: 0, car: "compact", paint: "mint", plate: "SCOUT", camera: "overhead", radio: false, station: 0, music: true, sound: true, engine: true };
+export const DEFAULT_STYLE: ScoutStyle = { name: "Scout", avatar: 0, car: "compact", paint: "slate", plate: "SCOUT", camera: "cockpit", radio: false, station: 0, music: true, sound: true, engine: true };
 export const MEET_DISTANCE = 90;
 export const VENUE_DISTANCE = 110;
 export const FULL_TURN = Math.PI * 2;
@@ -51,7 +52,8 @@ export const locationOf = (game: Game, id: string) => FIELD_LOCATIONS[game.tier]
 
 // Keep every contact's feet on the open pavement beside their venue's entrance.
 // The renderer and the recruiting rules share these positions, including generated leads.
-export function candidatePosition(game: Pick<Game, "tier">, id: string): Point {
+export function candidatePosition(game: Pick<Game, "tier" | "immersion">, id: string): Point {
+  if (game.immersion) { const anchor = candidateAnchor(game.tier, id); return { x: anchor.x, y: anchor.z }; }
   const location = FIELD_LOCATIONS[game.tier][candidateLocation(id)];
   const index = Math.max(0, Number(id.split("-")[1]) || 0);
   const slot = Math.floor(index / 3) % 12;
@@ -64,6 +66,12 @@ export function candidatePosition(game: Pick<Game, "tier">, id: string): Point {
 
 export const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
 export function atVenue(game: Game, locationId: number): boolean {
+  if (game.immersion) {
+    const state = game.immersion, place = getImmersiveLocations(game.tier).find(item => item.id === locationId);
+    if (!place || state.mode !== "foot" || !state.parkedAt.includes(locationId) || Math.hypot(state.vehicle.x - place.parking.x, state.vehicle.z - place.parking.z) > 25) return false;
+    if (locationId === 4) return Math.hypot(state.player.x - place.parking.x, state.player.z - place.parking.z) <= 6;
+    return state.interior === locationId && publicInteriorContains(game.tier, locationId, state.player, .3);
+  }
   const location = FIELD_LOCATIONS[game.tier].find(place => place.id === locationId);
   const field = fieldOf(game);
   return !!location && field.scene === "district" && !field.driving && distance(field.player, location.door) <= VENUE_DISTANCE;
@@ -71,11 +79,16 @@ export function atVenue(game: Game, locationId: number): boolean {
 export function canMeet(game: Game, id: string): boolean {
   const contact = game.candidates.find(candidate => candidate.id === id);
   const field = fieldOf(game);
+  if (game.immersion) {
+    const anchor = candidateAnchor(game.tier, id);
+    return !!contact && contact.discovered && contact.status === "available" && atVenue(game, candidateLocation(id)) && Math.hypot(game.immersion.player.x - anchor.x, game.immersion.player.z - anchor.z) <= 3.6;
+  }
   return !!contact && contact.discovered && contact.status === "available" &&
     field.scene === "district" && !field.driving && distance(field.player, candidatePosition(game, id)) <= MEET_DISTANCE;
 }
 export function canRefuel(game: Game): boolean {
   const field = fieldOf(game);
+  if (game.immersion) return atVenue(game, 4) && Math.hypot(game.immersion.player.x - game.immersion.vehicle.x, game.immersion.player.z - game.immersion.vehicle.z) <= 6;
   return atVenue(game, 4) && distance(field.car, FIELD_LOCATIONS[game.tier][4].point) <= 100;
 }
 

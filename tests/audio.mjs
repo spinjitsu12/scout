@@ -1,212 +1,98 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import crypto from 'node:crypto';
 import { registerHooks } from 'node:module';
-
-// Node's native TypeScript support needs the extension that the app bundler supplies.
-// No WebAudio mock is involved: these tests exercise the actual score and scheduler.
 registerHooks({
   resolve(specifier, context, nextResolve) {
-    if (specifier === './music-score' && context.parentURL?.endsWith('/audio.ts')) {
-      return nextResolve(new URL('../src/lib/music-score.ts', import.meta.url).href, context);
+    if (['./music-score', './audio-credits'].includes(specifier) && context.parentURL?.endsWith('/audio.ts')) {
+      return nextResolve(new URL('../src/lib/' + specifier.slice(2) + '.ts', import.meta.url).href, context);
     }
     return nextResolve(specifier, context);
   },
 });
-
-const { MUSIC_TRACKS } = await import('../src/lib/music-score.ts');
-const { scoutAudio, midiToFrequency, validateMusicTrack, scoreEventsInWindow, drivingMix, soundEffectPlan, selectMusic, AUDIO_LIMITS } = await import('../src/lib/audio.ts');
-assert.equal(typeof globalThis.window, 'undefined', 'The audio module imports safely during server rendering');
-assert.equal(scoutAudio.getStatus().started, false, 'Importing never starts audio');
+const { scoutAudio, DEFAULT_AUDIO_VOLUMES, normalizeVolumes, audioAssetUrl, RECORDED_TRACKS, SCORE_PLAYLISTS, FOLEY_FILES, ambientMix, engineMix, AUDIO_LIMITS } = await import('../src/lib/audio.ts');
+const { AUDIO_CREDITS } = await import('../src/lib/audio-credits.ts');
+const root = path.resolve(import.meta.dirname, '..');
+const manifest = JSON.parse(await fs.readFile(path.join(root, 'public/audio/manifest.json'), 'utf8'));
+assert.equal(typeof globalThis.window, 'undefined');
+assert.equal(scoutAudio.getStatus().started, false, 'Importing never creates browser objects or starts audio');
 assert.equal(scoutAudio.getStatus().playing, false);
-assert.equal(midiToFrequency(69), 440);
-assert.equal(midiToFrequency(81), 880);
-assert(Math.abs(midiToFrequency(69, 100) / 440 - 2 ** (1 / 12)) < 1e-12);
-
-let scheduledNotes = 0;
-const scoreVoicePeaks = [];
-for (const tier of [0, 1, 2]) {
-  const track = MUSIC_TRACKS[tier];
-  assert.deepEqual(validateMusicTrack(track), [], `${track.title} has safe, sorted, rhythmic score data`);
-  assert.equal(track.tier, tier);
-  assert.equal(track.bars, 32);
-  assert.equal(track.beats, 128);
-  assert(track.events.length >= 100, 'A full composition contains multiple layers');
-  assert(new Set(track.events.map(event => event.instrument)).size >= 4, 'The arrangement contains distinct voices');
-  const origin = 13.25;
-  const beatSeconds = 60 / track.bpm;
-  const loopSeconds = track.beats * beatSeconds;
-  const end = origin + loopSeconds * 3;
-  const expected = [];
-  for (let loop = 0; loop < 3; loop++) {
-    for (const event of track.events) {
-      expected.push({ event, loop, time: origin + loop * loopSeconds + event.beat * beatSeconds, duration: event.duration * beatSeconds });
-    }
-  }
-  // Uneven polls cross note, bar, and loop boundaries. Every event must occur once.
-  const actual = [];
-  const polls = [0.017, 0.09, 0.2, 1.03, 0.051];
-  let cursor = origin - 0.01;
-  let poll = 0;
-  while (cursor < end) {
-    const until = Math.min(end, cursor + polls[poll++ % polls.length]);
-    actual.push(...scoreEventsInWindow(track, origin, cursor, until));
-    cursor = until;
-  }
-  assert.deepEqual(actual, expected, 'Three continuous loops neither lose nor duplicate score events');
-  scheduledNotes += actual.length;
-
-  const boundary = origin + loopSeconds;
-  const before = scoreEventsInWindow(track, origin, boundary - 0.4, boundary);
-  const after = scoreEventsInWindow(track, origin, boundary, boundary + 0.4);
-  assert(before.every(note => note.time < boundary));
-  assert(after.every(note => note.time >= boundary));
-  assert(after.some(note => note.loop === 1 && note.event.beat === 0), 'A new loop starts at its exact audio-clock boundary');
-  assert.deepEqual(scoreEventsInWindow(track, origin, origin - 1, origin), []);
-  assert.deepEqual(scoreEventsInWindow(track, origin, origin, origin), []);
-
-  // A delayed poll asks only for future notes, so returning to a tab cannot burst
-  // an entire missed measure into the speakers.
-  const future = boundary + 12 * beatSeconds;
-  assert(scoreEventsInWindow(track, origin, future, future + 0.2).every(note => note.time >= future));
-
-  const invalid = { ...track, events: [{ ...track.events[0], beat: 0.13, midi: 140, gain: 2, duration: -1, pan: 3 }] };
-  const errors = validateMusicTrack(invalid);
-  for (const message of ['off rhythm grid', 'invalid pitch', 'invalid gain', 'invalid duration', 'invalid pan']) {
-    assert(errors.some(error => error.includes(message)), `Rejects ${message}`);
-  }
-  assert(validateMusicTrack({ ...track, bpm: NaN }).includes('Invalid tempo'));
-  assert(validateMusicTrack({ ...track, beats: 127 }).includes('Invalid loop length'));
-  assert.throws(() => scoreEventsInWindow(track, origin, 2, 1), RangeError);
-  assert.throws(() => scoreEventsInWindow(track, origin, 0, Infinity), RangeError);
-
-  // Include both loop-boundary overlap and generous instrument tails. A tier
-  // crossfade must fit without dropping any of these original score voices.
-  const occupancy = [];
-  for (let loop = 0; loop < 2; loop++) {
-    for (const event of track.events) {
-      const time = (loop * track.beats + event.beat) * beatSeconds;
-      occupancy.push([time - 0.2, 1], [time + Math.max(0.035, event.duration * beatSeconds) + 0.68, -1]);
-    }
-  }
-  occupancy.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
-  let voices = 0;
-  let peak = 0;
-  for (const [, change] of occupancy) peak = Math.max(peak, voices += change);
-  scoreVoicePeaks.push(peak);
+assert.equal(scoutAudio.getDiagnostics().contextState, 'closed');
+assert.equal(RECORDED_TRACKS.length, 6);
+for (const track of RECORDED_TRACKS) {
+  const entry = manifest.music.find(item => item.file === track.file);
+  assert(entry, 'Every playlist recording has an offline manifest');
+  assert.equal(track.artist, 'Scott Buckley');
+  assert.equal(track.license, 'CC BY 4.0');
+  assert.equal(track.licenseUrl, 'https://creativecommons.org/licenses/by/4.0/');
+  assert(track.source.startsWith('https://www.scottbuckley.com.au/library/'));
+  const bytes = await fs.readFile(path.join(root, 'public', track.file));
+  assert(bytes.length > 1_000_000, 'Bundled music is a full recording');
+  assert.equal(bytes.length, entry.bytes);
+  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), entry.sha256);
+  assert(entry.duration >= 180, 'Arrangements unfold over minutes');
+  assert.equal(entry.stream.codec_name, 'mp3');
+  assert.equal(entry.stream.channels, 2);
+  assert(Number(entry.stream.sample_rate) >= 44100);
+  assert(Number(entry.peak_dbfs) <= 0);
+  assert(Number(entry.mean_volume) < -10, 'Recordings preserve quiet dynamics');
 }
-for (const first of scoreVoicePeaks) for (const second of scoreVoicePeaks) {
-  assert(first + second <= AUDIO_LIMITS.musicVoices, 'Two complete arrangements fit the music voice budget during a fade');
+for (const file of FOLEY_FILES) {
+  const bytes = await fs.readFile(path.join(root, 'public', file));
+  assert.equal(bytes.toString('ascii', 0, 4), 'OggS');
+  const entry = manifest.foley.find(item => item.file === file);
+  assert(entry, 'Every foley file is decoded and documented');
+  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), entry.sha256);
+  assert.equal(entry.stream.codec_name, 'vorbis');
 }
-
-const example = MUSIC_TRACKS[0];
-const held = { ...example, events: [{ beat: 127, duration: 4, midi: 60, gain: 0.05, instrument: 'pad' }] };
-assert.deepEqual(validateMusicTrack(held), [], 'Sustained notes may ring through the loop boundary');
-const heldEvents = scoreEventsInWindow(held, 0, 0, 128 * 60 / held.bpm);
-assert.equal(heldEvents.length, 1);
-assert(heldEvents[0].time + heldEvents[0].duration > 128 * 60 / held.bpm, 'The scheduler preserves the full natural tail');
-
-for (const kind of ['standard', 'coupe', 'luxury']) {
-  const parked = drivingMix(0, kind);
-  assert.equal(parked.humGain, 0, 'A parked vehicle has no engine tone');
-  assert.equal(parked.roadGain, 0, 'A parked vehicle has no road noise');
-  let previous = parked;
-  for (let step = 1; step <= 100; step++) {
-    const mix = drivingMix(step / 100, kind);
-    assert(Object.values(mix).every(Number.isFinite));
-    assert(mix.fundamentalHz >= previous.fundamentalHz && mix.humGain >= previous.humGain);
-    assert(mix.fundamentalHz >= 36 && mix.fundamentalHz <= 78, 'The rev stays in a soft low register');
-    assert.equal(mix.harmonicHz, mix.fundamentalHz * 2);
-    assert(mix.motorCutoffHz <= 800 && mix.roadCutoffHz <= 1250, 'Motor and road textures stay softened');
-    assert(mix.humGain * (mix.fundamentalLevel + mix.harmonicLevel) + mix.roadGain < 0.016, 'Even full-speed driving stays below the foreground cue mix');
-    previous = mix;
-  }
+assert(AUDIO_CREDITS.some(credit => credit.artist === 'isaiah658'));
+assert(AUDIO_CREDITS.some(credit => credit.artist === 'Kenney'));
+for (const tier of [0, 1, 2]) assert(SCORE_PLAYLISTS[tier].length >= 3 && SCORE_PLAYLISTS[tier].every(id => RECORDED_TRACKS.some(track => track.id === id)));
+assert.equal(AUDIO_LIMITS.musicVoices, 2);
+assert.equal(AUDIO_LIMITS.drivingVoices, 1);
+assert.deepEqual(normalizeVolumes({master:4,music:-1,ambient:NaN,effects:Infinity,engine:.24}),{...DEFAULT_AUDIO_VOLUMES,master:1,music:0,engine:.24});
+assert.equal(normalizeVolumes({sfx:.17}).effects,.17);
+assert.equal(normalizeVolumes({sfx:.17,effects:.3}).effects,.3);
+assert.equal(audioAssetUrl('audio/music/simplicity.mp3','./','file:///D:/SCOUT/resources/app.asar/dist/index.html'),'file:///D:/SCOUT/resources/app.asar/dist/audio/music/simplicity.mp3');
+assert.equal(audioAssetUrl('audio/foley/click_001.ogg','/scout/','https://example.test/scout/index.html'),'https://example.test/scout/audio/foley/click_001.ogg');
+assert.throws(()=>audioAssetUrl('https://remote.test/song.mp3'));
+assert.throws(()=>audioAssetUrl('audio/music/../outside.mp3'));
+assert.throws(()=>audioAssetUrl('audio/music\\outside.mp3'));
+assert(ambientMix({scene:'outdoors',weather:'rain'}).wind>ambientMix({scene:'outdoors',weather:'clear'}).wind);
+assert(ambientMix({scene:'apartment',weather:'rain'}).wind<ambientMix({scene:'outdoors',weather:'rain'}).wind);
+assert.equal(ambientMix({scene:'menu'}).wind,0);
+const accelerating=engineMix({normalizedSpeed:.4,normalizedEngine:.8,engineLoad:.8});
+const coasting=engineMix({normalizedSpeed:.4,normalizedEngine:.3,engineLoad:.05});
+assert(accelerating.frequency>coasting.frequency,'Coasting and shifts lower RPM independently of road speed');
+assert(accelerating.humGain>coasting.humGain,'Pedal load controls motor body');
+assert.equal(accelerating.roadGain,coasting.roadGain,'Tire texture follows road speed independently of RPM');
+for(const value of[NaN,Infinity,-Infinity]){
+ assert(Object.values(engineMix({normalizedSpeed:value,normalizedEngine:value,engineLoad:value})).filter(value=>typeof value==='number').every(Number.isFinite));
 }
-for (const value of [NaN, Infinity, -Infinity, -1]) assert.equal(drivingMix(value).speed, 0);
-assert.equal(drivingMix(2).speed, 1);
-assert(drivingMix(1, 'luxury').roadGain < drivingMix(1).roadGain, 'The luxury cabin has a quieter road texture');
-assert(drivingMix(1, 'coupe').harmonicLevel > drivingMix(1, 'luxury').harmonicLevel, 'The coupe has its own deeper, richer motor profile');
-assert(AUDIO_LIMITS.drivingSources * AUDIO_LIMITS.drivingVoices <= 6, 'Continuous engine sources stay bounded during rapid pause/resume');
-
-const effects = ['step', 'interact', 'recruit', 'success', 'error', 'week', 'prestige', 'enterCar', 'exitCar', 'arrival', 'paint', 'phone', 'wake', 'luxury', 'lowFuel', 'bump', 'refuel'];
-for (const tier of [0, 1, 2]) for (const effect of effects) {
-  const plan = soundEffectPlan(effect, tier);
-  assert(plan.length >= 1 && plan.length <= 7, `${effect} is a short original cue`);
-  assert(plan.length * 2 <= AUDIO_LIMITS.effectVoices, 'Two overlapping cues fit the effect voice budget');
-  let conservativePeak = 0;
-  for (const note of plan) {
-    assert(Number.isFinite(note.midi) && note.midi >= 0 && note.midi <= 127);
-    assert(Number.isFinite(note.offset) && note.offset >= 0 && note.offset <= 0.6);
-    assert(note.duration > 0 && note.duration <= 0.6);
-    assert(note.gain > 0 && note.gain <= 0.07);
-    assert(Math.abs(note.pan) <= 1);
-    conservativePeak += note.gain * AUDIO_LIMITS.effectLevel;
-  }
-  assert(conservativePeak < 0.2, 'Every cue has ample output headroom, including all natural tails');
-}
-
-for (const musicEnabled of [false, true]) for (const radioEnabled of [false, true]) {
-  for (const inVehicle of [false, true]) for (const radioReady of [false, true]) {
-    for (const tier of [0, 1, 2]) for (const radioStation of [0, 1, 2]) {
-      const chosen = selectMusic({ musicEnabled, radioEnabled, inVehicle, radioStation, tier }, radioReady);
-      const expected = radioEnabled && inVehicle && radioReady ? { kind: 'radio', index: radioStation }
-        : musicEnabled ? { kind: 'score', index: tier } : null;
-      assert.deepEqual(chosen, expected, 'Radio and background soundtrack are mutually exclusive, and radio works independently of background music');
-    }
-  }
-}
-
-assert.equal(scoutAudio.setRadioTracks(MUSIC_TRACKS), true);
-scoutAudio.setMusicEnabled(false);
-scoutAudio.setSoundEnabled(false);
-scoutAudio.setEngineEnabled(false);
-scoutAudio.setRadio(true, 2);
-scoutAudio.setInVehicle(true);
-scoutAudio.setEngineKind('coupe');
-for (let step = 0; step < 1000; step++) scoutAudio.setDriving((step % 100) / 100);
-for (const effect of effects) scoutAudio.sfx(effect);
-const configured = scoutAudio.getStatus();
-assert.equal(configured.started, false, 'Driving, radio registration and preference changes never unlock audio');
-assert.equal(configured.radioEnabled, true);
-assert.equal(configured.radioActive, false, 'Radio is silent until a user gesture starts audio');
-assert.equal(configured.radioStation, 2);
-assert.equal(configured.radioTitle, MUSIC_TRACKS[2].title);
-assert.equal(configured.musicEnabled, false);
-assert.equal(configured.soundEnabled, false);
-assert.equal(configured.engineEnabled, false);
-scoutAudio.setEngineEnabled(true);
-assert.equal(scoutAudio.getStatus().soundEnabled, false, 'Enabling the motor does not reenable world sounds');
-scoutAudio.setSoundEnabled(true);
-scoutAudio.setEngineEnabled(false);
-assert.equal(scoutAudio.getStatus().soundEnabled, true, 'Muting the motor leaves interaction cues enabled');
-scoutAudio.setSuspended(true);
-const menu = scoutAudio.getStatus();
-assert.equal(menu.suspended, true);
-assert.equal(menu.musicEnabled, false, 'Menu ambience never changes saved music preferences');
-assert.equal(menu.radioEnabled, true, 'Opening a menu leaves the radio preference intact');
-assert.equal(menu.muted, false, 'Gameplay suspension is independent of master mute');
-assert.equal(menu.started, false, 'Menus cannot unlock audio without a player gesture');
-scoutAudio.setSuspended(false);
-assert.equal(scoutAudio.setRadioTracks({ ...MUSIC_TRACKS, 1: { ...MUSIC_TRACKS[1], bpm: NaN } }), false, 'Malformed station data cannot enter the scheduler');
-scoutAudio.setDriving(0);
-scoutAudio.setInVehicle(false);
-scoutAudio.setRadio(false);
-scoutAudio.setMusicEnabled(true);
-scoutAudio.setSoundEnabled(true);
-scoutAudio.setEngineEnabled(true);
-scoutAudio.setEngineKind('standard');
-
-const statuses = [];
-const unsubscribe = scoutAudio.subscribe(status => statuses.push(status));
-scoutAudio.setTier(2);
-scoutAudio.setMuted(true);
-assert.equal(statuses.at(-1).tier, 2);
-assert.equal(statuses.at(-1).muted, true);
-assert.equal(statuses.at(-1).playing, false);
-assert.equal(statuses.at(-1).title, MUSIC_TRACKS[2].title);
-const delivered = statuses.length;
-unsubscribe();
-scoutAudio.setTier(0);
-scoutAudio.setMuted(false);
+const dryTank=engineMix({normalizedSpeed:.3,normalizedEngine:0,engineLoad:0,engineRpm:0});
+assert.equal(dryTank.humGain,0,'An engine out of fuel has no combustion hum');
+assert(dryTank.roadGain>0,'Tires remain audible while a dry-tank vehicle coasts');
+assert(engineMix({normalizedSpeed:0,normalizedEngine:0,engineLoad:0}).humGain>0,'A running parked car has a quiet idle');
+scoutAudio.setVehicleTelemetry({normalizedSpeed:.4,normalizedEngine:.8,engineLoad:.6,gearNumber:3});
+scoutAudio.setVolumes({master:.42,ambient:.3,effects:.26,engine:.2});
+scoutAudio.setEnvironment({scene:'apartment',interior:true});
+scoutAudio.setEnvironment({scene:'outdoors'});
+assert.equal(scoutAudio.getStatus().environment.interior,false,'Leaving a room restores outdoor ambience');
+scoutAudio.setEnvironment({scene:'outdoors',timeOfDay:27,weather:'rain',conversation:true});
+scoutAudio.setTier(2);scoutAudio.setInVehicle(true);
+for(let i=0;i<1000;i++)scoutAudio.setDriving((i%100)/100);
+scoutAudio.sfx('step');scoutAudio.sfx('phone');
+assert.equal(scoutAudio.getStatus().started,false,'World and preference updates cannot unlock audio');
+assert.equal(scoutAudio.getStatus().environment.timeOfDay,3);
+const snapshot=scoutAudio.getStatus();snapshot.volumes.master=1;snapshot.environment.scene='menu';
+assert.equal(scoutAudio.getStatus().volumes.master,.42);assert.equal(scoutAudio.getStatus().environment.scene,'outdoors');
+scoutAudio.setSuspended(true);assert.equal(scoutAudio.getStatus().volumes.effects,.26,'Pause preserves slider preferences');
+scoutAudio.setMuted(true);assert.equal(scoutAudio.getStatus().volumes.master,.42,'Mute preserves master level');
+scoutAudio.setVolumes({engine:0});assert.equal(scoutAudio.getStatus().volumes.effects,.26,'Motor/effects independent');
+const statuses=[];const unsubscribe=scoutAudio.subscribe(status=>statuses.push(status));
+scoutAudio.setTier(0);assert.equal(statuses.at(-1).tier,0);const count=statuses.length;unsubscribe();scoutAudio.setTier(1);assert.equal(statuses.length,count);
 scoutAudio.stop();
-assert.equal(statuses.length, delivered, 'Unsubscribed UI receives no later changes');
-assert.equal(scoutAudio.getStatus().started, false);
-console.log(`PASS: three original scores, ${scheduledNotes} continuously scheduled notes, exact loop boundaries, natural tails, ${effects.length} composed cues, quiet vehicle profiles, radio/music priority, separate world/engine settings, preference-preserving menu suspension, voice budgets, and gesture-only audio.`);
+assert.deepEqual(scoutAudio.getDiagnostics(),{contextState:'closed',recordings:0,effects:0,engine:0,ambience:0,decodedSamples:0,activeTrack:null});
+console.log('PASS: six complete credited composer recordings, offline MP3/Ogg integrity, portable asset paths, quiet field ambience, independent clamped sliders, preference-preserving pause/mute, bounded sources and gesture-only audio.');
+

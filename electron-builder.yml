@@ -16,6 +16,10 @@ files:
   - electron/main.cjs
   - electron/preload.cjs
   - electron/save-store.cjs
+  - electron/display-mode.cjs
+  - electron/credit-links.cjs
+  - electron/desktop-options.cjs
+  - electron/mac-updates.cjs
   - electron/game-engine.cjs
   - electron/update-manager.cjs
   - electron/update-worker.ps1
@@ -33,6 +37,34 @@ win:
   icon: build/icon.ico
   signAndEditExecutable: false
   signExecutable: false
+mac:
+  compression: normal
+  target:
+    - target: zip
+      arch: [arm64]
+  artifactName: SCOUT-${version}-macOS-Apple-Silicon.${ext}
+  icon: build/icon.icns
+  category: public.app-category.simulation-games
+  minimumSystemVersion: '13.0'
+  darkModeSupport: true
+  identity: '-'
+  hardenedRuntime: false
+  notarize: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    NSHighResolutionCapable: true
+dmg:
+  title: SCOUT
+  icon: build/icon.icns
+  contents:
+    - x: 140
+      y: 170
+      type: file
+    - x: 420
+      y: 170
+      type: link
+      path: /Applications
 forceCodeSigning: false
 portable:
   requestExecutionLevel: user

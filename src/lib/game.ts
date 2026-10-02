@@ -1,5 +1,7 @@
 import { DEFAULT_STYLE, FIELD_LOCATIONS, FUEL_CAPACITY, GAS_PRICES, atVenue, boundedField, candidateLocation, canMeet, canRefuel, freshField, validField, validScoutStyle, type FieldState, type ScoutStyle } from "./expedition.ts";
 import { initialPrologue, validPrologue, type PrologueState } from "./prologue.ts";
+import { freshImmersion, validImmersion, type ImmersionSnapshot } from "./immersive-runtime.ts";
+import { getImmersiveLocations, publicInteriorContains } from "./immersive-locations.ts";
 
 export type Skill = "craft" | "insight" | "nerve" | "teamwork";
 export type Motive = "autonomy" | "security" | "mentorship" | "purpose" | "privacy";
@@ -23,6 +25,8 @@ export type Game = {
   prestige: number; history: History[]; report: Report | null; briefing: boolean; event: number;
   mentoring: number; rescueUsed: boolean; won: boolean;
   field?: FieldState; style?: ScoutStyle; story?: PrologueState;
+  immersion?: ImmersionSnapshot;
+  playerProfile?: { background: "observer" | "connector" | "analyst" };
 };
 export const SKILLS: Skill[] = ["craft", "insight", "nerve", "teamwork"];
 export const MOTIVES: Record<Motive, { name: string; offer: string; cost: number; description: string }> = {
@@ -151,6 +155,7 @@ export function projectScore(g: Game, mission: Mission, ids: string[]) {
 }
 export type Action =
   | { type: "story"; state: PrologueState }
+  | { type: "immersionSnapshot"; snapshot: ImmersionSnapshot }
   | { type: "scout"; source: number }
   | { type: "investigate"; id: string; method: "interview" | "sample" | "reference" | "trial" }
   | { type: "star"; id: string }
@@ -181,7 +186,29 @@ export function act(original: Game, action: Action): Game {
   const find = (id: string, available = false) => { const c = g.candidates.find(c => c.id === id); if(!c || (available && (c.status !== "available" || !c.discovered))) throw new Error("This candidate is no longer available."); return c; };
   if (action.type === "story") {
     if (!validPrologue(action.state)) throw new Error("The prologue could not be saved.");
+    const wasWaking = g.story?.phase === "wake";
     g.story = { ...action.state };
+    if (g.immersion && action.state.phase === "wake" && !wasWaking) { g.field.fuel = FUEL_CAPACITY; g.immersion = freshImmersion(g); }
+    return g;
+  }
+  if (action.type === "immersionSnapshot") {
+    if (!validImmersion(action.snapshot) || action.snapshot.tier !== g.tier) throw new Error("Your position could not be saved.");
+    const snapshot = structuredClone(action.snapshot);
+    const locations = getImmersiveLocations(g.tier);
+    // Arrival is earned by bringing the vehicle to the actual parking area.
+    snapshot.parkedAt = [...new Set(g.immersion?.parkedAt ?? [])];
+    if (Math.abs(snapshot.vehicle.speed) < .65) for (const location of locations) {
+      if (Math.hypot(snapshot.vehicle.x - location.parking.x, snapshot.vehicle.z - location.parking.z) <= 25 && !snapshot.parkedAt.includes(location.id)) snapshot.parkedAt.push(location.id);
+    }
+    if (snapshot.interior !== null && !publicInteriorContains(g.tier, snapshot.interior, snapshot.player)) snapshot.interior = null;
+    snapshot.vehicle.fuel = Math.min(g.field.fuel, snapshot.vehicle.fuel);
+    g.immersion = snapshot;
+    g.field = boundedField({ ...g.field, scene: snapshot.interior === 0 ? "office" : "district",
+      player: { x: snapshot.mode === "driving" ? snapshot.vehicle.x : snapshot.player.x, y: snapshot.mode === "driving" ? snapshot.vehicle.z : snapshot.player.z },
+      car: { x: snapshot.vehicle.x, y: snapshot.vehicle.z }, heading: snapshot.vehicle.heading,
+      driving: snapshot.mode === "driving", fuel: snapshot.vehicle.fuel,
+      destination: snapshot.destination !== null && snapshot.destination <= 4 ? snapshot.destination : null });
+    for (const location of locations) if (location.id <= 4 && atVenue(g, location.id) && !g.field.visited.includes(location.id)) g.field.visited.push(location.id);
     return g;
   }
   if (action.type === "customize") {
@@ -199,12 +226,14 @@ export function act(original: Game, action: Action): Game {
     return g;
   }
   if (action.type === "fieldEnter") {
+    if (g.immersion) return g;
     if (g.field.scene === "district") return g;
     g.field = boundedField({ ...g.field, scene: "district", driving: false,
       player: { x: g.field.car.x + 44, y: g.field.car.y + 32 } });
     return g;
   }
   if (action.type === "fieldReturn") {
+    if (g.immersion) { if (!atVenue(g, 0)) throw new Error("Drive to headquarters, park, and walk through the entrance."); return g; }
     if (g.field.scene === "office") return g;
     if (!atVenue(g, 0)) throw new Error("Park and walk to the headquarters entrance to go inside.");
     const headquarters = FIELD_LOCATIONS[g.tier][0].point;
@@ -213,13 +242,15 @@ export function act(original: Game, action: Action): Game {
     return g;
   }
   if (action.type === "setDestination") {
-    if (g.field.scene !== "district") throw new Error("Head outside to set a driving destination.");
+    if (!g.immersion && g.field.scene !== "district") throw new Error("Head outside to set a driving destination.");
     if (action.destination !== null && (!Number.isInteger(action.destination) || !FIELD_LOCATIONS[g.tier].some(location => location.id === action.destination))) throw new Error("Choose a destination on the district map.");
     g.field.destination = action.destination;
+    if (g.immersion) g.immersion.destination = action.destination;
     return g;
   }
   if (action.type === "fieldSnapshot") {
     if (!validField(action.field, false)) throw new Error("The scouting position could not be saved.");
+    if (g.immersion) return g;
     if (action.field.scene !== g.field.scene) throw new Error("Use the headquarters entrance to change locations.");
     const field = boundedField(action.field);
     field.met = [...g.field.met];
@@ -245,6 +276,7 @@ export function act(original: Game, action: Action): Game {
     need(0, cost);
     g.cash = Math.round(g.cash * 100) / 100;
     g.field.fuel = Math.min(FUEL_CAPACITY, g.field.fuel + gallons);
+    if (g.immersion) g.immersion.vehicle.fuel = g.field.fuel;
     log(g, `Bought ${gallons.toFixed(2)} gallons at $${GAS_PRICES[g.tier].toFixed(2)} per gallon ($${cost.toFixed(2)} total).`);
     return g;
   }
@@ -255,6 +287,13 @@ export function act(original: Game, action: Action): Game {
     g.field = { ...g.field, car: { ...station.point }, player: { x: station.door.x + 40, y: station.door.y + 30 },
       fuel: 0, heading: 0, destination: 4, visited: [...new Set([...g.field.visited, 4])] };
     log(g, "Roadside assistance brought your vehicle to the fuel station for $150. Fuel is sold separately.", "warn");
+    if (g.immersion) {
+      g.immersion.vehicle = { ...g.immersion.vehicle, x: station.point.x, z: station.point.y, speed: 0, fuel: 0, heading: 0 };
+      g.immersion.player = { ...g.immersion.player, x: station.point.x + 2.5, z: station.point.y };
+      g.immersion.interior = null; g.immersion.mode = "foot"; g.immersion.destination = 4;
+      g.immersion.parkedAt = [...new Set([...g.immersion.parkedAt, 4])];
+      g.field.player = { x: g.immersion.player.x, y: g.immersion.player.z };
+    }
     return g;
   }
   if (action.type === "meet") {
@@ -403,6 +442,7 @@ export function act(original: Game, action: Action): Game {
     if(action.type==="prestige")g.history.push({tier:old,week:g.week,hires:members(g).length,successes:g.completed,reputation:g.reputation});
     if(action.type==="prestige"){g.tier=(g.tier+1) as Tier;g.prestige++;}
     const next=TIERS[g.tier];g.week=1;g.cash=next.budget;g.reputation=0;g.completed=0;g.attempts=0;g.exposure=0;g.actions=weeklyActions(g);g.missionThisWeek=false;g.rescueUsed=false;g.won=false;g.briefing=true;g.report=null;g.log=[];g.field=freshField(g.tier);g.candidates=[];g.candidates=Array.from({length:12},(_,i)=>createCandidate(g,i));
+    if (g.immersion) g.immersion = freshImmersion(g);
     log(g,action.type==="prestige"?`Your next chapter begins at ${next.employer}. ${TIERS[old].perk}`:`A fresh recruiting season begins at ${next.employer}.` ,"good");
   }
   return g;
@@ -459,5 +499,7 @@ export function validGame(value: unknown): value is Game {
   if (g.style !== undefined && !validScoutStyle(g.style)) return false;
   if (g.story !== undefined && !validPrologue(g.story)) return false;
   if (g.field !== undefined && (!validField(g.field, true, true) || !g.field.met.every(id => ids.has(id)))) return false;
+  if (g.immersion !== undefined && (!validImmersion(g.immersion) || g.immersion.tier !== g.tier)) return false;
+  if (g.playerProfile !== undefined && (!record(g.playerProfile) || !["observer", "connector", "analyst"].includes(g.playerProfile.background as string))) return false;
   return true;
 }

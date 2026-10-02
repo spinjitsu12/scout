@@ -1,4 +1,16 @@
 export type DesktopUpdateState = "idle" | "checking" | "available" | "downloading" | "validating" | "ready" | "installing" | "error" | "offline" | "unconfigured" | "unsupported";
+export type SaveSlot = 1 | 2 | 3;
+export type SaveSlotSummary = {
+  slot: SaveSlot;
+  occupied: boolean;
+  name: string | null;
+  tier: number | null;
+  week: number | null;
+  lastSavedAt?: number;
+  error?: string;
+  backupAvailable?: boolean;
+};
+export type DisplayMode = "borderless" | "fullscreen" | "windowed";
 export type DesktopUpdateStatus = {
   supported: boolean;
   currentVersion: string;
@@ -9,7 +21,8 @@ export type DesktopUpdateStatus = {
   lastCheckedAt: number | null;
   automaticCheck: boolean;
   offlinePlayable?: boolean;
-  updateMode?: "portable" | "installer" | "development";
+  updateMode?: "portable" | "installer" | "development" | "mac-app";
+  manualUpdate?: boolean;
   unsupportedReason?: string;
   message?: string;
   availableVersion?: string;
@@ -23,9 +36,13 @@ export type DesktopUpdateStatus = {
 export type DesktopBridge = {
   platform?: string;
   confirmReady?: () => Promise<void>;
-  loadCareer: () => Promise<string | null>;
-  saveCareer: (json: string) => Promise<{ ok: boolean; error?: string }>;
-  loadBackup: () => Promise<string | null>;
+  listSaveSlots: () => Promise<SaveSlotSummary[]>;
+  loadCareer: (slot?: SaveSlot) => Promise<string | null>;
+  saveCareer: (json: string, slot?: SaveSlot) => Promise<{ ok: boolean; error?: string }>;
+  loadBackup: (slot?: SaveSlot) => Promise<string | null>;
+  getDisplayMode: () => Promise<DisplayMode>;
+  setDisplayMode: (mode: DisplayMode) => Promise<DisplayMode>;
+  onDisplayMode: (listener: (mode: DisplayMode) => void) => () => void;
   toggleFullscreen: () => Promise<boolean>;
   quit: () => Promise<void>;
   exportCareer: (json: string) => Promise<{ ok: boolean; canceled?: boolean; error?: string }>;

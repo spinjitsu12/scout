@@ -1,0 +1,510 @@
+{
+  "music": [
+    {
+      "file": "audio/music/the-long-dark.mp3",
+      "bytes": 17595203,
+      "sha256": "fa5bfe904dd4902b9eb66d8df518a91adde41fb6d1687aefb5af1a2de7da28da",
+      "duration": 439.823673,
+      "stream": {
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-17.3",
+      "peak_dbfs": "-1.1",
+      "title": "The Long Dark",
+      "artist": "Scott Buckley",
+      "source": "https://www.scottbuckley.com.au/library/the-long-dark/",
+      "download": "https://www.scottbuckley.com.au/library/wp-content/uploads/2023/01/TheLongDark.mp3",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "file": "audio/music/effervescence.mp3",
+      "bytes": 16524218,
+      "sha256": "215ff6ec113abbcfa3258028af322f651a40cf1102996b347dde873379b42674",
+      "duration": 413.048163,
+      "stream": {
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-17.0",
+      "peak_dbfs": "-1.0",
+      "title": "Effervescence",
+      "artist": "Scott Buckley",
+      "source": "https://www.scottbuckley.com.au/library/effervescence/",
+      "download": "https://www.scottbuckley.com.au/library/wp-content/uploads/2023/07/Effervescence.mp3",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "file": "audio/music/simplicity.mp3",
+      "bytes": 7384513,
+      "sha256": "71cfdd6d81765a0624f6b48704a26cfbeb095f83190c1d52d9fcfba3fe1afb0b",
+      "duration": 184.555102,
+      "stream": {
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-16.0",
+      "peak_dbfs": "-0.9",
+      "title": "Simplicity",
+      "artist": "Scott Buckley",
+      "source": "https://www.scottbuckley.com.au/library/simplicity/",
+      "download": "https://www.scottbuckley.com.au/library/wp-content/uploads/2024/03/Simplicity.mp3",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "file": "audio/music/at-the-end-of-all-things.mp3",
+      "bytes": 12683236,
+      "sha256": "57028e3de133aa9beba2f9540ffea3bb7822cbdb8f899de16b6b44389879ba91",
+      "duration": 317.022041,
+      "stream": {
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-16.4",
+      "peak_dbfs": "-1.7",
+      "title": "At The End Of All Things",
+      "artist": "Scott Buckley",
+      "source": "https://www.scottbuckley.com.au/library/at-the-end-of-all-things/",
+      "download": "https://www.scottbuckley.com.au/library/wp-content/uploads/2024/06/AtTheEndOfAllThings.mp3",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "file": "audio/music/chasing-daylight.mp3",
+      "bytes": 10958088,
+      "sha256": "f8581d155e0a05ea2e0a58ca430917587d308157ac5551f441ea8745b875feee",
+      "duration": 273.893878,
+      "stream": {
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-16.2",
+      "peak_dbfs": "-1.1",
+      "title": "Chasing Daylight",
+      "artist": "Scott Buckley",
+      "source": "https://www.scottbuckley.com.au/library/chasing-daylight/",
+      "download": "https://www.scottbuckley.com.au/library/wp-content/uploads/2021/03/sb_chasingdaylight.mp3",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "file": "audio/music/golden-hour.mp3",
+      "bytes": 12975778,
+      "sha256": "fc46696027b2f55a2948e1a24176ff7562d9f99c85e9223ef65b80473d54f5fe",
+      "duration": 324.336327,
+      "stream": {
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-16.6",
+      "peak_dbfs": "-1.0",
+      "title": "Golden Hour",
+      "artist": "Scott Buckley",
+      "source": "https://www.scottbuckley.com.au/library/golden-hour/",
+      "download": "https://www.scottbuckley.com.au/library/wp-content/uploads/2023/02/GoldenHour.mp3",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "foley": [
+    {
+      "file": "audio/foley/footstep_carpet_003.ogg",
+      "bytes": 6301,
+      "sha256": "4ae7454338d57c7d102145919ae653c7d010eb542797c4f25a1c7470be3a7e4c",
+      "duration": 0.144785,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-22.9",
+      "peak_dbfs": "-1.1"
+    },
+    {
+      "file": "audio/foley/beltHandle1.ogg",
+      "bytes": 10820,
+      "sha256": "2ef665bd8b65dbe669f4560be38a6d8f04a162e618b15a49e3e71b58e558aab0",
+      "duration": 0.276708,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "48000",
+        "channels": 2
+      },
+      "mean_volume": "-28.2",
+      "peak_dbfs": "-3.3"
+    },
+    {
+      "file": "audio/foley/doorClose_1.ogg",
+      "bytes": 18564,
+      "sha256": "834d29c60a8a8bfb50b158cdb6b7dfa8f02812a408a1ee9703d038dfab0b1aeb",
+      "duration": 0.675042,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "48000",
+        "channels": 2
+      },
+      "mean_volume": "-17.3",
+      "peak_dbfs": "0.0"
+    },
+    {
+      "file": "audio/foley/park-birds.ogg",
+      "bytes": 544669,
+      "sha256": "359e4e3f9da9d75aac64cede511c7e3ef8b461f9d9f8c230f8f80e44c4b3e35f",
+      "duration": 30.68825,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "48000",
+        "channels": 2
+      },
+      "mean_volume": "-30.8",
+      "peak_dbfs": "-6.2"
+    },
+    {
+      "file": "audio/foley/footstep_grass_003.ogg",
+      "bytes": 8129,
+      "sha256": "0546e1d8ab2def714425701a18bd34c5ee2794b12e858e5b595aabcf38a34137",
+      "duration": 0.66932,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-29.4",
+      "peak_dbfs": "-0.9"
+    },
+    {
+      "file": "audio/foley/footstep_concrete_002.ogg",
+      "bytes": 6255,
+      "sha256": "b21fa546d74941196b25da8a20b7010abd8c05c4fcf93545d1f344e66a664e13",
+      "duration": 0.112789,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-22.7",
+      "peak_dbfs": "-1.0"
+    },
+    {
+      "file": "audio/foley/bookFlip1.ogg",
+      "bytes": 18248,
+      "sha256": "fa81ac2fedc8c641661b87e349630a36c9800e795e0c800e029214efdbe26a7d",
+      "duration": 0.768646,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "48000",
+        "channels": 2
+      },
+      "mean_volume": "-29.8",
+      "peak_dbfs": "0.0"
+    },
+    {
+      "file": "audio/foley/footstep_carpet_001.ogg",
+      "bytes": 6411,
+      "sha256": "9af3c3f76705107339e72036e4053bdca3eaa50ad31c8c929f42ce8d40e5d781",
+      "duration": 0.144785,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-19.6",
+      "peak_dbfs": "-1.1"
+    },
+    {
+      "file": "audio/foley/footstep_grass_001.ogg",
+      "bytes": 8313,
+      "sha256": "fb28781bd22b2eefdc14077f1adf5c94d7fe9c3a130194633b55f3e0d39d9f04",
+      "duration": 0.673605,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-28.8",
+      "peak_dbfs": "-1.2"
+    },
+    {
+      "file": "audio/foley/cloth2.ogg",
+      "bytes": 11787,
+      "sha256": "8a7451193c38bc05483aec25dd193e163a15d44cf7fff04ac7912573231b0201",
+      "duration": 0.415063,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "48000",
+        "channels": 2
+      },
+      "mean_volume": "-28.7",
+      "peak_dbfs": "-7.9"
+    },
+    {
+      "file": "audio/foley/metalLatch.ogg",
+      "bytes": 10208,
+      "sha256": "ba9ba60b172b3ebc131a940f25793cd2e207aca7af73dc80d637277f060f1708",
+      "duration": 0.261333,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "48000",
+        "channels": 2
+      },
+      "mean_volume": "-20.5",
+      "peak_dbfs": "0.0"
+    },
+    {
+      "file": "audio/foley/footstep_concrete_003.ogg",
+      "bytes": 5805,
+      "sha256": "8b513c2f0316324060b9174b8f28df6c2147418c506e6a53b77f18e149a5547b",
+      "duration": 0.110499,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-21.7",
+      "peak_dbfs": "-1.1"
+    },
+    {
+      "file": "audio/foley/bookClose.ogg",
+      "bytes": 9292,
+      "sha256": "81e976532565f4372abd14e83d2684195fa548d0a28d345de221e56052454f32",
+      "duration": 0.230604,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "48000",
+        "channels": 2
+      },
+      "mean_volume": "-18.8",
+      "peak_dbfs": "0.0"
+    },
+    {
+      "file": "audio/foley/footstep_grass_002.ogg",
+      "bytes": 8278,
+      "sha256": "73a520139f5be716a403bfe9c80e0e94d1e61d8e9de04a354b336392164b53dc",
+      "duration": 0.692449,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-29.5",
+      "peak_dbfs": "-1.1"
+    },
+    {
+      "file": "audio/foley/switch_001.ogg",
+      "bytes": 6753,
+      "sha256": "3b74efad87f1e69dbd1d05c5ad952ab90859b5a3d11da6ec5bd79b4f03b42afa",
+      "duration": 0.617664,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-27.3",
+      "peak_dbfs": "-1.0"
+    },
+    {
+      "file": "audio/foley/footstep_wood_003.ogg",
+      "bytes": 6207,
+      "sha256": "2a68a083daa9eda08fed0ea5da5280dfbe0de226196c576be02f95259dd139d9",
+      "duration": 0.251519,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-21.5",
+      "peak_dbfs": "-1.1"
+    },
+    {
+      "file": "audio/foley/footstep_wood_000.ogg",
+      "bytes": 5949,
+      "sha256": "5f1c252942a220d658121bd9417448cd19649ded9fff2ff15f6e50899373ce8e",
+      "duration": 0.249592,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-21.2",
+      "peak_dbfs": "-0.9"
+    },
+    {
+      "file": "audio/foley/footstep_carpet_000.ogg",
+      "bytes": 6353,
+      "sha256": "b9524658b52a99a20590f8feefc103088637fd13ea8ec35811aee785e1f2f330",
+      "duration": 0.144785,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-23.7",
+      "peak_dbfs": "-1.1"
+    },
+    {
+      "file": "audio/foley/footstep_carpet_002.ogg",
+      "bytes": 6411,
+      "sha256": "9af3c3f76705107339e72036e4053bdca3eaa50ad31c8c929f42ce8d40e5d781",
+      "duration": 0.144785,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-19.6",
+      "peak_dbfs": "-1.1"
+    },
+    {
+      "file": "audio/foley/cloth1.ogg",
+      "bytes": 16508,
+      "sha256": "ddb93a3671233f95da0e0b10367f082f7eb42fa6caaddcf776410aa8833c747d",
+      "duration": 0.661042,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "48000",
+        "channels": 2
+      },
+      "mean_volume": "-24.6",
+      "peak_dbfs": "-3.5"
+    },
+    {
+      "file": "audio/foley/footstep_wood_002.ogg",
+      "bytes": 5895,
+      "sha256": "9ff095b05cee5eec40b081defe3f0eef7232bb16d4865ce03b9f6dbab875cfdd",
+      "duration": 0.251383,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-19.4",
+      "peak_dbfs": "-0.9"
+    },
+    {
+      "file": "audio/foley/click_001.ogg",
+      "bytes": 4876,
+      "sha256": "ccfb7fa0cccdd9faec0eb16033c732b1e308d139d80f799161495d58f7adcdb9",
+      "duration": 0.100023,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 1
+      },
+      "mean_volume": "-26.4",
+      "peak_dbfs": "-1.4"
+    },
+    {
+      "file": "audio/foley/doorClose_2.ogg",
+      "bytes": 17598,
+      "sha256": "4aa4fe79836c53cd6d0cb0b22ddc33b9901429463ae1bb75131f072683f63f21",
+      "duration": 0.612479,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "48000",
+        "channels": 2
+      },
+      "mean_volume": "-18.8",
+      "peak_dbfs": "-2.4"
+    },
+    {
+      "file": "audio/foley/phone-vibration.ogg",
+      "bytes": 6725,
+      "sha256": "49db2a32090e3f14961358468d8ef3c05fcebd518675e8f4711f85874478a962",
+      "duration": 1.2,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "48000",
+        "channels": 1
+      },
+      "mean_volume": "-24.0",
+      "peak_dbfs": "-15.3"
+    },
+    {
+      "file": "audio/foley/footstep_concrete_001.ogg",
+      "bytes": 6308,
+      "sha256": "507a75eb19b897087855a3be3cf11a12d7fa37d143ad535eeebe0b8031c7325d",
+      "duration": 0.107642,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-22.4",
+      "peak_dbfs": "-1.2"
+    },
+    {
+      "file": "audio/foley/impactSoft_medium_000.ogg",
+      "bytes": 5351,
+      "sha256": "7d3ba0bb5e60a11b5d3e558c141303dcf494256675fbf753c0d252d2cf0481e3",
+      "duration": 0.118005,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-14.2",
+      "peak_dbfs": "-1.0"
+    },
+    {
+      "file": "audio/foley/footstep_wood_001.ogg",
+      "bytes": 5929,
+      "sha256": "e4f68e1c9fd55b4dc8ca89ed2bbab6f200171bc54bdc18aa96b80d8e7336f462",
+      "duration": 0.251565,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-20.0",
+      "peak_dbfs": "-1.0"
+    },
+    {
+      "file": "audio/foley/footstep_concrete_000.ogg",
+      "bytes": 5808,
+      "sha256": "d7267e183067757c92c169de2a379abea592cfca6b39bb2e8feea15221ad79fe",
+      "duration": 0.105918,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-20.9",
+      "peak_dbfs": "-0.9"
+    },
+    {
+      "file": "audio/foley/doorOpen_1.ogg",
+      "bytes": 22848,
+      "sha256": "4ab93bab96522d8eb109ff96dc57cb6765deb02448fe14c10472084be5bb2a0b",
+      "duration": 0.918958,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "48000",
+        "channels": 2
+      },
+      "mean_volume": "-20.2",
+      "peak_dbfs": "0.0"
+    },
+    {
+      "file": "audio/foley/footstep_grass_000.ogg",
+      "bytes": 8290,
+      "sha256": "9d49497777405d78d7cf7f2888e28277f3a23192300cfd1d79d54876b20f479f",
+      "duration": 0.777574,
+      "stream": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "mean_volume": "-29.9",
+      "peak_dbfs": "-1.1"
+    }
+  ]
+}

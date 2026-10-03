@@ -32,9 +32,11 @@ The Mac app checks the publisher's release channel after opening. Offline or una
 
 ## Build through GitHub
 
+Both platforms use `.github/workflows/desktop-release.yml`. Updating this workflow on `main` automatically starts the Windows and Apple silicon builds.
+
 Upload the updated source to your existing repository, then open **Actions → Build Windows and Mac game → Run workflow**. The workflow builds Windows and Apple silicon in separate jobs. Download `SCOUT-Mac-Apple-Silicon-3.0.0` when it succeeds; it contains the app ZIP, DMG and this guide.
 
-The repository may stay private for building and downloading Actions artifacts. Startup release checks use public GitHub releases. Publishing the workflow uploads both Windows and Mac packages to the same versioned release.
+Keep your existing public repository. Publishing the workflow uploads both Windows and Mac packages to the same public, versioned release. Startup checks read that public release channel.
 
 To build on an Apple silicon Mac with Node.js 22.18 or 24 installed:
 
@@ -50,4 +52,8 @@ Packages are written to `release`. Future builds can use Apple Developer signing
 
 ## Verification limits
 
-The supplied ZIP has been checked for native ARM64 binaries, signature digests, archive CRCs, preserved framework symlinks and executable permissions, and complete offline asset bytes. All 74 desktop regression tests pass, including Mac updates and display behavior. GitHub Actions additionally runs Apple's signature verifier and launches the packaged app to check native saves, fullscreen, offline startup and its 3D scene. That workflow has not yet been run with this source. A physical Apple silicon Mac playtest is still needed; the local checks do not measure Mac frame rate or prove first-launch Gatekeeper behavior. See `QA-3.0.md` for the checks and their limits.
+The supplied ZIP has been checked for native ARM64 binaries, signature digests, archive CRCs, preserved framework symlinks and executable permissions, and complete offline asset bytes. Desktop regression tests cover Mac updates, display behavior and the startup test harness.
+
+GitHub run `37078613457` passed Windows packaging, native Mac signature verification, delivered ZIP verification, native save loading and fullscreen checks. Its 3D smoke check failed because the test forced SwiftShader's Vulkan renderer. The corrected smoke test uses Metal, waits for the saved-career button to become enabled, and checks actual rendered scene pixels. It captures a screenshot, the failing stage, renderer errors and GPU details when a check fails. Artifact uploads can be repeated safely when jobs are rerun.
+
+The corrected native Mac smoke check still needs a new GitHub run. A physical Apple silicon Mac playtest is also needed for first launch, pointer behavior, audio and frame rate. See `QA-3.0.md` for the checks and their limits.

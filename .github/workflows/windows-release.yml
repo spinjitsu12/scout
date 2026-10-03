@@ -8,9 +8,6 @@ on:
         type: boolean
         default: false
   push:
-    branches: [main]
-    paths:
-      - '.github/workflows/desktop-release.yml'
     tags:
       - 'v*.*.*'
 
@@ -60,7 +57,6 @@ jobs:
             release/SCOUT-update.json
           if-no-files-found: error
           retention-days: 30
-          overwrite: true
 
   build-mac:
     name: Build Apple silicon Mac app
@@ -96,7 +92,6 @@ jobs:
           path: qa-mac/
           if-no-files-found: ignore
           retention-days: 14
-          overwrite: true
       - name: Include Mac installation instructions
         run: cp README-MAC.md release/README-MAC.md
       - uses: actions/upload-artifact@v7
@@ -108,7 +103,6 @@ jobs:
             release/README-MAC.md
           if-no-files-found: error
           retention-days: 30
-          overwrite: true
 
   publish:
     if: github.ref_type == 'tag' || inputs.publish_release == true

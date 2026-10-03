@@ -1,0 +1,134 @@
+name: Build Windows and Mac game
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_release:
+        description: Publish this version to the public update channel
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/desktop-release.yml'
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scout-desktop-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
+    env:
+      SCOUT_UPDATE_REPOSITORY: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22.18.0'
+          cache: npm
+      - name: Validate version
+        id: version
+        shell: pwsh
+        run: |
+          $version = node -p "require('./package.json').version"
+          if ($version -notmatch '^(0|[1-9]\d{0,3})\.(0|[1-9]\d{0,3})\.(0|[1-9]\d{0,3})$') { throw 'Invalid stable version.' }
+          $tag = "v$version"
+          if ($env:GITHUB_REF_TYPE -eq 'tag' -and $env:GITHUB_REF_NAME -ne $tag) { throw 'The tag and package version must match.' }
+          "version=$version" >> $env:GITHUB_OUTPUT
+          "tag=$tag" >> $env:GITHUB_OUTPUT
+      - run: npm ci
+      - run: npm test
+      - run: npm run test:desktop
+      - run: npm run dist:portable
+      - name: Verify release payload
+        run: node scripts/verify-release.mjs
+      - uses: actions/upload-artifact@v7
+        with:
+          name: SCOUT-Windows-${{ steps.version.outputs.version }}
+          path: |
+            release/SCOUT-*-Windows-Portable.exe
+            release/SCOUT-update.json
+          if-no-files-found: error
+          retention-days: 30
+          overwrite: true
+
+  build-mac:
+    name: Build Apple silicon Mac app
+    runs-on: macos-15
+    timeout-minutes: 30
+    env:
+      SCOUT_UPDATE_REPOSITORY: ${{ github.repository }}
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22.18.0'
+          cache: npm
+      - name: Validate version
+        id: version
+        run: node scripts/release-version.mjs
+      - run: npm ci
+      - run: npm test
+      - run: npm run test:desktop
+      - run: npm run dist:mac:dmg
+      - name: Verify app, bundled assets, and native signatures
+        run: npm run verify:mac
+      - name: Verify the delivered app archive
+        run: npm run verify:mac:archive
+      - name: Launch the packaged app and check offline desktop behavior
+        run: npm run test:mac:smoke
+      - name: Keep native Mac startup diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: QA-Mac-Apple-Silicon-${{ steps.version.outputs.version }}
+          path: qa-mac/
+          if-no-files-found: ignore
+          retention-days: 14
+          overwrite: true
+      - name: Include Mac installation instructions
+        run: cp README-MAC.md release/README-MAC.md
+      - uses: actions/upload-artifact@v7
+        with:
+          name: SCOUT-Mac-Apple-Silicon-${{ steps.version.outputs.version }}
+          path: |
+            release/SCOUT-*-macOS-Apple-Silicon.zip
+            release/SCOUT-*-macOS-Apple-Silicon.dmg
+            release/README-MAC.md
+          if-no-files-found: error
+          retention-days: 30
+          overwrite: true
+
+  publish:
+    if: github.ref_type == 'tag' || inputs.publish_release == true
+    needs: [build, build-mac]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: SCOUT-*-${{ needs.build.outputs.version }}
+          merge-multiple: true
+          path: release
+      - name: Publish immutable release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ needs.build.outputs.tag }}
+          RELEASE_VERSION: ${{ needs.build.outputs.version }}
+        run: |
+          gh release create "$RELEASE_TAG" release/SCOUT-*-Windows-Portable.exe release/SCOUT-update.json \
+            release/SCOUT-*-macOS-Apple-Silicon.zip release/SCOUT-*-macOS-Apple-Silicon.dmg release/README-MAC.md \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --title "SCOUT $RELEASE_VERSION" --generate-notes --latest

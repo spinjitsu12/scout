@@ -1,6 +1,6 @@
 # SCOUT 3.0 verification
 
-Validation performed on 2–3 October 2026. This release establishes the playable stylized first-person world; it is a development build, with further art, world activity, and hardware performance testing still appropriate before calling it a finished product.
+Validation performed on 2 October 2026. This release establishes the playable stylized first-person world; it is a development build, with further art, world activity, and hardware performance testing still appropriate before calling it a finished product.
 
 ## Automated gameplay and geometry
 
@@ -14,7 +14,7 @@ Physical career checks reject meetings from the road, remote arrival claims, for
 
 ## Native saves and updates
 
-`npm run test:desktop` passes 85 tests. Cases include independent save slots, explicit slot identities, legacy migration, corrupt-file recovery, concurrent and interrupted writes, atomic exports, display preferences, preload close acknowledgements, offline startup, unavailable or hung update services, staged update integrity, and rollback. Mac additions cover asynchronous fullscreen transitions, the native green button, Mac menus and preload identity, and validated manual Apple silicon update downloads. Eleven smoke-harness regression tests cover disabled career buttons, modern renderer errors, lost GPUs, blank or lost WebGL contexts, failed screenshots, native host guards, nonzero exits and process timeout/termination behavior.
+`npm run test:desktop` passes 74 tests. Cases include independent save slots, explicit slot identities, legacy migration, corrupt-file recovery, concurrent and interrupted writes, atomic exports, display preferences, preload close acknowledgements, offline startup, unavailable or hung update services, staged update integrity, and rollback. Mac additions cover asynchronous fullscreen transitions, the native green button, Mac menus and preload identity, and validated manual Apple silicon update downloads.
 
 Credit links open only the fixed credited HTTPS pages. Gameplay and save loading do not wait for the update service.
 
@@ -42,10 +42,6 @@ The Mac package is a native ARM64 `SCOUT.app` for macOS 13 or newer, with an ad-
 
 Local signature checks validate all 54,361 signed code pages, Info.plist and resource-seal digests, 236 sealed resources, and the app and helper JIT entitlements. These checks run on Linux; Apple's native signature verifier and the native app have not been run here. The app is not notarized. First-launch approval instructions are in `README-MAC.md`.
 
-GitHub run `37078613457` passed the Windows job and the Mac ZIP/DMG build, Apple's native signature verifier and extraction/re-verification of the delivered ZIP. The native Mac launch passed its preload/menu, three empty save slots, independent career write/reload and fullscreen checks. Its first-person scene timed out while the test's forced SwiftShader Vulkan renderer failed to initialize.
+The combined GitHub workflow builds the Mac app ZIP and DMG on an Apple silicon macOS runner. It runs Apple's `codesign --verify --deep --strict`, extracts and re-verifies the delivered ZIP, then launches a private test copy of the packaged app with its real main process, preload, UI and engine. The test checks three independent career files, native fullscreen transitions, offline update behavior and a full-size first-person WebGL scene. It isolates save files and uses software rendering for CI; the delivered app is untouched. Diagnostic JSON and screenshots are retained if the launch test fails.
 
-The corrected smoke test launches a private copy with ANGLE's native Metal backend. It preserves the real main process, sandbox preload, renderer and game engine; career files stay isolated from player saves. It waits for an enabled career button before opening the world, disables the seeded career's briefing pause, and reads scene pixels during an animation frame to verify a live, full-size WebGL scene. It also checks offline update behavior. Diagnostics retain the failing stage, renderer/preload/GPU errors, GPU information and a screenshot. The temporary test app is re-signed and verified; the delivered app is untouched. Process termination completes before temporary files are removed. Repeated workflow attempts replace earlier artifacts rather than failing on duplicate names.
-
-The exported scene probe also passes in the real Electron 44.5.1 game on Linux with an isolated native save and an offscreen 1280 × 800 window: all 16 sampled pixels were painted, 12 colors differed, the GL error was zero and no renderer errors occurred. That fixture substitutes a synthetic monitor and offscreen window, uses Linux SwiftShader and bypasses the host's unavailable singleton socket. It validates the probe against actual game rendering, including the non-preserved drawing buffer; it does not test native Mac Metal or Mac fullscreen behavior.
-
-The corrected native Mac smoke check still needs a new GitHub run. A physical Apple silicon Mac playtest is also needed for first launch, display and pointer behavior, audio, and hardware frame rate.
+The updated GitHub workflow has not been executed from this workspace. A physical Apple silicon Mac playtest is still needed for first launch, display and pointer behavior, audio, and hardware frame rate.

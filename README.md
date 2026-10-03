@@ -42,17 +42,30 @@ On Mac, careers are stored in `~/Library/Application Support/SCOUT/save` separat
 
 Default display mode is Borderless Fullscreen. Fullscreen, Windowed, field of view, mouse sensitivity, head bob, and five audio volume sliders are available in settings. The soundtrack includes six complete credited composer recordings, natural bird ambience, local foley, and RPM-sensitive engine audio. Credits and license links are available in settings and `CREDITS-AUDIO.md`.
 
-## Build from your existing local repository
+## Replace your GitHub source and build
 
-The combined build workflow is `.github/workflows/desktop-release.yml`. Changes to this workflow on `main` start both platform builds automatically. Manual runs appear as **Build Windows and Mac game** in Actions.
+You do not need to make the repository public to build or download Actions artifacts. Public, unauthenticated GitHub releases are needed for the existing public automatic-update channel. A private game build still works offline.
 
-Keep the existing public `spinjitsu12/scout` repository. Work in its already-cloned local `scout` folder: the one containing `package.json`, `src`, `public`, `electron`, and `.github`. Apply source fixes in that folder and commit the changed files using your normal Git workflow. A separate clone and GitHub's web editor are not required.
+1. Extract this source ZIP with Windows **Extract All**. The project is the `SCOUT` folder containing `package.json`, `src`, `public`, `electron`, and `.github`.
+2. Install Git for Windows and Node.js 22.18 or a supported Node.js 24 version.
+3. Open PowerShell in the extracted `SCOUT` folder. Run the following script. It clones the existing repository into a separate folder, replaces its working files while preserving Git history, and commits this version.
 
-1. Use Node.js 22.18 or a supported Node.js 24 version for local development. The workflow installs its own Node.js runtime.
-2. Commit the changed files locally and push to `main`. A change to `.github/workflows/desktop-release.yml` starts both builds automatically. Source changes without a workflow change can be built with a manual run.
-3. On GitHub open **Actions → Build Windows and Mac game → Run workflow**, choosing `main`. Leave publishing unchecked while validating a fix. Start a fresh run after pushing new code; rerunning an older failed run checks its original commit.
-4. After a successful build, download `SCOUT-Windows-3.0.0` or `SCOUT-Mac-Apple-Silicon-3.0.0` and extract the artifact. The Mac artifact contains an ARM64 app ZIP, a DMG and installation instructions.
-5. To publish this version, run the same workflow with **Publish this version to the public update channel** enabled. Both builds must pass before the workflow creates `v3.0.0` with the Windows EXE and update manifest plus the Mac ZIP and DMG. For later published builds, increment the package version first.
+```powershell
+$scoutSource = (Get-Location).Path
+$scoutCheckout = Join-Path (Split-Path $scoutSource -Parent) 'SCOUT-GitHub-3.0'
+if (Test-Path $scoutCheckout) { throw 'Choose a new checkout folder name before continuing.' }
+git clone https://github.com/spinjitsu12/scout.git $scoutCheckout
+if ($LASTEXITCODE -ne 0) { throw 'Git clone failed.' }
+robocopy $scoutSource $scoutCheckout /MIR /XD .git node_modules dist release /XF *.log
+if ($LASTEXITCODE -ge 8) { throw 'Copy failed.' }
+Set-Location $scoutCheckout
+git add -A
+git commit -m 'Add Apple silicon Mac build to SCOUT 3.0'
+git push origin HEAD
+```
+
+4. On GitHub open **Actions → Build Windows and Mac game → Run workflow**. Choose your main branch. Enable the publish option only when you want to release 3.0.0.
+5. After a successful build, download `SCOUT-Windows-3.0.0` or `SCOUT-Mac-Apple-Silicon-3.0.0` and extract the artifact. The Mac artifact contains an ARM64 app ZIP, a DMG and installation instructions. For Windows automatic updates, publish the portable EXE and `SCOUT-update.json`; the same release includes the Mac ZIP and DMG for Mac startup notifications. Use the new `v3.0.0` release tag.
 
 The supplied portable executable can also be played directly without rebuilding. Source assets are already bundled. `public/models` contains original GLB exports for editing in Blender, and the procedural asset constructors are in `src/lib/immersive-assets.ts`.
 
@@ -86,6 +99,6 @@ npm run verify:mac:archive
 npm run test:mac:smoke
 ```
 
-`npm run dist:mac` builds just the installable app ZIP. `verify:mac` checks ARM64 runtime binaries, app identity, macOS minimum version, signatures and framework links, and compares every offline asset to the current build. On a Mac it additionally runs Apple's native signature verification. `verify:mac:archive` checks the delivered ZIP's CRCs, executable permissions and framework symlinks, then extracts and verifies the app on a Mac. `test:mac:smoke` launches a private copy on an Apple silicon Mac with native Metal rendering and isolated saves to check startup, fullscreen, offline play and actual first-person scene pixels. It retains stage-specific JSON, GPU diagnostics and screenshots. `test:desktop` includes regression tests for that harness. The combined GitHub workflow runs these checks and builds both platforms before optional publishing; artifact uploads support job reruns.
+`npm run dist:mac` builds just the installable app ZIP. `verify:mac` checks ARM64 runtime binaries, app identity, macOS minimum version, signatures and framework links, and compares every offline asset to the current build. On a Mac it additionally runs Apple's native signature verification. `verify:mac:archive` checks the delivered ZIP's CRCs, executable permissions and framework symlinks, then extracts and verifies the app on a Mac. `test:mac:smoke` launches a private copy on an Apple silicon Mac with isolated saves to check native startup, fullscreen, offline play and first-person WebGL rendering. The combined GitHub workflow runs these checks and builds both platforms before optional publishing.
 
 Tests cover three-chapter progression, legacy and 3D saves, honest physical arrivals, measured driving/braking, actual road and driveway access, apartment rooms, shared furniture collision, interior contact approaches, independent audio sliders, recording integrity, and safe native updates. Release verification checks executable identity and hash, current native helpers, and every bundled offline asset byte. Native rendering/media QA is recorded in `QA-3.0.md`.

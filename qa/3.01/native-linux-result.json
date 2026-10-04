@@ -1,0 +1,358 @@
+{
+  "ok": true,
+  "platform": "linux-desktop",
+  "electron": "44.5.1",
+  "appVersion": "3.0.1",
+  "checks": [
+    {
+      "name": "Real sandbox preload exposes three empty isolated native save slots",
+      "passed": true
+    },
+    {
+      "name": "Three schema-2 careers write and reload through the real native save store",
+      "passed": true
+    },
+    {
+      "name": "Actual first-person world paints distinct visible WebGL2 pixels",
+      "passed": true,
+      "width": 640,
+      "height": 480,
+      "webgl": true,
+      "paintedSamples": 16,
+      "distinctColors": 13,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "glError": 0
+    },
+    {
+      "name": "Cockpit has no floating mph/fuel gauges or permanent storage/objective clutter",
+      "passed": true,
+      "floatingDrivingHUD": false,
+      "floatingMph": false,
+      "floatingFuel": false,
+      "localStorageCopy": false,
+      "fieldNotes": false
+    },
+    {
+      "name": "Live driving snapshots do not write the career every few seconds",
+      "passed": true
+    },
+    {
+      "name": "Native keyboard acceleration and steering produce real distance, fuel use and heading changes",
+      "passed": true,
+      "vehicle": {
+        "x": 493.14276635650185,
+        "z": 858.2724933959172,
+        "heading": 1.2864839658052378,
+        "speed": 7.56643966468636,
+        "steering": -0.024782987494237164,
+        "distance": 15.382570856835722,
+        "fuel": 11.99970130355022,
+        "gear": "D",
+        "damage": 0,
+        "disabled": false
+      }
+    },
+    {
+      "name": "Brake, handbrake and grounded car exit preserve the driven career",
+      "passed": true
+    },
+    {
+      "name": "Regional map uses the real 12 km by 10 km bounds and shows service destinations",
+      "passed": true,
+      "places": [
+        {
+          "name": "Cirrus Works",
+          "left": 3.225,
+          "top": 2.66
+        },
+        {
+          "name": "Maker Yard",
+          "left": 27.5,
+          "top": 15
+        },
+        {
+          "name": "Palette House",
+          "left": 44,
+          "top": 28
+        },
+        {
+          "name": "Junction Café",
+          "left": 55.9167,
+          "top": 28.5
+        },
+        {
+          "name": "Highway Fuel",
+          "left": 7,
+          "top": 6.2
+        },
+        {
+          "name": "Home",
+          "left": 1.83333,
+          "top": 5.1
+        }
+      ],
+      "services": 4,
+      "regions": 7,
+      "nearbyToggle": true
+    },
+    {
+      "name": "Save, title and career reload retain vehicle pose, fuel, damage and mileage",
+      "passed": true
+    },
+    {
+      "name": "Fuel is purchased at the modeled pump without repairing damage or resetting mileage",
+      "passed": true
+    },
+    {
+      "name": "Paid repairs restore vehicle condition while keeping fuel and mileage",
+      "passed": true
+    },
+    {
+      "name": "E prompt matches its action and the car can be re-entered after pump service",
+      "passed": true
+    },
+    {
+      "name": "Actual T roadside tow charges $150 and preserves fuel, damage, gear and mileage",
+      "passed": true,
+      "vehicle": {
+        "x": 840,
+        "z": 620,
+        "heading": 0,
+        "speed": 0,
+        "steering": 0,
+        "distance": 3142.7,
+        "fuel": 2.25,
+        "gear": "R",
+        "damage": 0.93,
+        "disabled": true
+      }
+    },
+    {
+      "name": "Final walking movement remains live until the exit checkpoint",
+      "passed": true
+    },
+    {
+      "name": "Linux development update manager does not block the offline local world",
+      "passed": true,
+      "state": "unsupported"
+    },
+    {
+      "name": "Real native Save and exit flushes the latest movement before app shutdown",
+      "passed": true
+    },
+    {
+      "name": "A fresh native process reloads the final durable career through the real preload",
+      "passed": true
+    },
+    {
+      "name": "Reopened career enters and paints the actual saved first-person world",
+      "passed": true
+    },
+    {
+      "name": "Nearby map clips distant venues and maps the real 2.4 km by 2 km viewport",
+      "passed": true,
+      "places": [
+        {
+          "name": "Cirrus Works",
+          "left": 16.125,
+          "top": 13.3
+        },
+        {
+          "name": "Highway Fuel",
+          "left": 35,
+          "top": 31
+        },
+        {
+          "name": "Home",
+          "left": 9.16667,
+          "top": 25.5
+        }
+      ],
+      "origin": {
+        "x": 0,
+        "z": 0
+      }
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Native Linux development build with software SwiftShader; this is not a Mac or Windows native runtime test.",
+    "Offscreen window and disabled OS sandbox are confined to the Linux container QA process. Production BrowserWindow security and GPU flags are unchanged.",
+    "Mac fullscreen/signature/update installation and Windows installer behavior are not exercised here.",
+    "The test bypasses the single-instance OS socket lock in memory because this Linux container blocks socket creation. Single-instance locking is not exercised.",
+    "The headless fixture supplies a fixed cursor position because the headless Linux Ozone surface has no physical pointer. Desktop pointer and monitor selection are not exercised.",
+    "A synthetic 1280 by 800 monitor is supplied in memory to the headless fixture. Physical display selection and fullscreen transitions are not exercised.",
+    "Native titlebar options are omitted in the offscreen Linux fixture; OS titlebar styling is not exercised.",
+    "Pointer capture is unavailable in the offscreen fixture; its request rejects immediately. Native mouse locking is not exercised.",
+    "The movement checks look upward through the game mouse-look handler to reduce visible geometry on the software GPU. These checks validate input/state/save behavior, not frame-rate performance."
+  ],
+  "metrics": {
+    "viewport": {
+      "width": 640,
+      "height": 480,
+      "webgl": true,
+      "paintedSamples": 16,
+      "distinctColors": 13,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "glError": 0
+    },
+    "keyboardEvents": [
+      {
+        "type": "keydown",
+        "key": "w",
+        "hidden": false,
+        "trusted": true
+      },
+      {
+        "type": "keydown",
+        "key": "a",
+        "hidden": false,
+        "trusted": true
+      },
+      {
+        "type": "keyup",
+        "key": "a",
+        "hidden": false,
+        "trusted": true
+      },
+      {
+        "type": "keyup",
+        "key": "w",
+        "hidden": false,
+        "trusted": true
+      }
+    ],
+    "updateStatus": {
+      "supported": false,
+      "currentVersion": "3.0.1",
+      "repository": "spinjitsu12/scout",
+      "configurable": false,
+      "updateMode": "development",
+      "offlinePlayable": true,
+      "automaticCheck": true,
+      "unsupportedReason": "In-app updates run in the packaged Windows portable game.",
+      "state": "unsupported",
+      "connection": "unknown",
+      "lastCheckedAt": null,
+      "message": "In-app updates run in the packaged Windows portable game."
+    },
+    "finalCareer": {
+      "schema": 2,
+      "tier": 0,
+      "interior": null,
+      "player": {
+        "x": 843,
+        "z": 609.0382939867841,
+        "yaw": 1.5707963267948966,
+        "pitch": 1.16
+      },
+      "vehicle": {
+        "x": 840,
+        "z": 620,
+        "heading": 0,
+        "speed": 0,
+        "steering": 0,
+        "distance": 3142.7,
+        "fuel": 2.25,
+        "gear": "R",
+        "damage": 0.93,
+        "disabled": true
+      },
+      "mode": "foot",
+      "destination": null,
+      "parkedAt": [
+        4
+      ],
+      "tutorial": "complete",
+      "thoughtsSeen": [],
+      "homeReviewed": true
+    },
+    "reopenedViewport": {
+      "width": 640,
+      "height": 480,
+      "webgl": true,
+      "paintedSamples": 16,
+      "distinctColors": 16,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "glError": 0
+    }
+  },
+  "screenshots": [
+    "native-linux-title.png",
+    "native-linux-on-foot.png",
+    "native-linux-cockpit.png",
+    "native-linux-settings.png",
+    "native-linux-regional-map.png",
+    "native-linux-nearby-map.png",
+    "native-linux-service.png",
+    "native-linux-stranded.png",
+    "native-linux-towed.png",
+    "native-linux-save-and-exit.png",
+    "native-linux-reopened.png",
+    "native-linux-reopened-nearby-map.png"
+  ],
+  "sourceMainSHA256": "8c426138df9b0f4eb52aaac4782c77c56363fd21883c3021185eb1e6908417cf",
+  "distHTMLSHA256": "b32d21ba754040c0318e2b63ff0b199a848f6b36924c5dc8246104468bf2d94b",
+  "diagnostics": {
+    "gpuFeatures": {
+      "2d_canvas": "enabled",
+      "direct_rendering_display_compositor": "disabled_off_ok",
+      "gpu_compositing": "enabled",
+      "multiple_raster_threads": "enabled_on",
+      "opengl": "enabled_on",
+      "rasterization": "enabled",
+      "raw_draw": "disabled_off_ok",
+      "skia_graphite": "disabled_off",
+      "trees_in_viz": "disabled_off",
+      "video_decode": "enabled",
+      "video_encode": "disabled_software",
+      "vulkan": "disabled_off",
+      "webgl": "enabled",
+      "webgpu": "unavailable_software",
+      "webgpu_on_vk_via_gl_interop": "disabled_off",
+      "webnn": "disabled_off"
+    },
+    "gpu": {
+      "auxAttributes": {
+        "amdSwitchable": false,
+        "canSupportThreadedTextureMailbox": false,
+        "glImplementationParts": "(gl=none,angle=none)",
+        "glResetNotificationStrategy": 0,
+        "hardwareSupportsVulkan": false,
+        "inProcessGpu": true,
+        "initializationTime": 0,
+        "isAsan": false,
+        "isClangCoverage": false,
+        "jpegDecodeAcceleratorSupported": false,
+        "optimus": false,
+        "passthroughCmdDecoder": false,
+        "sandboxed": false,
+        "skiaBackendType": "None",
+        "subpixelFontRendering": true,
+        "targetCpuBits": 64,
+        "visibilityCallbackCallCount": 0
+      },
+      "gpuDevice": [
+        {
+          "active": false,
+          "deviceId": 0,
+          "gpuPreference": 0,
+          "vendorId": 0
+        }
+      ]
+    },
+    "page": {
+      "ready": "complete",
+      "body": "M\nMap\nSCOUT\nCirrus Works · Week 1",
+      "canvases": [
+        {
+          "width": 640,
+          "height": 480
+        }
+      ]
+    }
+  },
+  "nativeQuitObserved": true,
+  "stage": "Completed",
+  "reopenObserved": true
+}

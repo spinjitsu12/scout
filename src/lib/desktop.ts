@@ -44,7 +44,7 @@ export type DesktopBridge = {
   setDisplayMode: (mode: DisplayMode) => Promise<DisplayMode>;
   onDisplayMode: (listener: (mode: DisplayMode) => void) => () => void;
   toggleFullscreen: () => Promise<boolean>;
-  quit: () => Promise<void>;
+  quit: () => Promise<{ ok: boolean; error?: string } | void>;
   exportCareer: (json: string) => Promise<{ ok: boolean; canceled?: boolean; error?: string }>;
   importCareer: () => Promise<string | null>;
   getUpdateStatus: () => Promise<DesktopUpdateStatus>;
@@ -56,11 +56,11 @@ export type DesktopBridge = {
   installUpdate: () => Promise<{ ok: boolean; error?: string }>;
   onUpdateStatus: (listener: (status: DesktopUpdateStatus) => void) => () => void;
   onBeforeClose: (listener: () => void | Promise<void>) => () => void;
+  onCloseCancelled?: (listener: () => void) => () => void;
 };
 declare global { interface Window { scoutDesktop?: DesktopBridge } }
 export const desktopBridge = () => typeof window === "undefined" ? undefined : window.scoutDesktop;
 
-export function localSaveLabel(saveStatus: string, status: DesktopUpdateStatus | null): string {
-  if (saveStatus !== "Saved") return saveStatus === "Saving" ? "Saving locally…" : saveStatus;
-  return status?.connection === "offline" || status?.state === "offline" ? "Offline · saved locally" : "Saved locally";
+export function localSaveLabel(saveStatus: string, _status: DesktopUpdateStatus | null): string {
+  return saveStatus === "Saving" ? "Saving…" : saveStatus;
 }

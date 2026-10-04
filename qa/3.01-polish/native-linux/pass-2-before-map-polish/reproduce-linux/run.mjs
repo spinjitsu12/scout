@@ -1,0 +1,22 @@
+if (process.platform !== 'linux') throw new Error('This fixture is Linux-only. Use the native Mac smoke script on Apple silicon.');
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import os from 'node:os';
+import {spawn} from 'node:child_process';
+const here=import.meta.dirname, output=path.resolve(here,'../../native-linux');
+await fs.mkdir(output,{recursive:true});
+const phase=process.env.SCOUT_LINUX_QA_PHASE??(process.env.SCOUT_LINUX_QA_REOPEN==='1'?'reopen':'initial');
+if(!['initial','reopen','resolve','settled'].includes(phase))throw Error('Unknown native QA phase: '+phase);
+const reopen=phase!=='initial';
+const profile=reopen?JSON.parse(await fs.readFile(path.join(output,'native-linux-profile.json'),'utf8')).profile:await fs.mkdtemp(path.join(os.tmpdir(),'scout301-native-linux-'));
+if(!reopen)await fs.writeFile(path.join(output,'native-linux-profile.json'),JSON.stringify({profile},null,2));
+const binary=path.resolve(here,'../../../../node_modules/electron/dist/electron');
+const child=spawn(binary,[here,'--no-sandbox','--ozone-platform=headless','--use-angle=swiftshader','--enable-unsafe-swiftshader'],{env:{...process.env,SCOUT_LINUX_QA_PROFILE:profile,SCOUT_LINUX_QA_PHASE:phase},stdio:['ignore','pipe','pipe']});
+const log=[]; let timedOut=false;
+for(const stream of [child.stdout,child.stderr])stream.on('data',data=>{const value=data.toString();log.push(value);process.stdout.write(value);});
+const timer=setTimeout(()=>{timedOut=true;child.kill('SIGTERM');setTimeout(()=>child.kill('SIGKILL'),3000).unref();},900000);
+const exit=await new Promise(resolve=>{child.once('exit',(code,signal)=>resolve({code,signal}));child.once('error',error=>resolve({code:null,signal:null,error:String(error)}));});
+clearTimeout(timer);await fs.writeFile(path.join(output,'native-linux-'+phase+'-console.log'),log.join(''));
+let report;try{report=JSON.parse(await fs.readFile(path.join(output,'native-linux-result.json'),'utf8'));}catch{}
+if(report?.completedPhase===phase)await fs.writeFile(path.join(output,'native-linux-'+phase+'-result.json'),JSON.stringify(report,null,2));
+if(timedOut||exit.code!==0||!report?.ok||report?.completedPhase!==phase){console.error(JSON.stringify({exit,timedOut,phase,completedPhase:report?.completedPhase,stage:report?.stage,error:report?.error},null,2));process.exitCode=1;}else console.log(JSON.stringify({ok:true,phase,checks:report.checks.length,profile,result:path.join(output,'native-linux-result.json')},null,2));

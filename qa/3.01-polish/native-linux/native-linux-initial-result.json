@@ -1,0 +1,775 @@
+{
+  "ok": true,
+  "platform": "linux-desktop",
+  "scenario": "3.01-active-slow-frames-and-world-polish",
+  "electron": "44.5.1",
+  "appVersion": "3.0.1",
+  "checks": [
+    {
+      "name": "Real sandbox preload exposes three empty isolated native save slots",
+      "passed": true
+    },
+    {
+      "name": "Three schema-2 careers write and reload through the real native save store",
+      "passed": true
+    },
+    {
+      "name": "Actual first-person world paints distinct visible WebGL2 pixels",
+      "passed": true,
+      "width": 640,
+      "height": 480,
+      "webgl": true,
+      "paintedSamples": 16,
+      "distinctColors": 13,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "glError": 0
+    },
+    {
+      "name": "Cockpit has no floating mph/fuel gauges or permanent storage/objective clutter",
+      "passed": true,
+      "floatingDrivingHUD": false,
+      "floatingMph": false,
+      "floatingFuel": false,
+      "localStorageCopy": false,
+      "fieldNotes": false
+    },
+    {
+      "name": "Driving route card stays clear of the lower cockpit instruments",
+      "passed": true,
+      "top": 164,
+      "bottom": 218.578125,
+      "canvasTop": 0,
+      "canvasHeight": 480
+    },
+    {
+      "name": "Automatic quality reduces full-scene backing pixels during sustained active slow frames",
+      "passed": true,
+      "start": {
+        "deliberateRafDelayMs": 0,
+        "frames": 43,
+        "slowFrames": 10,
+        "minMs": 16.599999999999454,
+        "maxMs": 1466.6000000000004,
+        "meanMs": 180.22325581395353,
+        "width": 640,
+        "height": 480,
+        "quality": "auto"
+      },
+      "end": {
+        "deliberateRafDelayMs": 300,
+        "frames": 19,
+        "slowFrames": 19,
+        "minMs": 299.89999999999964,
+        "maxMs": 516.5999999999985,
+        "meanMs": 312.2684210526315,
+        "width": 448,
+        "height": 336,
+        "quality": "auto"
+      }
+    },
+    {
+      "name": "Live driving snapshots do not write the career every few seconds",
+      "passed": true
+    },
+    {
+      "name": "Native keyboard acceleration and steering produce real distance, fuel use and heading changes",
+      "passed": true,
+      "vehicle": {
+        "x": 499.244521157722,
+        "z": 865.8898819300675,
+        "heading": 0.4701802515485999,
+        "speed": 3.8105796503228264,
+        "steering": -0.05319838173284651,
+        "distance": 4.250676915771703,
+        "fuel": 11.999917460994284,
+        "gear": "D",
+        "damage": 0,
+        "disabled": false
+      }
+    },
+    {
+      "name": "Sustained active frames over 250 ms continue bounded simulation rather than freezing it",
+      "passed": true,
+      "slowFrames": 19,
+      "distance": 4.250676915771703,
+      "fuel": 11.999917460994284,
+      "heading": 0.4701802515485999
+    },
+    {
+      "name": "Settings pause discards held input and does not advance vehicle state",
+      "passed": true
+    },
+    {
+      "name": "Resuming a paused scene does not repay the unseen pause as a simulation jump",
+      "passed": true,
+      "distanceBefore": 4.250676915771703,
+      "distanceAfter": 6.363018227329041
+    },
+    {
+      "name": "Brake, handbrake and grounded car exit preserve the driven career",
+      "passed": true
+    },
+    {
+      "name": "Regional map hides the background header and its controls",
+      "passed": true,
+      "headerVisibility": "hidden",
+      "headerPointerEvents": "none",
+      "brandVisibility": "hidden",
+      "controls": [
+        {
+          "label": "Open field journal (J)",
+          "visibility": "hidden",
+          "pointerEvents": "auto",
+          "hitExposed": false
+        },
+        {
+          "label": "Open settings (Escape)",
+          "visibility": "hidden",
+          "pointerEvents": "auto",
+          "hitExposed": false
+        }
+      ]
+    },
+    {
+      "name": "Regional map uses the real 12 km by 10 km bounds and shows service destinations",
+      "passed": true,
+      "places": [
+        {
+          "name": "Cirrus Works",
+          "left": 3.225,
+          "top": 2.66
+        },
+        {
+          "name": "Maker Yard",
+          "left": 27.5,
+          "top": 15
+        },
+        {
+          "name": "Palette House",
+          "left": 44,
+          "top": 28
+        },
+        {
+          "name": "Junction Café",
+          "left": 55.9167,
+          "top": 28.5
+        },
+        {
+          "name": "Highway Fuel",
+          "left": 7,
+          "top": 6.2
+        },
+        {
+          "name": "Home",
+          "left": 1.83333,
+          "top": 5.1
+        }
+      ],
+      "services": 4,
+      "regions": 7,
+      "nearbyToggle": true
+    },
+    {
+      "name": "Region view keeps complete settlement names inside the map at the small viewport",
+      "passed": true,
+      "map": {
+        "left": 50.125,
+        "right": 574.875,
+        "top": 194.84375,
+        "bottom": 632.125,
+        "width": 524.75,
+        "height": 437.28125
+      },
+      "names": [
+        {
+          "name": "Cirrus Harbor",
+          "left": 90.2109375,
+          "right": 176.4140625,
+          "top": 242.4375,
+          "bottom": 259.234375,
+          "width": 86.203125,
+          "height": 16.796875
+        },
+        {
+          "name": "Eastmere Campus",
+          "left": 132.6796875,
+          "right": 243.9921875,
+          "top": 284.2109375,
+          "bottom": 301.0078125,
+          "width": 111.3125,
+          "height": 16.796875
+        },
+        {
+          "name": "Bellweather",
+          "left": 234.34375,
+          "right": 307.859375,
+          "top": 342.5546875,
+          "bottom": 359.3515625,
+          "width": 73.515625,
+          "height": 16.796875
+        },
+        {
+          "name": "Aster Bay",
+          "left": 309.9609375,
+          "right": 369.0234375,
+          "top": 345.59375,
+          "bottom": 362.390625,
+          "width": 59.0625,
+          "height": 16.796875
+        },
+        {
+          "name": "Juniper Vale",
+          "left": 129.0625,
+          "right": 203.171875,
+          "top": 481.40625,
+          "bottom": 498.203125,
+          "width": 74.109375,
+          "height": 16.796875
+        },
+        {
+          "name": "Larkspur Gardens",
+          "left": 279.078125,
+          "right": 389.484375,
+          "top": 563.671875,
+          "bottom": 580.46875,
+          "width": 110.40625,
+          "height": 16.796875
+        },
+        {
+          "name": "Meridian City",
+          "left": 396.9296875,
+          "right": 480.7421875,
+          "top": 508.8203125,
+          "bottom": 525.6171875,
+          "width": 83.8125,
+          "height": 16.796875
+        }
+      ]
+    },
+    {
+      "name": "Nearby view keeps complete settlement names inside the map at the small viewport",
+      "passed": true,
+      "map": {
+        "left": 50.125,
+        "right": 574.875,
+        "top": 194.84375,
+        "bottom": 632.125,
+        "width": 524.75,
+        "height": 437.28125
+      },
+      "names": [
+        {
+          "name": "Cirrus Harbor",
+          "left": 173.546875,
+          "right": 259.75,
+          "top": 420.0234375,
+          "bottom": 436.8203125,
+          "width": 86.203125,
+          "height": 16.796875
+        }
+      ]
+    },
+    {
+      "name": "Closing the regional map restores the header and hit-tested controls",
+      "passed": true,
+      "headerVisibility": "visible",
+      "headerPointerEvents": "none",
+      "brandVisibility": "visible",
+      "controls": [
+        {
+          "label": "Open field journal (J)",
+          "visibility": "visible",
+          "pointerEvents": "auto",
+          "hitExposed": true
+        },
+        {
+          "label": "Open settings (Escape)",
+          "visibility": "visible",
+          "pointerEvents": "auto",
+          "hitExposed": true
+        }
+      ]
+    },
+    {
+      "name": "Save, title and career reload retain vehicle pose, fuel, damage and mileage",
+      "passed": true
+    },
+    {
+      "name": "Physical pump service hides the background header and its controls",
+      "passed": true,
+      "headerVisibility": "hidden",
+      "headerPointerEvents": "none",
+      "brandVisibility": "hidden",
+      "controls": [
+        {
+          "label": "Open field journal (J)",
+          "visibility": "hidden",
+          "pointerEvents": "auto",
+          "hitExposed": false
+        },
+        {
+          "label": "Open settings (Escape)",
+          "visibility": "hidden",
+          "pointerEvents": "auto",
+          "hitExposed": false
+        }
+      ]
+    },
+    {
+      "name": "Closing physical pump service restores the header and hit-tested controls",
+      "passed": true,
+      "headerVisibility": "visible",
+      "headerPointerEvents": "none",
+      "brandVisibility": "visible",
+      "controls": [
+        {
+          "label": "Open field journal (J)",
+          "visibility": "visible",
+          "pointerEvents": "auto",
+          "hitExposed": true
+        },
+        {
+          "label": "Open settings (Escape)",
+          "visibility": "visible",
+          "pointerEvents": "auto",
+          "hitExposed": true
+        }
+      ]
+    },
+    {
+      "name": "Fuel is purchased at the modeled pump without repairing damage or resetting mileage",
+      "passed": true
+    },
+    {
+      "name": "Paid repairs restore vehicle condition while keeping fuel and mileage",
+      "passed": true
+    },
+    {
+      "name": "E prompt matches its action and the car can be re-entered after pump service",
+      "passed": true
+    },
+    {
+      "name": "Actual T roadside tow charges $150 and preserves fuel, damage, gear and mileage",
+      "passed": true,
+      "vehicle": {
+        "x": 840,
+        "z": 620,
+        "heading": 0,
+        "speed": 0,
+        "steering": 0,
+        "distance": 3142.7,
+        "fuel": 2.25,
+        "gear": "R",
+        "damage": 0.93,
+        "disabled": true
+      }
+    },
+    {
+      "name": "Final walking movement remains live until the exit checkpoint",
+      "passed": true
+    },
+    {
+      "name": "Linux development update manager does not block the offline local world",
+      "passed": true,
+      "state": "unsupported"
+    },
+    {
+      "name": "Real native Save and exit flushes the latest movement before app shutdown",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Native Linux development build with software SwiftShader; this is not a Mac or Windows native runtime test.",
+    "Offscreen window and disabled OS sandbox are confined to the Linux container QA process. Production BrowserWindow security and GPU flags are unchanged.",
+    "Mac fullscreen/signature/update installation and Windows installer behavior are not exercised here.",
+    "HTTP and HTTPS renderer requests are blocked throughout this isolated fixture; bundled file resources remain available.",
+    "Valid synthetic careers are written only into the isolated QA profile. No player career is seeded or replaced.",
+    "The test bypasses the single-instance OS socket lock in memory because this Linux container blocks socket creation. Single-instance locking is not exercised.",
+    "The headless fixture supplies a fixed cursor position because the headless Linux Ozone surface has no physical pointer. Desktop pointer and monitor selection are not exercised.",
+    "A synthetic 1280 by 800 monitor is supplied in memory to the headless fixture. Physical display selection and fullscreen transitions are not exercised.",
+    "Native titlebar options are omitted in the offscreen Linux fixture; OS titlebar styling is not exercised.",
+    "Pointer capture is unavailable in the offscreen fixture; its request rejects immediately. Native mouse locking is not exercised.",
+    "Active slow-frame regression deliberately delays renderer requestAnimationFrame scheduling by 300 ms. The normal grounded/cockpit scene remains visible during all input checks. These are simulation/quality/governor assertions under Linux software rendering, not target-hardware frame-rate measurements."
+  ],
+  "metrics": {
+    "viewport": {
+      "width": 640,
+      "height": 480,
+      "webgl": true,
+      "paintedSamples": 16,
+      "distinctColors": 13,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "glError": 0
+    },
+    "activeSlowFrames": {
+      "start": {
+        "deliberateRafDelayMs": 0,
+        "frames": 43,
+        "slowFrames": 10,
+        "minMs": 16.599999999999454,
+        "maxMs": 1466.6000000000004,
+        "meanMs": 180.22325581395353,
+        "width": 640,
+        "height": 480,
+        "quality": "auto"
+      },
+      "end": {
+        "deliberateRafDelayMs": 300,
+        "frames": 19,
+        "slowFrames": 19,
+        "minMs": 299.89999999999964,
+        "maxMs": 516.5999999999985,
+        "meanMs": 312.2684210526315,
+        "width": 448,
+        "height": 336,
+        "quality": "auto"
+      }
+    },
+    "keyboardEvents": [
+      {
+        "type": "keydown",
+        "key": "w",
+        "hidden": false,
+        "trusted": true
+      },
+      {
+        "type": "keydown",
+        "key": "a",
+        "hidden": false,
+        "trusted": true
+      },
+      {
+        "type": "keyup",
+        "key": "a",
+        "hidden": false,
+        "trusted": true
+      },
+      {
+        "type": "keyup",
+        "key": "w",
+        "hidden": false,
+        "trusted": true
+      }
+    ],
+    "modalChrome": [
+      {
+        "label": "Regional map",
+        "hidden": true,
+        "headerVisibility": "hidden",
+        "headerPointerEvents": "none",
+        "brandVisibility": "hidden",
+        "controls": [
+          {
+            "label": "Open field journal (J)",
+            "visibility": "hidden",
+            "pointerEvents": "auto",
+            "hitExposed": false
+          },
+          {
+            "label": "Open settings (Escape)",
+            "visibility": "hidden",
+            "pointerEvents": "auto",
+            "hitExposed": false
+          }
+        ]
+      },
+      {
+        "label": "Closing the regional map",
+        "hidden": false,
+        "headerVisibility": "visible",
+        "headerPointerEvents": "none",
+        "brandVisibility": "visible",
+        "controls": [
+          {
+            "label": "Open field journal (J)",
+            "visibility": "visible",
+            "pointerEvents": "auto",
+            "hitExposed": true
+          },
+          {
+            "label": "Open settings (Escape)",
+            "visibility": "visible",
+            "pointerEvents": "auto",
+            "hitExposed": true
+          }
+        ]
+      },
+      {
+        "label": "Physical pump service",
+        "hidden": true,
+        "headerVisibility": "hidden",
+        "headerPointerEvents": "none",
+        "brandVisibility": "hidden",
+        "controls": [
+          {
+            "label": "Open field journal (J)",
+            "visibility": "hidden",
+            "pointerEvents": "auto",
+            "hitExposed": false
+          },
+          {
+            "label": "Open settings (Escape)",
+            "visibility": "hidden",
+            "pointerEvents": "auto",
+            "hitExposed": false
+          }
+        ]
+      },
+      {
+        "label": "Closing physical pump service",
+        "hidden": false,
+        "headerVisibility": "visible",
+        "headerPointerEvents": "none",
+        "brandVisibility": "visible",
+        "controls": [
+          {
+            "label": "Open field journal (J)",
+            "visibility": "visible",
+            "pointerEvents": "auto",
+            "hitExposed": true
+          },
+          {
+            "label": "Open settings (Escape)",
+            "visibility": "visible",
+            "pointerEvents": "auto",
+            "hitExposed": true
+          }
+        ]
+      }
+    ],
+    "mapLabels": [
+      {
+        "label": "Region view",
+        "map": {
+          "left": 50.125,
+          "right": 574.875,
+          "top": 194.84375,
+          "bottom": 632.125,
+          "width": 524.75,
+          "height": 437.28125
+        },
+        "names": [
+          {
+            "name": "Cirrus Harbor",
+            "left": 90.2109375,
+            "right": 176.4140625,
+            "top": 242.4375,
+            "bottom": 259.234375,
+            "width": 86.203125,
+            "height": 16.796875
+          },
+          {
+            "name": "Eastmere Campus",
+            "left": 132.6796875,
+            "right": 243.9921875,
+            "top": 284.2109375,
+            "bottom": 301.0078125,
+            "width": 111.3125,
+            "height": 16.796875
+          },
+          {
+            "name": "Bellweather",
+            "left": 234.34375,
+            "right": 307.859375,
+            "top": 342.5546875,
+            "bottom": 359.3515625,
+            "width": 73.515625,
+            "height": 16.796875
+          },
+          {
+            "name": "Aster Bay",
+            "left": 309.9609375,
+            "right": 369.0234375,
+            "top": 345.59375,
+            "bottom": 362.390625,
+            "width": 59.0625,
+            "height": 16.796875
+          },
+          {
+            "name": "Juniper Vale",
+            "left": 129.0625,
+            "right": 203.171875,
+            "top": 481.40625,
+            "bottom": 498.203125,
+            "width": 74.109375,
+            "height": 16.796875
+          },
+          {
+            "name": "Larkspur Gardens",
+            "left": 279.078125,
+            "right": 389.484375,
+            "top": 563.671875,
+            "bottom": 580.46875,
+            "width": 110.40625,
+            "height": 16.796875
+          },
+          {
+            "name": "Meridian City",
+            "left": 396.9296875,
+            "right": 480.7421875,
+            "top": 508.8203125,
+            "bottom": 525.6171875,
+            "width": 83.8125,
+            "height": 16.796875
+          }
+        ]
+      },
+      {
+        "label": "Nearby view",
+        "map": {
+          "left": 50.125,
+          "right": 574.875,
+          "top": 194.84375,
+          "bottom": 632.125,
+          "width": 524.75,
+          "height": 437.28125
+        },
+        "names": [
+          {
+            "name": "Cirrus Harbor",
+            "left": 173.546875,
+            "right": 259.75,
+            "top": 420.0234375,
+            "bottom": 436.8203125,
+            "width": 86.203125,
+            "height": 16.796875
+          }
+        ]
+      }
+    ],
+    "towedViewport": {
+      "width": 512,
+      "height": 384,
+      "webgl": true,
+      "paintedSamples": 16,
+      "distinctColors": 10,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "glError": 0
+    },
+    "updateStatus": {
+      "supported": false,
+      "currentVersion": "3.0.1",
+      "repository": "spinjitsu12/scout",
+      "configurable": false,
+      "updateMode": "development",
+      "offlinePlayable": true,
+      "automaticCheck": true,
+      "unsupportedReason": "In-app updates run in the packaged Windows portable game.",
+      "state": "unsupported",
+      "connection": "unknown",
+      "lastCheckedAt": null,
+      "message": "In-app updates run in the packaged Windows portable game."
+    },
+    "finalCareer": {
+      "schema": 2,
+      "tier": 0,
+      "interior": null,
+      "player": {
+        "x": 843,
+        "z": 611.2599606534523,
+        "yaw": 1.5707963267948966,
+        "pitch": 0
+      },
+      "vehicle": {
+        "x": 840,
+        "z": 620,
+        "heading": 0,
+        "speed": 0,
+        "steering": 0,
+        "distance": 3142.7,
+        "fuel": 2.25,
+        "gear": "R",
+        "damage": 0.93,
+        "disabled": true
+      },
+      "mode": "foot",
+      "destination": null,
+      "parkedAt": [
+        4
+      ],
+      "tutorial": "complete",
+      "thoughtsSeen": [],
+      "homeReviewed": true
+    }
+  },
+  "screenshots": [
+    "native-linux-title.png",
+    "native-linux-on-foot.png",
+    "native-linux-cockpit.png",
+    "native-linux-active-slow-frames.png",
+    "native-linux-settings.png",
+    "native-linux-after-drive-exterior.png",
+    "native-linux-regional-map.png",
+    "native-linux-nearby-map.png",
+    "native-linux-service.png",
+    "native-linux-service-reentered-cockpit.png",
+    "native-linux-stranded.png",
+    "native-linux-towed.png",
+    "native-linux-save-and-exit.png"
+  ],
+  "sourceMainSHA256": "8c426138df9b0f4eb52aaac4782c77c56363fd21883c3021185eb1e6908417cf",
+  "distHTMLSHA256": "9c3534e45acef3d21b2ccd2aeecc6cfe730d8c1393aab639f9c85a83337e8494",
+  "diagnostics": {
+    "gpuFeatures": {
+      "2d_canvas": "enabled",
+      "direct_rendering_display_compositor": "disabled_off_ok",
+      "gpu_compositing": "enabled",
+      "multiple_raster_threads": "enabled_on",
+      "opengl": "enabled_on",
+      "rasterization": "enabled",
+      "raw_draw": "disabled_off_ok",
+      "skia_graphite": "disabled_off",
+      "trees_in_viz": "disabled_off",
+      "video_decode": "enabled",
+      "video_encode": "disabled_software",
+      "vulkan": "disabled_off",
+      "webgl": "enabled",
+      "webgpu": "unavailable_software",
+      "webgpu_on_vk_via_gl_interop": "disabled_off",
+      "webnn": "disabled_off"
+    },
+    "gpu": {
+      "auxAttributes": {
+        "amdSwitchable": false,
+        "canSupportThreadedTextureMailbox": false,
+        "glImplementationParts": "(gl=none,angle=none)",
+        "glResetNotificationStrategy": 0,
+        "hardwareSupportsVulkan": false,
+        "inProcessGpu": true,
+        "initializationTime": 0,
+        "isAsan": false,
+        "isClangCoverage": false,
+        "jpegDecodeAcceleratorSupported": false,
+        "optimus": false,
+        "passthroughCmdDecoder": false,
+        "sandboxed": false,
+        "skiaBackendType": "None",
+        "subpixelFontRendering": true,
+        "targetCpuBits": 64,
+        "visibilityCallbackCallCount": 0
+      },
+      "gpuDevice": [
+        {
+          "active": false,
+          "deviceId": 0,
+          "gpuPreference": 0,
+          "vendorId": 0
+        }
+      ]
+    },
+    "page": {
+      "ready": "complete",
+      "body": "M\nMap\nSCOUT\nCirrus Works · Week 1",
+      "canvases": [
+        {
+          "width": 448,
+          "height": 336
+        }
+      ]
+    }
+  },
+  "nativeQuitObserved": true,
+  "stage": "Completed",
+  "completedPhase": "initial"
+}

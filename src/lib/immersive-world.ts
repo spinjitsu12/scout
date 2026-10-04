@@ -2,16 +2,18 @@ import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { Tier } from './game';
 import { createAssetLibrary, createPerson, WORLD_PALETTE, type PersonModel } from './immersive-assets.ts';
+import { createWindGrass, createCoastalAtmosphere } from './immersive-atmosphere.ts';
+import { buildRegionalScenery } from './regional-scenery.ts';
 import { getImmersiveLocations, WORLD_SIZE, WORLD_ROADS, HOME_SPAWN, HOME_CAR_SPAWN, type WorldPoint, type WorldCollision, type WorldInteractable, type ImmersiveLocation } from './immersive-locations.ts';
 export * from './immersive-locations.ts';
 export { createPerson, createVehicle } from './immersive-assets.ts';
 
-export type ImmersiveWorld = { group: THREE.Group; collisions: WorldCollision[]; locations: ImmersiveLocation[]; interactables: WorldInteractable[]; homeSpawn: WorldPoint; carSpawn: WorldPoint; update: (dt: number, elapsed: number) => void; dispose: () => void };
+export type ImmersiveWorld = { group: THREE.Group; collisions: WorldCollision[]; locations: ImmersiveLocation[]; interactables: WorldInteractable[]; homeSpawn: WorldPoint; carSpawn: WorldPoint; setFocus: (point: WorldPoint) => void; update: (dt: number, elapsed: number) => void; dispose: () => void };
 
-/** A continuous 1.5km town. Rooms are physically inside their buildings and open doors have actual gaps. */
-export function buildImmersiveWorld(options: { tier: Tier }): ImmersiveWorld {
+/** Seven connected coastal settlements; rooms, road access and physical blockers share metre coordinates. */
+export function buildImmersiveWorld(options: { tier: Tier; ambientResidents?: boolean }): ImmersiveWorld {
   const tier = options.tier, assets = createAssetLibrary(), { box, cylinder, sphere, put, mat, textured } = assets;
-  const group = new THREE.Group(); group.name = 'SCOUT continuous open world';
+  const group = new THREE.Group(); group.name = 'SCOUT · Cirrus Coastal Region';
   const collisions: WorldCollision[] = [], locations = getImmersiveLocations(tier);
   const interactables: WorldInteractable[] = locations.flatMap(l => [...l.pointsOfInterest, { id: `door-${l.id}`, type: 'door' as const, label: `Enter ${l.name}`, position: l.door, range: 2.5, locationId: l.id }]);
   const ownedGeometries: THREE.BufferGeometry[] = [], ownedMaterials: THREE.Material[] = [], ownedTextures: THREE.Texture[] = [];
@@ -20,15 +22,20 @@ export function buildImmersiveWorld(options: { tier: Tier }): ImmersiveWorld {
   const solid = (id: string, x: number, z: number, width: number, depth: number, height: number, minY = 0, kind: WorldCollision['kind'] = 'furniture') => collisions.push({ id: `${id}-${colliderIndex++}`, minX: x - width / 2, maxX: x + width / 2, minZ: z - depth / 2, maxZ: z + depth / 2, minY, maxY: minY + height, kind });
   const block = (id: string, x: number, y: number, z: number, w: number, h: number, d: number, material: THREE.Material | string, kind: WorldCollision['kind'] = 'wall', collides = true) => { const mesh = put(group, box(w, h, d, material), x, y, z); if (collides) solid(id, x, z, w, d, h, y - h / 2, kind); return mesh; };
   const furniture = (id: string, object: THREE.Group, x: number, z: number, w: number, d: number, h: number, rotation = 0) => { object.rotation.y = rotation; put(group, object, x, 0, z); const c = Math.abs(Math.cos(rotation)), s = Math.abs(Math.sin(rotation)); solid(id, x, z, w * c + d * s, d * c + w * s, h); return object; };
-  put(group, box(WORLD_SIZE.width + 600, .2, WORLD_SIZE.depth + 600, textured('grass')), 768, -.12, 512).castShadow = false;
+  const groundMaterial = textured('grass').clone(); ownedMaterials.push(groundMaterial);
+  if (groundMaterial.map) { const texture = groundMaterial.map.clone(); texture.repeat.set(500, 420); texture.needsUpdate = true; groundMaterial.map = texture; ownedTextures.push(texture); }
+  // Stop at the coastline so land never masks the animated water.
+  put(group, box(11500, .2, WORLD_SIZE.depth + 600, groundMaterial), 5450, -.12, WORLD_SIZE.depth / 2).castShadow = false;
   const roadMat = textured('asphalt'), sidewalkMat = textured('stone');
-  const road = (x: number, z: number, w: number, d: number, lanes = true) => {
+  const road = (x: number, z: number, w: number, d: number, lanes = true, highway = false) => {
     put(group, box(w + 5.2, .025, d + 5.2, sidewalkMat), x, -.012, z).castShadow = false; put(group, box(w, .03, d, roadMat), x, .01, z).castShadow = false;
     const horizontal = w > d, length = horizontal ? w : d;
     if (lanes) { for (let offset = -length / 2 + 7; offset < length / 2 - 3; offset += 13) put(group, box(horizontal ? 5 : .12, .006, horizontal ? .12 : 5, '#dec996'), x + (horizontal ? offset : 0), .029, z + (horizontal ? 0 : offset)).castShadow = false;
-      for (const side of [-1, 1]) put(group, box(horizontal ? w : .1, .007, horizontal ? .1 : d, '#dfdfcf'), x + (horizontal ? 0 : side * (w / 2 - .45)), .03, z + (horizontal ? side * (d / 2 - .45) : 0)).castShadow = false; }
+      for (const side of [-1, 1]) put(group, box(horizontal ? w : .1, .007, horizontal ? .1 : d, '#dfdfcf'), x + (horizontal ? 0 : side * (w / 2 - .45)), .03, z + (horizontal ? side * (d / 2 - .45) : 0)).castShadow = false;
+      if (highway) for (const side of [-1, 1]) put(group, box(horizontal ? w : .1, .008, horizontal ? .1 : d, '#edca82'), x + (horizontal ? 0 : side * .25), .031, z + (horizontal ? side * .25 : 0)).castShadow = false;
+    }
   };
-  WORLD_ROADS.forEach(p => road(p.x, p.z, p.width, p.depth));
+  WORLD_ROADS.forEach(p => road(p.x, p.z, p.width, p.depth, p.kind !== 'access', p.kind === 'highway'));
   const glass = new THREE.MeshPhysicalMaterial({ color: '#abc7bc', roughness: .16, metalness: .05, transparent: true, opacity: .2, side: THREE.DoubleSide, depthWrite: false }); ownedMaterials.push(glass);
   const wallColor = tier === 2 ? '#b8b8ac' : WORLD_PALETTE.plaster;
   const windowWall = (id: string, x: number, z: number, length: number, horizontal: boolean, color: string, height = 4.4) => {
@@ -172,81 +179,61 @@ export function buildImmersiveWorld(options: { tier: Tier }): ImmersiveWorld {
     }
     for (const side of [-1, 1]) { shelf(x + side * (w / 2 - .7), z + 1.5, side > 0 ? -Math.PI / 2 : Math.PI / 2, 3.6); furniture('reading-sofa', assets.sofa('#9aab94', 3.1), x + side * 24, z + 17.7, 3.3, 1, 1.1); furniture('reading-lamp', assets.floorLamp(), x + side * 29, z + 18.8, .5, .5, 1.9); }
     const face = l.door.z > z ? 1 : -1; for (const side of [-1, 1]) furniture('porch-bench', assets.bench(), x + side * 9, l.door.z + face * 4, 2.2, .8, 1.25, face < 0 ? Math.PI : 0);
-    road(l.parking.x, l.parking.z, 45, 25, false); for (let i = -3; i <= 3; i++) put(group, box(.1, .005, 5.7, '#e6dfbc'), x + i * 3.5, .042, l.parking.z + 5).castShadow = false; const access = x < 768 ? 500 : 1040; road((access + x) / 2, l.parking.z, Math.abs(access - x) + 12, 9.2, false);
+    road(l.parking.x, l.parking.z, 45, 25, false); for (let i = -3; i <= 3; i++) put(group, box(.1, .005, 5.7, '#e6dfbc'), x + i * 3.5, .042, l.parking.z + 5).castShadow = false; const access = l.access.x; road((access + x) / 2, l.parking.z, Math.abs(access - x) + 12, 9.2, false);
     for (const side of [-1, 1]) { put(group, assets.label('P', 'Visitor parking', 1.15, .8), x + side * 19, 1.9, l.parking.z + 11); put(group, cylinder(.035, 1.9, '#566c5a'), x + side * 19, .95, l.parking.z + 11); }
   }
   locations.forEach(building);
 
-  // A coherent neighborhood, not a few venues floating in an empty world.
-  const accessRoads = locations.filter(l => l.id < 4).map(l => { const access = l.parking.x < 768 ? 500 : 1040; return { x: (access + l.parking.x) / 2, z: l.parking.z, width: Math.abs(access - l.parking.x) + 12, depth: 9.2 }; });
-  const nearDriveway = (x: number, z: number, pad: number) => accessRoads.some(p => Math.abs(x - p.x) < p.width / 2 + pad && Math.abs(z - p.z) < p.depth / 2 + pad);
-  const nearLocation = (x: number, z: number, pad = 40) => nearDriveway(x, z, 15) || locations.some(l => x > l.footprint.minX - pad && x < l.footprint.maxX + pad && z > l.footprint.minZ - pad && z < l.footprint.maxZ + pad || Math.hypot(x - l.parking.x, z - l.parking.z) < pad + 20);
-  function neighborhoodBuilding(x: number, z: number, variant: number, facing: number) {
-    const w = 12 + variant % 3 * 3.5, d = 11 + variant % 2 * 4, h = 3.2 + variant % 3 * 1.2, house = new THREE.Group(); house.rotation.y = facing;
-    put(house, box(w, h, d, ['#d9cbb1', '#af8e75', '#9faea0', '#c8c6b2', '#aaa991'][variant % 5]), 0, h / 2, 0); put(house, box(w + .45, .12, d + .4, '#6b7964'), 0, h + .05, 0);
-    if (variant % 3 !== 0) { const shape = new THREE.Shape(); shape.moveTo(-w / 2 - .3, 0); shape.lineTo(0, w * .28); shape.lineTo(w / 2 + .3, 0); shape.closePath(); const geometry = new THREE.ExtrudeGeometry(shape, { depth: d + .6, bevelEnabled: false }); ownedGeometries.push(geometry); put(house, new THREE.Mesh(geometry, mat(['#718473', '#85745c', '#607772'][variant % 3])), 0, h, -d / 2 - .3).castShadow = true; put(house, box(.7, 1.4, .7, '#9a7d64'), w / 4, h + 1, 1); }
-    for (const px of [-w / 3, w / 3]) { put(house, box(2, 1.35, .055, '#526c60'), px, 1.85, d / 2 + .036); put(house, box(1.8, 1.15, .06, '#adc8b5'), px, 1.85, d / 2 + .077); put(house, box(2.03, .12, .18, '#e3d6b7'), px, 1.18, d / 2 + .09); put(house, box(.05, 1.15, .066, '#5a7461'), px, 1.85, d / 2 + .082); put(house, box(1.8, .05, .066, '#5a7461'), px, 1.85, d / 2 + .083); }
-    put(house, box(1.1, 2.15, .055, '#537365'), 0, 1.075, d / 2 + .04); put(house, sphere(.045, '#bca26b'), -.36, 1.02, d / 2 + .094);
-    if (variant % 3 === 0) put(house, assets.label(['RIVER & ROW', 'HARBOR BOOKS', 'FIELD SUPPLY', 'LANTERN REPAIR'][variant % 4], 'Independent since 1982', Math.min(8, w - 1), .9, '#456756'), 0, h - .55, d / 2 + .11);
-    put(group, house, x, 0, z); const c = Math.abs(Math.cos(facing)), s = Math.abs(Math.sin(facing)); solid('neighborhood-building', x, z, w * c + d * s, d * c + w * s, h + w * .28, 0, 'building');
-    const garden = new THREE.Vector3(w / 2 + 2, 0, 1).applyAxisAngle(new THREE.Vector3(0, 1, 0), facing); furniture('garden-planter', assets.plant(2), x + garden.x, z + garden.z, 1.2, 1.2, 2.2);
-  }
-  let houseIndex = 0;
-  for (const street of [500, 1040]) for (const side of [-1, 1]) for (let z = 165; z < 930; z += 67) { const x = street + side * 36; if (Math.abs(z - 350) < 32 || Math.abs(z - 650) < 32 || Math.abs(z - 525) < 24 || nearLocation(x, z)) continue; neighborhoodBuilding(x, z, houseIndex++, side > 0 ? Math.PI / 2 : -Math.PI / 2); }
-  for (const street of [350, 650]) for (const side of [-1, 1]) for (let x = 185; x < 1370; x += 68) { const z = street + side * 38; if ([500, 768, 1040].some(v => Math.abs(x - v) < 37) || nearLocation(x, z, 22)) continue; neighborhoodBuilding(x, z, houseIndex++, side > 0 ? Math.PI : 0); }
-  for (const x of [500, 768, 1040]) for (const z of [350, 650]) { for (const side of [-1, 1]) for (let stripe = -3; stripe <= 3; stripe++) put(group, box(.55, .008, 5.1, '#d8d9c4'), x + stripe, .04, z + side * 10).castShadow = false; const sign = new THREE.Group(); put(sign, cylinder(.045, 3.1, '#526951'), 0, 1.55, 0); put(sign, assets.label(x < 768 ? 'OLD QUARTER' : 'EAST DISTRICT', 'Slow down • look around', 4.5, 1.1), 0, 2.7, 0); furniture('route-sign', sign, x + 11, z + 12, .14, .14, 3.3); }
-  for (const [x, z] of [[538, 475], [1002, 490], [710, 620], [1260, 370]]) { const stop = new THREE.Group(); put(stop, box(3.8, .12, 1.9, '#597160'), 0, 2.5, 0); for (const side of [-1, 1]) put(stop, cylinder(.04, 2.5, '#596b52'), side * 1.75, 1.25, .75); put(stop, box(3.8, 1.45, .018, glass), 0, 1.43, .78); put(stop, assets.bench(), 0, 0, .32); furniture('bus-shelter', stop, x, z, 3.9, 1.7, 2.7); put(group, assets.label('BUS', 'Take the scenic route', 1.1, .5), x + 2.5, 2.3, z); put(group, cylinder(.04, 2.4, '#667454'), x + 2.5, 1.2, z); }
-  for (const x of [500, 1040]) for (let z = 145; z < 925; z += 46) if (!nearLocation(x + 10, z, 5) && ![110, 350, 525, 650, 950].some(crossing => Math.abs(z - crossing) < 12)) furniture('street-lamp', assets.streetLamp(), x + 10, z, .28, .28, 5.3);
-
-  // The river sits east of the scenic walking path and west of the outer through-road.
-  const riverGeometry = new THREE.PlaneGeometry(65, 650, 4, 20), riverMaterial = new THREE.MeshStandardMaterial({ color: '#739e9c', roughness: .28, metalness: .25, transparent: true, opacity: .93 }); ownedGeometries.push(riverGeometry); ownedMaterials.push(riverMaterial); const river = new THREE.Mesh(riverGeometry, riverMaterial); river.rotation.x = -Math.PI / 2; river.position.set(1354, -.045, 525); river.receiveShadow = true; group.add(river);
-  road(1298, 530, 4.2, 735, false);
-  for (let z = 230; z < 870; z += 125) { furniture('riverside-bench', assets.bench(), 1291, z, 2.2, .8, 1.25, Math.PI / 2); furniture('riverside-lamp', assets.streetLamp(), 1293, z + 18, .3, .3, 5.3); }
-  interactables.push({ id: 'river-overlook', type: 'thought', label: 'Watch the river for a while', position: { x: 1290, z: 480 }, range: 4, locationId: -1, detail: 'The river keeps its own schedule. Behind you, the neighborhood carries on: doors opening, cups being set down, people finding their next piece of work.' });
-  for (let z = 182; z < 880; z += 12) {
-    if ([350, 650].some(crossing => z <= crossing + 16 && z + 12 >= crossing - 16)) continue;
-    block('river-rail-post', 1308, .55, z, .12, 1.1, .12, '#796b4d', 'furniture'); block('river-rail', 1308, .72, z + 6, .09, .11, 12, '#8d7c58', 'furniture');
-  }
-  for (const z of [350, 650]) {
-    // A real low bridge deck and side rails continue each street across the river.
-    block('river-bridge-deck', 1354, -.2, z, 100, .32, 20, '#8c9b84', 'building');
-    for (const side of [-1, 1]) {
-      block('river-bridge-rail', 1347, .8, z + side * 10, 82, .13, .13, '#72836c', 'furniture');
-      for (let x = 1306; x <= 1386; x += 8) block('river-bridge-post', x, .55, z + side * 10, .16, 1.1, .16, '#6b7e68', 'furniture');
-    }
-  }
-  // Visible trunks have matching physical radii. Foliage creates shade, never an invisible ground barrier.
-  let seed = 831 + tier * 271; const rng = () => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; };
-  const treePoints: { x: number; z: number; size: number; tint: number; angle: number }[] = [];
-  const isRoad = (x: number, z: number, pad: number) => nearDriveway(x, z, pad) || WORLD_ROADS.some(p => Math.abs(x - p.x) < p.width / 2 + pad && Math.abs(z - p.z) < p.depth / 2 + pad);
-  for (let i = 0; i < 1450; i++) { const x = 45 + rng() * 1445, z = 45 + rng() * 940; if (isRoad(x, z, 9) || nearLocation(x, z, 28) || x > 1280 && x < 1420 || Math.abs(z - 266) < 18 && (x > 325 && x < 525 || x > 1015 && x < 1240) || z > 690 && z < 790 && (x > 325 && x < 525 || x > 1015 && x < 1240)) continue; const size = 1.2 + rng() * 1.4; treePoints.push({ x, z, size, tint: rng(), angle: rng() * Math.PI * 2 }); solid('tree-trunk', x, z, .55 * size, .55 * size, 5.3 * size, 0, 'tree'); }
-  const trunkGeometry = new THREE.CylinderGeometry(.14, .27, 4.3, 7), crownGeometry = new THREE.IcosahedronGeometry(2.8, 1); ownedGeometries.push(trunkGeometry, crownGeometry); const patches = new Map<string, typeof treePoints>(); treePoints.forEach(p => { const key = `${Math.floor(p.x / 240)}:${Math.floor(p.z / 240)}`, patch = patches.get(key) ?? []; patch.push(p); patches.set(key, patch); });
-  const matrix = new THREE.Matrix4(), pos = new THREE.Vector3(), rot = new THREE.Quaternion(), scale = new THREE.Vector3();
-  for (const points of patches.values()) { const trunks = new THREE.InstancedMesh(trunkGeometry, mat('#76664b'), points.length), crowns = new THREE.InstancedMesh(crownGeometry, mat('#648264'), points.length * 3); points.forEach((p, i) => { pos.set(p.x, p.size * 2.15, p.z); scale.setScalar(p.size); rot.setFromAxisAngle(new THREE.Vector3(0, 1, 0), p.angle); matrix.compose(pos, rot, scale); trunks.setMatrixAt(i, matrix); for (let c = 0; c < 3; c++) { const a = c * Math.PI * 2 / 3 + p.angle; pos.set(p.x + Math.sin(a) * p.size * .8, p.size * (4.3 + c * .24), p.z + Math.cos(a) * p.size * .8); scale.set(p.size * (.8 + c * .06), p.size * (.75 + c * .09), p.size * .8); matrix.compose(pos, rot, scale); crowns.setMatrixAt(i * 3 + c, matrix); crowns.setColorAt(i * 3 + c, new THREE.Color().setHSL(.265 + p.tint * .06, .17 + p.tint * .1, .29 + p.tint * .12)); } }); trunks.castShadow = crowns.castShadow = trunks.receiveShadow = crowns.receiveShadow = true; trunks.computeBoundingSphere(); crowns.computeBoundingSphere(); group.add(trunks, crowns); }
-  for (let i = 0; i < 18; i++) { const hill = sphere(100 + i % 4 * 30, ['#7b9276', '#8b9b7b', '#697f6c'][i % 3], 2); hill.scale.set(1.8, .6 + i % 3 * .1, 1.2); const angle = i / 18 * Math.PI * 2; put(group, hill, 768 + Math.sin(angle) * 1200, -15, 512 + Math.cos(angle) * 950).castShadow = false; }
-  for (const z of [50, 985]) for (let x = 55; x < 1490; x += 25) { block('town-fence-post', x, .6, z, .16, 1.2, .16, '#8c8166', 'furniture'); block('town-fence-rail', x + 12.5, .8, z, 25, .14, .12, '#988869', 'furniture'); }
-  for (const x of [50, 1485]) for (let z = 55; z < 985; z += 25) { block('town-fence-post', x, .6, z, .16, 1.2, .16, '#8c8166', 'furniture'); block('town-fence-rail', x, .8, z + 12.5, .12, .14, 25, '#988869', 'furniture'); }
+  const scenery = buildRegionalScenery({ group, assets, collisions, interactables, locations, ownedGeometries, ownedMaterials, tier });
 
   // Static detail shares spatial material batches; the animated residents keep their articulated parts.
   batchStaticGeometry(group, ownedGeometries);
+  const grass = createWindGrass({ patches: scenery.grassPatches, maxBlades: 28000 }); group.add(grass.group);
+  const atmosphere = createCoastalAtmosphere({ width: WORLD_SIZE.width, depth: WORLD_SIZE.depth, centerX: WORLD_SIZE.width / 2, centerZ: WORLD_SIZE.depth / 2, coastX: 11200 }); group.add(atmosphere.group);
   const paths: WorldPoint[][] = [
     [{ x: 508, z: 395 }, { x: 508, z: 435 }, { x: 508.3, z: 435 }, { x: 508.3, z: 395 }],
     [{ x: 1032, z: 548 }, { x: 1032, z: 588 }, { x: 1031.7, z: 588 }, { x: 1031.7, z: 548 }],
     [{ x: 1298, z: 330 }, { x: 1298, z: 410 }, { x: 1296, z: 410 }, { x: 1296, z: 330 }],
     [{ x: 800, z: 641.5 }, { x: 826, z: 641.5 }, { x: 826, z: 641 }, { x: 800, z: 641 }],
   ];
-  paths.forEach((path, index) => { const person = createPerson({ avatar: index * 3 + tier }); group.add(person.group); residents.push({ person, path, distance: index * 13, speed: .9 + index % 2 * .15 }); });
-  locations.filter(l => l.id > 0 && l.id < 4).forEach((l, index) => { const person = createPerson({ avatar: 7 + index }); group.add(person.group); residents.push({ person, path: [{ x: l.center.x - 4, z: l.center.z - 10 }, { x: l.center.x + 4, z: l.center.z - 10 }, { x: l.center.x + 4, z: l.center.z + 12 }, { x: l.center.x - 4, z: l.center.z + 12 }], distance: index * 11, speed: .6 }); });
-  const update = (dt: number, elapsed: number) => { riverMaterial.color.setHSL(.48, .17, .51 + Math.sin(elapsed * .1) * .015); residents.forEach(r => { r.distance += Math.min(dt, .05) * r.speed; let total = 0; const lengths = r.path.map((a, i) => { const b = r.path[(i + 1) % r.path.length], length = Math.hypot(a.x - b.x, a.z - b.z); total += length; return length; }); let distance = r.distance % total; for (let i = 0; i < lengths.length; i++) { if (distance > lengths[i]) { distance -= lengths[i]; continue; } const a = r.path[i], b = r.path[(i + 1) % r.path.length], amount = distance / lengths[i]; r.person.group.position.set(a.x + (b.x - a.x) * amount, 0, a.z + (b.z - a.z) * amount); r.person.group.rotation.y = Math.atan2(-(b.x - a.x), -(b.z - a.z)); break; } r.person.update(r.speed, elapsed); }); };
+  if (options.ambientResidents !== false) {
+    paths.forEach((path, index) => { const person = createPerson({ avatar: index * 3 + tier }); group.add(person.group); residents.push({ person, path, distance: index * 13, speed: .9 + index % 2 * .15 }); });
+    locations.filter(l => l.id > 0 && l.id < 4).forEach((l, index) => { const person = createPerson({ avatar: 7 + index }); group.add(person.group); residents.push({ person, path: [{ x: l.center.x - 4, z: l.center.z - 10 }, { x: l.center.x + 4, z: l.center.z - 10 }, { x: l.center.x + 4, z: l.center.z + 12 }, { x: l.center.x - 4, z: l.center.z + 12 }], distance: index * 11, speed: .6 }); });
+  }
+  const setFocus = createRegionalVisibility(group); setFocus(HOME_SPAWN);
+  const update = (dt: number, elapsed: number) => { scenery.update(elapsed); grass.update(elapsed); atmosphere.update(elapsed); residents.forEach(r => { r.distance += Math.min(dt, .05) * r.speed; let total = 0; const lengths = r.path.map((a, i) => { const b = r.path[(i + 1) % r.path.length], length = Math.hypot(a.x - b.x, a.z - b.z); total += length; return length; }); let distance = r.distance % total; for (let i = 0; i < lengths.length; i++) { if (distance > lengths[i]) { distance -= lengths[i]; continue; } const a = r.path[i], b = r.path[(i + 1) % r.path.length], amount = distance / lengths[i]; r.person.group.position.set(a.x + (b.x - a.x) * amount, 0, a.z + (b.z - a.z) * amount); r.person.group.rotation.y = Math.atan2(-(b.x - a.x), -(b.z - a.z)); break; } r.person.update(r.speed, elapsed); }); };
   update(0, 0); let disposed = false;
-  return { group, collisions, locations, interactables, homeSpawn: { ...HOME_SPAWN }, carSpawn: { ...HOME_CAR_SPAWN }, update, dispose: () => { if (disposed) return; disposed = true; residents.forEach(r => r.person.dispose()); assets.dispose(); new Set(ownedGeometries).forEach(g => g.dispose()); ownedMaterials.forEach(m => m.dispose()); ownedTextures.forEach(t => t.dispose()); group.clear(); } };
+  return { group, collisions, locations, interactables, homeSpawn: { ...HOME_SPAWN }, carSpawn: { ...HOME_CAR_SPAWN }, setFocus, update, dispose: () => { if (disposed) return; disposed = true; residents.forEach(r => r.person.dispose()); group.traverse(object => { if (object instanceof THREE.InstancedMesh && !object.userData.animatedGrass && !object.userData.animatedAtmosphere) object.dispose(); }); grass.dispose(); atmosphere.dispose(); assets.dispose(); new Set(ownedGeometries).forEach(g => g.dispose()); ownedMaterials.forEach(m => m.dispose()); ownedTextures.forEach(t => t.dispose()); group.clear(); } };
+}
+
+/** Distant chunks are hidden before render traversal, while roads and sky remain continuous. */
+function createRegionalVisibility(root: THREE.Group): (point: WorldPoint) => void {
+  root.updateMatrixWorld(true);
+  const chunks = new Map<string, { group: THREE.Group; x: number; z: number }>(), objects: THREE.Mesh[] = [];
+  root.traverse(object => {
+    if (!(object instanceof THREE.Mesh) || object.userData.animatedAtmosphere) return;
+    for (let parent = object.parent; parent && parent !== root; parent = parent.parent) if (parent.name.startsWith('Scout character')) return;
+    objects.push(object);
+  });
+  for (const object of objects) {
+    if (object instanceof THREE.InstancedMesh) { if (!object.boundingSphere) object.computeBoundingSphere(); } else if (!object.geometry.boundingSphere) object.geometry.computeBoundingSphere();
+    const sphere = object instanceof THREE.InstancedMesh ? object.boundingSphere : object.geometry.boundingSphere;
+    if (!sphere || sphere.radius * object.matrixWorld.getMaxScaleOnAxis() > 430) continue;
+    const center = sphere.center.clone().applyMatrix4(object.matrixWorld), cx = Math.floor(center.x / 320), cz = Math.floor(center.z / 320), key = `${cx}:${cz}`;
+    let chunk = chunks.get(key);
+    if (!chunk) { const group = new THREE.Group(); group.name = `Regional spatial chunk ${key}`; group.userData.regionalChunk = true; root.add(group); chunk = { group, x: (cx + .5) * 320, z: (cz + .5) * 320 }; chunks.set(key, chunk); }
+    chunk.group.attach(object);
+  }
+  const prune = (group: THREE.Group) => { for (const child of [...group.children]) if (child instanceof THREE.Group && !child.userData.regionalChunk && !child.name.startsWith('Scout character')) { prune(child); if (!child.children.length) child.removeFromParent(); } }; prune(root);
+  let previous: WorldPoint | undefined;
+  return point => { if (!Number.isFinite(point.x) || !Number.isFinite(point.z) || previous && Math.hypot(point.x - previous.x, point.z - previous.z) < 32) return; previous = { ...point }; for (const chunk of chunks.values()) chunk.group.visible = Math.hypot(point.x - chunk.x, point.z - chunk.z) < 1600; };
 }
 
 function batchStaticGeometry(root: THREE.Group, owned: THREE.BufferGeometry[]) {
   root.updateMatrixWorld(true);
   const batches = new Map<string, { material: THREE.Material; geometries: THREE.BufferGeometry[]; meshes: THREE.Mesh[]; castShadow: boolean; receiveShadow: boolean }>();
   root.traverse(object => {
-    if (!(object instanceof THREE.Mesh) || object instanceof THREE.InstancedMesh || Array.isArray(object.material) || object.material.transparent) return;
+    if (!(object instanceof THREE.Mesh) || object instanceof THREE.InstancedMesh || object.userData.animatedGrass || object.userData.animatedAtmosphere || Array.isArray(object.material) || object.material.transparent || object.material instanceof THREE.ShaderMaterial) return;
     const p = new THREE.Vector3(); object.getWorldPosition(p); const key = `${object.material.uuid}|${Math.floor(p.x / 240)}|${Math.floor(p.z / 240)}|${object.castShadow}`;
     const batch = batches.get(key) ?? { material: object.material, geometries: [] as THREE.BufferGeometry[], meshes: [] as THREE.Mesh[], castShadow: object.castShadow, receiveShadow: object.receiveShadow };
     const transformed = object.geometry.clone().applyMatrix4(object.matrixWorld); transformed.clearGroups(); const geometry = transformed.index ? transformed.toNonIndexed() : transformed; if (geometry !== transformed) transformed.dispose(); geometry.deleteAttribute('tangent');

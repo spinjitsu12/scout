@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
-import { buildImmersiveWorld, WORLD_ROADS, getImmersiveLocations } from '../src/lib/immersive-world.ts';
+import { buildImmersiveWorld, WORLD_ROADS, getImmersiveLocations, findRegionalRoute } from '../src/lib/immersive-world.ts';
 import { createVehicle } from '../src/lib/immersive-assets.ts';
 import { createImmersiveVehicle, immersiveVehicleFits, stepImmersiveVehicle } from '../src/lib/immersive-driving.ts';
 import { DREAM_CAR_SPAWN, HOME_CAR_SPAWN, IMMERSION_BOUNDS } from '../src/lib/immersive-runtime.ts';
@@ -8,13 +8,14 @@ const driveBetween = (from, to, world, label) => {
   const heading = Math.atan2(-(to.x - from.x), -(to.z - from.z));
   const length = Math.hypot(to.x - from.x, to.z - from.z);
   const samples = Math.max(1, Math.ceil(length / 2));
+  const localWorld = { ...world, solids: world.solids.filter(solid => solid.maxX >= Math.min(from.x, to.x) - 3 && solid.minX <= Math.max(from.x, to.x) + 3 && solid.maxZ >= Math.min(from.z, to.z) - 3 && solid.minZ <= Math.max(from.z, to.z) + 3) };
   for (let index = 0; index <= samples; index++) {
     const fraction = index / samples;
     const position = { x: from.x + (to.x - from.x) * fraction, z: from.z + (to.z - from.z) * fraction };
-    assert.ok(immersiveVehicleFits(position, heading, world), `${label}: the entire compact fits at (${position.x.toFixed(1)}, ${position.z.toFixed(1)})`);
+    assert.ok(immersiveVehicleFits(position, heading, localWorld), `${label}: the entire compact fits at (${position.x.toFixed(1)}, ${position.z.toFixed(1)})`);
   }
 };
-let parkingChecks = 0, approachChecks = 0;
+let parkingChecks = 0, approachChecks = 0, regionalRoutes = 0;
 for (const tier of [0, 1, 2]) {
   const scene = buildImmersiveWorld({ tier });
   try {
@@ -28,10 +29,9 @@ for (const tier of [0, 1, 2]) {
         assert.ok(immersiveVehicleFits(location.parking, heading, world), `${location.name} has a full-body parking space, heading ${heading}`); parkingChecks++;
       }
       if (location.id < 4) {
-        const roadX = location.parking.x < 768 ? 500 : 1040;
-        driveBetween({ x: roadX, z: location.parking.z }, location.parking, world, `${location.name} driveway`);
+        driveBetween(location.access, location.parking, world, `${location.name} driveway`);
         const bound = location.footprint;
-        assert.ok(Math.abs(location.parking.x - roadX) > 50, `${location.name} parking is a forecourt instead of the main lane`);
+        assert.ok(Math.hypot(location.parking.x - location.access.x, location.parking.z - location.access.z) > 50, `${location.name} parking is a forecourt instead of the main lane`);
         assert.ok(location.parking.z < bound.minZ || location.parking.z > bound.maxZ, `${location.name} parking stays outside its building`); approachChecks++;
       }
     }
@@ -40,18 +40,26 @@ for (const tier of [0, 1, 2]) {
     driveBetween({ x: fuel.parking.x, z: 650 }, fuel.parking, world, 'Fuel station entrance');
     driveBetween({ x: 500, z: 525 }, { x: HOME_CAR_SPAWN.x, z: 525 }, world, 'Home branch road');
     driveBetween({ x: HOME_CAR_SPAWN.x, z: 525 }, HOME_CAR_SPAWN, world, 'Home parking entrance');
+    for (const location of locations.filter(place => place.id >= 1 && place.id <= 3)) {
+      const route = findRegionalRoute(locations[0].parking, location.parking);
+      assert.ok(route.distance > 3000 && Number.isFinite(route.distance), `${location.name} requires a regional journey`);
+      assert.ok(route.segments.some(segment => segment.kind === 'highway'), `${location.name} is reached through the interstate`);
+      for (const segment of route.segments) driveBetween(segment.from, segment.to, world, `${location.name} via ${segment.name}`);
+      regionalRoutes++;
+    }
     for (const road of WORLD_ROADS) {
       const horizontal = road.width > road.depth, margin = 4;
       const from = horizontal ? { x: road.x - road.width / 2 + margin, z: road.z } : { x: road.x, z: road.z - road.depth / 2 + margin };
       const to = horizontal ? { x: road.x + road.width / 2 - margin, z: road.z } : { x: road.x, z: road.z + road.depth / 2 - margin };
-      driveBetween(from, to, world, `Tier ${tier} road ${road.x},${road.z}`);
+      driveBetween(from, to, world, `Tier ${tier} road ${road.name}`);
     }
-    let car = createImmersiveVehicle({ x: 500, z: locations[0].parking.z, heading: Math.PI / 2 });
+    const headquarters = locations[0], start = headquarters.access;
+    let car = createImmersiveVehicle({ ...start, heading: Math.atan2(-(headquarters.parking.x - start.x), -(headquarters.parking.z - start.z)) });
     for (let frame = 0; frame < 60 * 6; frame++) {
       car = stepImmersiveVehicle(car, { throttle: .65, brake: 0, steer: 0 }, 1 / 60, world);
       assert.equal(car.collision, false, 'A legal branch has no hidden vehicle barrier'); assert.equal(car.y, 0, 'The driveway never launches a car');
     }
-    assert.ok(car.x < 485, 'The compact physically drives from the street into a branch');
+    assert.ok(Math.hypot(car.x - start.x, car.z - start.z) > 15, 'The compact physically drives into a branch');
   } finally { scene.dispose(); }
 }
 const carModel = createVehicle();
@@ -70,4 +78,4 @@ try {
   assert.ok(carModel.wheels[0].rotation.y < 0 && carModel.wheels[1].rotation.y < 0, 'Visible front wheels steer right with the physics');
   assert.ok(carModel.steeringWheel.rotation.z < -2, 'The cockpit wheel follows the real steering ratio');
 } finally { carModel.dispose(); }
-console.log(`Immersive physical-world checks passed: ${parkingChecks} real parking poses, ${approachChecks} venue approaches, all main road centre lines across three chapters, home/fuel access, real branch driving, grounded car geometry, clear cockpit view and matching visual steering.`);
+console.log(`Immersive physical-world checks passed: ${parkingChecks} parking poses, ${approachChecks} venue approaches, ${regionalRoutes} interstate journeys, all ${WORLD_ROADS.length} road centre lines across three chapters, home/fuel access, real branch driving, grounded geometry, clear cockpit and matching visual steering.`);

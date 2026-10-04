@@ -1,0 +1,2396 @@
+{
+  "ok": true,
+  "platform": "linux-desktop",
+  "scenario": "3.01-active-slow-frames-and-world-polish",
+  "electron": "44.5.1",
+  "appVersion": "3.0.1",
+  "checks": [
+    {
+      "name": "Real sandbox preload exposes three empty isolated native save slots",
+      "passed": true
+    },
+    {
+      "name": "Three schema-2 careers write and reload through the real native save store",
+      "passed": true
+    },
+    {
+      "name": "Actual first-person world paints distinct visible WebGL2 pixels",
+      "passed": true,
+      "width": 640,
+      "height": 480,
+      "webgl": true,
+      "paintedSamples": 16,
+      "distinctColors": 13,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "glError": 0
+    },
+    {
+      "name": "Cockpit has no floating mph/fuel gauges or permanent storage/objective clutter",
+      "passed": true,
+      "floatingDrivingHUD": false,
+      "floatingMph": false,
+      "floatingFuel": false,
+      "localStorageCopy": false,
+      "fieldNotes": false
+    },
+    {
+      "name": "Automatic quality reduces full-scene backing pixels during sustained active slow frames",
+      "passed": true,
+      "start": {
+        "deliberateRafDelayMs": 0,
+        "frames": 56,
+        "slowFrames": 10,
+        "minMs": 16.59999999999991,
+        "maxMs": 2116.5999999999995,
+        "meanMs": 180.64642857142857,
+        "width": 640,
+        "height": 480,
+        "quality": "auto"
+      },
+      "end": {
+        "deliberateRafDelayMs": 300,
+        "frames": 19,
+        "slowFrames": 19,
+        "minMs": 299.8999999999978,
+        "maxMs": 550,
+        "meanMs": 328.9368421052632,
+        "width": 448,
+        "height": 336,
+        "quality": "auto"
+      }
+    },
+    {
+      "name": "Live driving snapshots do not write the career every few seconds",
+      "passed": true
+    },
+    {
+      "name": "Native keyboard acceleration and steering produce real distance, fuel use and heading changes",
+      "passed": true,
+      "vehicle": {
+        "x": 499.41532862068783,
+        "z": 866.2303841708928,
+        "heading": 0.45814441581086335,
+        "speed": 3.804803362121165,
+        "steering": -0.11839517587601588,
+        "distance": 3.869732448923626,
+        "fuel": 11.999924858116705,
+        "gear": "D",
+        "damage": 0,
+        "disabled": false
+      }
+    },
+    {
+      "name": "Sustained active frames over 250 ms continue bounded simulation rather than freezing it",
+      "passed": true,
+      "slowFrames": 19,
+      "distance": 3.869732448923626,
+      "fuel": 11.999924858116705,
+      "heading": 0.45814441581086335
+    },
+    {
+      "name": "Settings pause discards held input and does not advance vehicle state",
+      "passed": true
+    },
+    {
+      "name": "Resuming a paused scene does not repay the unseen pause as a simulation jump",
+      "passed": true,
+      "distanceBefore": 3.869732448923626,
+      "distanceAfter": 5.95608444162909
+    },
+    {
+      "name": "Brake, handbrake and grounded car exit preserve the driven career",
+      "passed": true
+    },
+    {
+      "name": "Regional map hides the background header and its controls",
+      "passed": true,
+      "headerVisibility": "hidden",
+      "headerPointerEvents": "none",
+      "brandVisibility": "hidden",
+      "controls": [
+        {
+          "label": "Open field journal (J)",
+          "visibility": "hidden",
+          "pointerEvents": "auto",
+          "hitExposed": false
+        },
+        {
+          "label": "Open settings (Escape)",
+          "visibility": "hidden",
+          "pointerEvents": "auto",
+          "hitExposed": false
+        }
+      ]
+    },
+    {
+      "name": "Regional map uses the real 12 km by 10 km bounds and shows service destinations",
+      "passed": true,
+      "places": [
+        {
+          "name": "Cirrus Works",
+          "left": 3.225,
+          "top": 2.66
+        },
+        {
+          "name": "Maker Yard",
+          "left": 27.5,
+          "top": 15
+        },
+        {
+          "name": "Palette House",
+          "left": 44,
+          "top": 28
+        },
+        {
+          "name": "Junction Café",
+          "left": 55.9167,
+          "top": 28.5
+        },
+        {
+          "name": "Highway Fuel",
+          "left": 7,
+          "top": 6.2
+        },
+        {
+          "name": "Home",
+          "left": 1.83333,
+          "top": 5.1
+        }
+      ],
+      "services": 4,
+      "regions": 7,
+      "nearbyToggle": true
+    },
+    {
+      "name": "Closing the regional map restores the header and hit-tested controls",
+      "passed": true,
+      "headerVisibility": "visible",
+      "headerPointerEvents": "none",
+      "brandVisibility": "visible",
+      "controls": [
+        {
+          "label": "Open field journal (J)",
+          "visibility": "visible",
+          "pointerEvents": "auto",
+          "hitExposed": true
+        },
+        {
+          "label": "Open settings (Escape)",
+          "visibility": "visible",
+          "pointerEvents": "auto",
+          "hitExposed": true
+        }
+      ]
+    },
+    {
+      "name": "Save, title and career reload retain vehicle pose, fuel, damage and mileage",
+      "passed": true
+    },
+    {
+      "name": "Physical pump service hides the background header and its controls",
+      "passed": true,
+      "headerVisibility": "hidden",
+      "headerPointerEvents": "none",
+      "brandVisibility": "hidden",
+      "controls": [
+        {
+          "label": "Open field journal (J)",
+          "visibility": "hidden",
+          "pointerEvents": "auto",
+          "hitExposed": false
+        },
+        {
+          "label": "Open settings (Escape)",
+          "visibility": "hidden",
+          "pointerEvents": "auto",
+          "hitExposed": false
+        }
+      ]
+    },
+    {
+      "name": "Closing physical pump service restores the header and hit-tested controls",
+      "passed": true,
+      "headerVisibility": "visible",
+      "headerPointerEvents": "none",
+      "brandVisibility": "visible",
+      "controls": [
+        {
+          "label": "Open field journal (J)",
+          "visibility": "visible",
+          "pointerEvents": "auto",
+          "hitExposed": true
+        },
+        {
+          "label": "Open settings (Escape)",
+          "visibility": "visible",
+          "pointerEvents": "auto",
+          "hitExposed": true
+        }
+      ]
+    },
+    {
+      "name": "Fuel is purchased at the modeled pump without repairing damage or resetting mileage",
+      "passed": true
+    },
+    {
+      "name": "Paid repairs restore vehicle condition while keeping fuel and mileage",
+      "passed": true
+    },
+    {
+      "name": "E prompt matches its action and the car can be re-entered after pump service",
+      "passed": true
+    },
+    {
+      "name": "Actual T roadside tow charges $150 and preserves fuel, damage, gear and mileage",
+      "passed": true,
+      "vehicle": {
+        "x": 840,
+        "z": 620,
+        "heading": 0,
+        "speed": 0,
+        "steering": 0,
+        "distance": 3142.7,
+        "fuel": 2.25,
+        "gear": "R",
+        "damage": 0.93,
+        "disabled": true
+      }
+    },
+    {
+      "name": "Final walking movement remains live until the exit checkpoint",
+      "passed": true
+    },
+    {
+      "name": "Linux development update manager does not block the offline local world",
+      "passed": true,
+      "state": "unsupported"
+    },
+    {
+      "name": "Real native Save and exit flushes the latest movement before app shutdown",
+      "passed": true
+    },
+    {
+      "name": "A fresh native process reloads the final durable career through the real preload",
+      "passed": true
+    },
+    {
+      "name": "Reopened career enters and paints the actual saved first-person world",
+      "passed": true
+    },
+    {
+      "name": "Nearby map clips distant venues and maps the real 2.4 km by 2 km viewport",
+      "passed": true,
+      "places": [
+        {
+          "name": "Cirrus Works",
+          "left": 16.125,
+          "top": 13.3
+        },
+        {
+          "name": "Highway Fuel",
+          "left": 35,
+          "top": 31
+        },
+        {
+          "name": "Home",
+          "left": 9.16667,
+          "top": 25.5
+        }
+      ],
+      "origin": {
+        "x": 0,
+        "z": 0
+      }
+    },
+    {
+      "name": "Grounded highway, campus and coast scenes paint for regional art and physical wayfinding review",
+      "passed": true,
+      "views": [
+        {
+          "name": "eastmere-interstate-sign",
+          "sign": "eastmere-exit-1",
+          "vehicle": {
+            "heading": -1.5707963267948966,
+            "speed": 0,
+            "steering": 0,
+            "distance": 0,
+            "fuel": 12,
+            "gear": "D",
+            "damage": 0,
+            "disabled": false,
+            "x": 2935,
+            "z": 1105
+          },
+          "pixels": {
+            "width": 640,
+            "height": 480,
+            "webgl": true,
+            "paintedSamples": 16,
+            "distinctColors": 11,
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+            "glError": 0
+          }
+        },
+        {
+          "name": "eastmere-welcome-sign",
+          "sign": "eastmere-welcome-eastmere-avenue-1",
+          "vehicle": {
+            "heading": 3.141592653589793,
+            "speed": 0,
+            "steering": 0,
+            "distance": 0,
+            "fuel": 12,
+            "gear": "D",
+            "damage": 0,
+            "disabled": false,
+            "x": 3146,
+            "z": 1186
+          },
+          "pixels": {
+            "width": 640,
+            "height": 480,
+            "webgl": true,
+            "paintedSamples": 16,
+            "distinctColors": 13,
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+            "glError": 0
+          }
+        },
+        {
+          "name": "tideglass-coast-overlook",
+          "sign": null,
+          "vehicle": {
+            "heading": 0,
+            "speed": 0,
+            "steering": 0,
+            "distance": 0,
+            "fuel": 12,
+            "gear": "D",
+            "damage": 0,
+            "disabled": false,
+            "x": 11090,
+            "z": 4800
+          },
+          "pixels": {
+            "width": 640,
+            "height": 480,
+            "webgl": true,
+            "paintedSamples": 16,
+            "distinctColors": 9,
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+            "glError": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "Actual native W driving strikes the deterministic plaza resident and saves severe career penalties",
+      "passed": true,
+      "setup": {
+        "vehicle": {
+          "x": 3218,
+          "z": 1692.4857142857143,
+          "heading": -3.141592653589793
+        },
+        "npcId": "pedestrian:eastmere-plaza-column-8-1",
+        "victim": {
+          "x": 3218,
+          "z": 1699.4857142857143,
+          "heading": -3.141592653589793
+        },
+        "minimumSpeed": 2.5
+      },
+      "incident": {
+        "id": "law:1:pedestrian:eastmere-plaza-column-8-1",
+        "npcId": "pedestrian:eastmere-plaza-column-8-1",
+        "position": {
+          "x": 3217.9999999341007,
+          "z": 1700.6260801578073
+        },
+        "speed": 4.968742896754838,
+        "week": 1,
+        "tier": 0,
+        "loss": {
+          "fine": 18900,
+          "reputation": 40,
+          "missions": 2,
+          "actions": 6,
+          "trust": 45,
+          "morale": 30
+        },
+        "resolved": false
+      },
+      "vehicle": {
+        "x": 3218.000000003889,
+        "z": 1698.3004268072036,
+        "heading": -3.141592653589793,
+        "speed": 4.705269289951415,
+        "steering": 0,
+        "distance": 927.5647125214894,
+        "fuel": 8.499887090785874,
+        "gear": "D",
+        "damage": 0,
+        "disabled": false
+      }
+    },
+    {
+      "name": "Police response stays pending while settings pause the live scene",
+      "passed": true
+    },
+    {
+      "name": "Native Save and exit retains the active police response and its immediate penalties",
+      "passed": true
+    },
+    {
+      "name": "A fresh native process preserves pending police time and every immediate career penalty",
+      "passed": true
+    },
+    {
+      "name": "Actual resumed fixed simulation advances persistent police response to arrival",
+      "passed": true,
+      "response": {
+        "id": "law:1:pedestrian:eastmere-plaza-column-8-1",
+        "npcId": "pedestrian:eastmere-plaza-column-8-1",
+        "position": {
+          "x": 3217.9999999341007,
+          "z": 1700.6260801578073
+        },
+        "speed": 4.968742896754838,
+        "phase": "arrived",
+        "elapsedSeconds": 21.950000000000003
+      }
+    },
+    {
+      "name": "Native police resolution preserves penalties and impounds at the nearest service without free repairs, fuel or mileage reset",
+      "passed": true,
+      "before": {
+        "x": 3217.9953715962642,
+        "z": 1704.9400964131912,
+        "heading": -3.141592653589793,
+        "speed": 0,
+        "steering": 0,
+        "distance": 934.2043972577259,
+        "fuel": 8.499758162385227,
+        "gear": "D",
+        "damage": 0,
+        "disabled": false
+      },
+      "after": {
+        "x": 3045,
+        "z": 2100,
+        "heading": 0,
+        "speed": 0,
+        "steering": 0,
+        "distance": 934.2043972577259,
+        "fuel": 8.499758162385227,
+        "gear": "D",
+        "damage": 0,
+        "disabled": false
+      },
+      "station": "eastmere-fuel",
+      "law": {
+        "schema": 1,
+        "sequence": 1,
+        "handled": [
+          "law:1:pedestrian:eastmere-plaza-column-8-1"
+        ],
+        "response": null,
+        "last": {
+          "id": "law:1:pedestrian:eastmere-plaza-column-8-1",
+          "npcId": "pedestrian:eastmere-plaza-column-8-1",
+          "position": {
+            "x": 3217.9999999341007,
+            "z": 1700.6260801578073
+          },
+          "speed": 4.968742896754838,
+          "week": 1,
+          "tier": 0,
+          "loss": {
+            "fine": 18900,
+            "reputation": 40,
+            "missions": 2,
+            "actions": 6,
+            "trust": 45,
+            "morale": 30
+          },
+          "resolved": true
+        }
+      }
+    },
+    {
+      "name": "Native Save and exit retains the resolved incident and impounded vehicle",
+      "passed": true
+    },
+    {
+      "name": "A third fresh native process retains the resolved incident and final impound checkpoint",
+      "passed": true
+    },
+    {
+      "name": "Resuming and re-saving a resolved police incident does not reopen it or charge the career twice",
+      "passed": true
+    },
+    {
+      "name": "Confirmed same-chapter restart remounts the live world and durably resets its vehicle, position and team",
+      "passed": true,
+      "before": {
+        "schema": 2,
+        "tier": 0,
+        "interior": null,
+        "player": {
+          "yaw": 0,
+          "pitch": 0,
+          "x": 3046.3,
+          "z": 2106.3
+        },
+        "vehicle": {
+          "heading": 0,
+          "speed": 0,
+          "steering": 0,
+          "distance": 1523.4,
+          "fuel": 4.25,
+          "gear": "D",
+          "damage": 0.42,
+          "disabled": false,
+          "x": 3045,
+          "z": 2100
+        },
+        "mode": "foot",
+        "destination": null,
+        "parkedAt": [],
+        "tutorial": "complete",
+        "thoughtsSeen": [],
+        "homeReviewed": true
+      },
+      "reset": {
+        "schema": 2,
+        "tier": 0,
+        "interior": 0,
+        "player": {
+          "x": 387,
+          "z": 221,
+          "yaw": 0,
+          "pitch": 0
+        },
+        "vehicle": {
+          "x": 387,
+          "z": 266,
+          "heading": 3.141592653589793,
+          "speed": 0,
+          "steering": 0,
+          "distance": 0,
+          "fuel": 12,
+          "gear": "D",
+          "damage": 0,
+          "disabled": false
+        },
+        "mode": "foot",
+        "destination": null,
+        "parkedAt": [
+          0
+        ],
+        "tutorial": "complete",
+        "thoughtsSeen": [],
+        "homeReviewed": true
+      },
+      "replacedCanvas": true
+    },
+    {
+      "name": "Actual keyboard movement and a live save remain in the restarted chapter rather than restoring the old scene",
+      "passed": true,
+      "player": {
+        "x": 391.565456013211,
+        "z": 221,
+        "yaw": 0,
+        "pitch": 0
+      },
+      "vehicle": {
+        "x": 387,
+        "z": 266,
+        "heading": 3.141592653589793,
+        "speed": 0,
+        "steering": 0,
+        "distance": 0,
+        "fuel": 12,
+        "gear": "D",
+        "damage": 0,
+        "disabled": false
+      }
+    },
+    {
+      "name": "Slot-2 chapter restart preserves the resolved law career and the unrelated final movement career byte for byte",
+      "passed": true
+    },
+    {
+      "name": "Final native shutdown does not charge a resolved incident twice",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Native Linux development build with software SwiftShader; this is not a Mac or Windows native runtime test.",
+    "Offscreen window and disabled OS sandbox are confined to the Linux container QA process. Production BrowserWindow security and GPU flags are unchanged.",
+    "Mac fullscreen/signature/update installation and Windows installer behavior are not exercised here.",
+    "HTTP and HTTPS renderer requests are blocked throughout this isolated fixture; bundled file resources remain available.",
+    "Valid synthetic careers are written only into the isolated QA profile. No player career is seeded or replaced.",
+    "The test bypasses the single-instance OS socket lock in memory because this Linux container blocks socket creation. Single-instance locking is not exercised.",
+    "The headless fixture supplies a fixed cursor position because the headless Linux Ozone surface has no physical pointer. Desktop pointer and monitor selection are not exercised.",
+    "A synthetic 1280 by 800 monitor is supplied in memory to the headless fixture. Physical display selection and fullscreen transitions are not exercised.",
+    "Native titlebar options are omitted in the offscreen Linux fixture; OS titlebar styling is not exercised.",
+    "Pointer capture is unavailable in the offscreen fixture; its request rejects immediately. Native mouse locking is not exercised.",
+    "Active slow-frame regression deliberately delays renderer requestAnimationFrame scheduling by 300 ms. The normal grounded/cockpit scene remains visible during all input checks. These are simulation/quality/governor assertions under Linux software rendering, not target-hardware frame-rate measurements."
+  ],
+  "metrics": {
+    "viewport": {
+      "width": 640,
+      "height": 480,
+      "webgl": true,
+      "paintedSamples": 16,
+      "distinctColors": 13,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "glError": 0
+    },
+    "activeSlowFrames": {
+      "start": {
+        "deliberateRafDelayMs": 0,
+        "frames": 56,
+        "slowFrames": 10,
+        "minMs": 16.59999999999991,
+        "maxMs": 2116.5999999999995,
+        "meanMs": 180.64642857142857,
+        "width": 640,
+        "height": 480,
+        "quality": "auto"
+      },
+      "end": {
+        "deliberateRafDelayMs": 300,
+        "frames": 19,
+        "slowFrames": 19,
+        "minMs": 299.8999999999978,
+        "maxMs": 550,
+        "meanMs": 328.9368421052632,
+        "width": 448,
+        "height": 336,
+        "quality": "auto"
+      }
+    },
+    "keyboardEvents": [
+      {
+        "type": "keydown",
+        "key": "w",
+        "hidden": false,
+        "trusted": true
+      },
+      {
+        "type": "keydown",
+        "key": "a",
+        "hidden": false,
+        "trusted": true
+      },
+      {
+        "type": "keyup",
+        "key": "a",
+        "hidden": false,
+        "trusted": true
+      },
+      {
+        "type": "keyup",
+        "key": "w",
+        "hidden": false,
+        "trusted": true
+      }
+    ],
+    "modalChrome": [
+      {
+        "label": "Regional map",
+        "hidden": true,
+        "headerVisibility": "hidden",
+        "headerPointerEvents": "none",
+        "brandVisibility": "hidden",
+        "controls": [
+          {
+            "label": "Open field journal (J)",
+            "visibility": "hidden",
+            "pointerEvents": "auto",
+            "hitExposed": false
+          },
+          {
+            "label": "Open settings (Escape)",
+            "visibility": "hidden",
+            "pointerEvents": "auto",
+            "hitExposed": false
+          }
+        ]
+      },
+      {
+        "label": "Closing the regional map",
+        "hidden": false,
+        "headerVisibility": "visible",
+        "headerPointerEvents": "none",
+        "brandVisibility": "visible",
+        "controls": [
+          {
+            "label": "Open field journal (J)",
+            "visibility": "visible",
+            "pointerEvents": "auto",
+            "hitExposed": true
+          },
+          {
+            "label": "Open settings (Escape)",
+            "visibility": "visible",
+            "pointerEvents": "auto",
+            "hitExposed": true
+          }
+        ]
+      },
+      {
+        "label": "Physical pump service",
+        "hidden": true,
+        "headerVisibility": "hidden",
+        "headerPointerEvents": "none",
+        "brandVisibility": "hidden",
+        "controls": [
+          {
+            "label": "Open field journal (J)",
+            "visibility": "hidden",
+            "pointerEvents": "auto",
+            "hitExposed": false
+          },
+          {
+            "label": "Open settings (Escape)",
+            "visibility": "hidden",
+            "pointerEvents": "auto",
+            "hitExposed": false
+          }
+        ]
+      },
+      {
+        "label": "Closing physical pump service",
+        "hidden": false,
+        "headerVisibility": "visible",
+        "headerPointerEvents": "none",
+        "brandVisibility": "visible",
+        "controls": [
+          {
+            "label": "Open field journal (J)",
+            "visibility": "visible",
+            "pointerEvents": "auto",
+            "hitExposed": true
+          },
+          {
+            "label": "Open settings (Escape)",
+            "visibility": "visible",
+            "pointerEvents": "auto",
+            "hitExposed": true
+          }
+        ]
+      }
+    ],
+    "towedViewport": {
+      "width": 448,
+      "height": 336,
+      "webgl": true,
+      "paintedSamples": 16,
+      "distinctColors": 10,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "glError": 0
+    },
+    "updateStatus": {
+      "supported": false,
+      "currentVersion": "3.0.1",
+      "repository": "spinjitsu12/scout",
+      "configurable": false,
+      "updateMode": "development",
+      "offlinePlayable": true,
+      "automaticCheck": true,
+      "unsupportedReason": "In-app updates run in the packaged Windows portable game.",
+      "state": "unsupported",
+      "connection": "unknown",
+      "lastCheckedAt": null,
+      "message": "In-app updates run in the packaged Windows portable game."
+    },
+    "finalCareer": {
+      "schema": 2,
+      "tier": 0,
+      "interior": null,
+      "player": {
+        "x": 843,
+        "z": 610.4172537743366,
+        "yaw": 1.5707963267948966,
+        "pitch": 0
+      },
+      "vehicle": {
+        "x": 840,
+        "z": 620,
+        "heading": 0,
+        "speed": 0,
+        "steering": 0,
+        "distance": 3142.7,
+        "fuel": 2.25,
+        "gear": "R",
+        "damage": 0.93,
+        "disabled": true
+      },
+      "mode": "foot",
+      "destination": null,
+      "parkedAt": [
+        4
+      ],
+      "tutorial": "complete",
+      "thoughtsSeen": [],
+      "homeReviewed": true
+    },
+    "reopenedViewport": {
+      "width": 640,
+      "height": 480,
+      "webgl": true,
+      "paintedSamples": 16,
+      "distinctColors": 14,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "glError": 0
+    },
+    "signViews": [
+      {
+        "name": "eastmere-interstate-sign",
+        "sign": "eastmere-exit-1",
+        "vehicle": {
+          "heading": -1.5707963267948966,
+          "speed": 0,
+          "steering": 0,
+          "distance": 0,
+          "fuel": 12,
+          "gear": "D",
+          "damage": 0,
+          "disabled": false,
+          "x": 2935,
+          "z": 1105
+        },
+        "pixels": {
+          "width": 640,
+          "height": 480,
+          "webgl": true,
+          "paintedSamples": 16,
+          "distinctColors": 11,
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "glError": 0
+        }
+      },
+      {
+        "name": "eastmere-welcome-sign",
+        "sign": "eastmere-welcome-eastmere-avenue-1",
+        "vehicle": {
+          "heading": 3.141592653589793,
+          "speed": 0,
+          "steering": 0,
+          "distance": 0,
+          "fuel": 12,
+          "gear": "D",
+          "damage": 0,
+          "disabled": false,
+          "x": 3146,
+          "z": 1186
+        },
+        "pixels": {
+          "width": 640,
+          "height": 480,
+          "webgl": true,
+          "paintedSamples": 16,
+          "distinctColors": 13,
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "glError": 0
+        }
+      },
+      {
+        "name": "tideglass-coast-overlook",
+        "sign": null,
+        "vehicle": {
+          "heading": 0,
+          "speed": 0,
+          "steering": 0,
+          "distance": 0,
+          "fuel": 12,
+          "gear": "D",
+          "damage": 0,
+          "disabled": false,
+          "x": 11090,
+          "z": 4800
+        },
+        "pixels": {
+          "width": 640,
+          "height": 480,
+          "webgl": true,
+          "paintedSamples": 16,
+          "distinctColors": 9,
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "glError": 0
+        }
+      }
+    ],
+    "actualPedestrianIncident": {
+      "setup": {
+        "vehicle": {
+          "x": 3218,
+          "z": 1692.4857142857143,
+          "heading": -3.141592653589793
+        },
+        "npcId": "pedestrian:eastmere-plaza-column-8-1",
+        "victim": {
+          "x": 3218,
+          "z": 1699.4857142857143,
+          "heading": -3.141592653589793
+        },
+        "minimumSpeed": 2.5
+      },
+      "incident": {
+        "id": "law:1:pedestrian:eastmere-plaza-column-8-1",
+        "npcId": "pedestrian:eastmere-plaza-column-8-1",
+        "position": {
+          "x": 3217.9999999341007,
+          "z": 1700.6260801578073
+        },
+        "speed": 4.968742896754838,
+        "week": 1,
+        "tier": 0,
+        "loss": {
+          "fine": 18900,
+          "reputation": 40,
+          "missions": 2,
+          "actions": 6,
+          "trust": 45,
+          "morale": 30
+        },
+        "resolved": false
+      },
+      "vehicle": {
+        "x": 3218.000000003889,
+        "z": 1698.3004268072036,
+        "heading": -3.141592653589793,
+        "speed": 4.705269289951415,
+        "steering": 0,
+        "distance": 927.5647125214894,
+        "fuel": 8.499887090785874,
+        "gear": "D",
+        "damage": 0,
+        "disabled": false
+      }
+    },
+    "policeBannerBounds": [
+      {
+        "phase": "dispatched",
+        "text": "Police respondingStop safely. Emergency services are on their way.",
+        "bounds": {
+          "x": 160,
+          "y": 164,
+          "width": 320,
+          "height": 80.90625,
+          "left": 160,
+          "right": 480,
+          "top": 164,
+          "bottom": 244.90625
+        },
+        "brand": {
+          "x": 25,
+          "y": 23,
+          "width": 165.078125,
+          "height": 41.78125,
+          "left": 25,
+          "right": 190.078125,
+          "top": 23,
+          "bottom": 64.78125
+        },
+        "actions": {
+          "x": 384,
+          "y": 24.890625,
+          "width": 96,
+          "height": 38,
+          "left": 384,
+          "right": 480,
+          "top": 24.890625,
+          "bottom": 62.890625
+        },
+        "overlapsBrand": false,
+        "overlapsActions": false
+      },
+      {
+        "phase": "dispatched",
+        "text": "Police respondingStop safely. Emergency services are on their way.",
+        "bounds": {
+          "x": 160,
+          "y": 164,
+          "width": 320,
+          "height": 80.90625,
+          "left": 160,
+          "right": 480,
+          "top": 164,
+          "bottom": 244.90625
+        },
+        "brand": {
+          "x": 25,
+          "y": 23,
+          "width": 165.078125,
+          "height": 41.78125,
+          "left": 25,
+          "right": 190.078125,
+          "top": 23,
+          "bottom": 64.78125
+        },
+        "actions": {
+          "x": 384,
+          "y": 24.890625,
+          "width": 96,
+          "height": 38,
+          "left": 384,
+          "right": 480,
+          "top": 24.890625,
+          "bottom": 62.890625
+        },
+        "overlapsBrand": false,
+        "overlapsActions": false
+      },
+      {
+        "phase": "arrived",
+        "text": "Police on sceneYour vehicle is being impounded.",
+        "bounds": {
+          "x": 202.0078125,
+          "y": 164,
+          "width": 235.984375,
+          "height": 63.515625,
+          "left": 202.0078125,
+          "right": 437.9921875,
+          "top": 164,
+          "bottom": 227.515625
+        },
+        "brand": {
+          "x": 25,
+          "y": 23,
+          "width": 165.078125,
+          "height": 41.78125,
+          "left": 25,
+          "right": 190.078125,
+          "top": 23,
+          "bottom": 64.78125
+        },
+        "actions": {
+          "x": 384,
+          "y": 24.890625,
+          "width": 96,
+          "height": 38,
+          "left": 384,
+          "right": 480,
+          "top": 24.890625,
+          "bottom": 62.890625
+        },
+        "overlapsBrand": false,
+        "overlapsActions": false
+      }
+    ],
+    "dispatchedBanner": {
+      "phase": "dispatched",
+      "text": "Police respondingStop safely. Emergency services are on their way.",
+      "bounds": {
+        "x": 160,
+        "y": 164,
+        "width": 320,
+        "height": 80.90625,
+        "left": 160,
+        "right": 480,
+        "top": 164,
+        "bottom": 244.90625
+      },
+      "brand": {
+        "x": 25,
+        "y": 23,
+        "width": 165.078125,
+        "height": 41.78125,
+        "left": 25,
+        "right": 190.078125,
+        "top": 23,
+        "bottom": 64.78125
+      },
+      "actions": {
+        "x": 384,
+        "y": 24.890625,
+        "width": 96,
+        "height": 38,
+        "left": 384,
+        "right": 480,
+        "top": 24.890625,
+        "bottom": 62.890625
+      },
+      "overlapsBrand": false,
+      "overlapsActions": false
+    },
+    "pendingBeforeExit": {
+      "schema": 1,
+      "sequence": 1,
+      "handled": [
+        "law:1:pedestrian:eastmere-plaza-column-8-1"
+      ],
+      "response": {
+        "id": "law:1:pedestrian:eastmere-plaza-column-8-1",
+        "npcId": "pedestrian:eastmere-plaza-column-8-1",
+        "position": {
+          "x": 3217.9999999341007,
+          "z": 1700.6260801578073
+        },
+        "speed": 4.968742896754838,
+        "phase": "dispatched",
+        "elapsedSeconds": 1.0166666666666666
+      },
+      "last": {
+        "id": "law:1:pedestrian:eastmere-plaza-column-8-1",
+        "npcId": "pedestrian:eastmere-plaza-column-8-1",
+        "position": {
+          "x": 3217.9999999341007,
+          "z": 1700.6260801578073
+        },
+        "speed": 4.968742896754838,
+        "week": 1,
+        "tier": 0,
+        "loss": {
+          "fine": 18900,
+          "reputation": 40,
+          "missions": 2,
+          "actions": 6,
+          "trust": 45,
+          "morale": 30
+        },
+        "resolved": false
+      }
+    },
+    "pendingIncidentCareer": {
+      "version": 1,
+      "seed": 2177729349,
+      "tier": 0,
+      "week": 1,
+      "cash": 23100,
+      "reputation": 33,
+      "actions": 0,
+      "candidates": [
+        {
+          "id": "t0-0",
+          "name": "Maya Chen",
+          "role": "Engineering",
+          "origin": "Open-source maintainer",
+          "bio": "Maintains a payment library after her day job. No degree; thousands of people rely on her code.",
+          "hook": "Fixed a race condition that three senior engineers missed.",
+          "skills": {
+            "craft": 84,
+            "insight": 88,
+            "nerve": 70,
+            "teamwork": 78
+          },
+          "ranges": {},
+          "growth": 3,
+          "reliability": 95,
+          "motive": "autonomy",
+          "salary": 1400,
+          "deadline": 6,
+          "discovered": true,
+          "starred": false,
+          "status": "hired",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37,
+          "hiredWeek": 1,
+          "wage": 1500,
+          "morale": 62,
+          "verified": true,
+          "completed": 3
+        },
+        {
+          "id": "t0-1",
+          "name": "Theo Mercer",
+          "role": "Design",
+          "origin": "Independent designer",
+          "bio": "Left a large agency to build tools for people with limited vision.",
+          "hook": "The prototype works with a keyboard alone.",
+          "skills": {
+            "craft": 80,
+            "insight": 86,
+            "nerve": 77,
+            "teamwork": 84
+          },
+          "ranges": {},
+          "growth": 3,
+          "reliability": 89,
+          "motive": "purpose",
+          "salary": 1500,
+          "deadline": 9,
+          "discovered": true,
+          "starred": false,
+          "status": "hired",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37,
+          "hiredWeek": 1,
+          "wage": 1500,
+          "morale": 62,
+          "verified": true,
+          "completed": 3
+        },
+        {
+          "id": "t0-2",
+          "name": "Nia Okafor",
+          "role": "Operations",
+          "origin": "Community organizer",
+          "bio": "Runs a volunteer repair network with almost no money and very little fuss.",
+          "hook": "Coordinated 60 volunteers through a citywide outage.",
+          "skills": {
+            "craft": 78,
+            "insight": 79,
+            "nerve": 89,
+            "teamwork": 93
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 96,
+          "motive": "purpose",
+          "salary": 1600,
+          "deadline": 6,
+          "discovered": true,
+          "starred": false,
+          "status": "hired",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37,
+          "hiredWeek": 1,
+          "wage": 1500,
+          "morale": 62,
+          "verified": true,
+          "completed": 3
+        },
+        {
+          "id": "t0-3",
+          "name": "Elliot Vance",
+          "role": "Engineering",
+          "origin": "Prestigious résumé",
+          "bio": "An impressive list of employers and titles. His portfolio credits large teams.",
+          "hook": "Claims to have led a complete platform migration.",
+          "skills": {
+            "craft": 62,
+            "insight": 52,
+            "nerve": 75,
+            "teamwork": 48
+          },
+          "ranges": {},
+          "growth": 1,
+          "reliability": 69,
+          "motive": "security",
+          "salary": 1350,
+          "deadline": 8,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-4",
+          "name": "Sana Patel",
+          "role": "Design",
+          "origin": "Student portfolio",
+          "bio": "A quiet final-year student with an unusual eye for interaction design.",
+          "hook": "Her unfinished project has a remarkably clear onboarding flow.",
+          "skills": {
+            "craft": 67,
+            "insight": 90,
+            "nerve": 49,
+            "teamwork": 73
+          },
+          "ranges": {},
+          "growth": 5,
+          "reliability": 79,
+          "motive": "mentorship",
+          "salary": 1350,
+          "deadline": 7,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-5",
+          "name": "Rafael Cruz",
+          "role": "Operations",
+          "origin": "Startup operator",
+          "bio": "Knows everyone in the local startup scene. Enjoys solving urgent problems.",
+          "hook": "His former team grew fast, then missed two launches.",
+          "skills": {
+            "craft": 72,
+            "insight": 65,
+            "nerve": 84,
+            "teamwork": 65
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 67,
+          "motive": "autonomy",
+          "salary": 1200,
+          "deadline": 6,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-6",
+          "name": "Jun Park",
+          "role": "Engineering",
+          "origin": "Repair shop programmer",
+          "bio": "Automated the family repair shop between customer appointments.",
+          "hook": "The inventory tool is faster than the commercial one it replaced.",
+          "skills": {
+            "craft": 79,
+            "insight": 91,
+            "nerve": 66,
+            "teamwork": 71
+          },
+          "ranges": {},
+          "growth": 4,
+          "reliability": 90,
+          "motive": "mentorship",
+          "salary": 1450,
+          "deadline": 9,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-7",
+          "name": "Amara Bell",
+          "role": "Design",
+          "origin": "Museum technician",
+          "bio": "Builds exhibits that make complex ideas accessible to children.",
+          "hook": "A visitor figured out the exhibit without reading a word.",
+          "skills": {
+            "craft": 88,
+            "insight": 84,
+            "nerve": 86,
+            "teamwork": 82
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 96,
+          "motive": "purpose",
+          "salary": 1350,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-8",
+          "name": "Levi Brooks",
+          "role": "Operations",
+          "origin": "Logistics specialist",
+          "bio": "A warehouse coordinator who quietly eliminated a major delivery bottleneck.",
+          "hook": "The improvement survived after he moved to another shift.",
+          "skills": {
+            "craft": 90,
+            "insight": 75,
+            "nerve": 88,
+            "teamwork": 87
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 99,
+          "motive": "security",
+          "salary": 1150,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-9",
+          "name": "Iris Vale",
+          "role": "Engineering",
+          "origin": "Competition finalist",
+          "bio": "Solved every programming challenge, but prefers to work alone.",
+          "hook": "Her code is elegant; nobody else could maintain it.",
+          "skills": {
+            "craft": 94,
+            "insight": 89,
+            "nerve": 83,
+            "teamwork": 35
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 84,
+          "motive": "autonomy",
+          "salary": 1700,
+          "deadline": 9,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-10",
+          "name": "Felix Reed",
+          "role": "Design",
+          "origin": "Award-winning creative",
+          "bio": "A persuasive presenter with a beautifully polished portfolio.",
+          "hook": "Every case study looks excellent; user outcomes are missing.",
+          "skills": {
+            "craft": 60,
+            "insight": 67,
+            "nerve": 91,
+            "teamwork": 71
+          },
+          "ranges": {},
+          "growth": 1,
+          "reliability": 76,
+          "motive": "security",
+          "salary": 1250,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-11",
+          "name": "Aisha Noor",
+          "role": "Operations",
+          "origin": "Front-desk problem solver",
+          "bio": "Works reception at a busy clinic. Patients ask for her by name.",
+          "hook": "Built a scheduling system that reduced missed visits.",
+          "skills": {
+            "craft": 73,
+            "insight": 85,
+            "nerve": 91,
+            "teamwork": 94
+          },
+          "ranges": {},
+          "growth": 4,
+          "reliability": 95,
+          "motive": "mentorship",
+          "salary": 1100,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        }
+      ],
+      "completed": 4,
+      "attempts": 8,
+      "exposure": 0,
+      "missionThisWeek": false,
+      "log": [
+        {
+          "id": 1,
+          "week": 1,
+          "text": "A pedestrian was struck. Police are responding. $18,900 in fines and damages; reputation −40, completed assignments −2. This week's work is suspended.",
+          "tone": "warn"
+        },
+        {
+          "id": 0,
+          "week": 1,
+          "text": "Welcome to Cirrus Works. Three great hires could change this company.",
+          "tone": "neutral"
+        }
+      ],
+      "prestige": 0,
+      "history": [],
+      "report": null,
+      "briefing": false,
+      "event": 2,
+      "mentoring": 0,
+      "rescueUsed": false,
+      "won": false,
+      "field": {
+        "scene": "district",
+        "player": {
+          "x": 1536,
+          "y": 1024
+        },
+        "car": {
+          "x": 1536,
+          "y": 1024
+        },
+        "heading": 3.141592653589793,
+        "driving": true,
+        "fuel": 8.499758162385227,
+        "visited": [
+          0
+        ],
+        "met": [],
+        "destination": 1
+      },
+      "style": {
+        "name": "Linux QA 1",
+        "avatar": 0,
+        "car": "compact",
+        "paint": "slate",
+        "plate": "SCOUT",
+        "camera": "cockpit",
+        "radio": false,
+        "station": 0,
+        "music": true,
+        "sound": true,
+        "engine": true
+      },
+      "story": {
+        "phase": "complete",
+        "choice": null
+      },
+      "law": {
+        "schema": 1,
+        "sequence": 1,
+        "handled": [
+          "law:1:pedestrian:eastmere-plaza-column-8-1"
+        ],
+        "response": {
+          "id": "law:1:pedestrian:eastmere-plaza-column-8-1",
+          "npcId": "pedestrian:eastmere-plaza-column-8-1",
+          "position": {
+            "x": 3217.9999999341007,
+            "z": 1700.6260801578073
+          },
+          "speed": 4.968742896754838,
+          "phase": "dispatched",
+          "elapsedSeconds": 1.0166666666666666
+        },
+        "last": {
+          "id": "law:1:pedestrian:eastmere-plaza-column-8-1",
+          "npcId": "pedestrian:eastmere-plaza-column-8-1",
+          "position": {
+            "x": 3217.9999999341007,
+            "z": 1700.6260801578073
+          },
+          "speed": 4.968742896754838,
+          "week": 1,
+          "tier": 0,
+          "loss": {
+            "fine": 18900,
+            "reputation": 40,
+            "missions": 2,
+            "actions": 6,
+            "trust": 45,
+            "morale": 30
+          },
+          "resolved": false
+        }
+      },
+      "immersion": {
+        "schema": 2,
+        "tier": 0,
+        "interior": null,
+        "player": {
+          "yaw": -3.141592653589793,
+          "pitch": 0,
+          "x": 3217.9953715962642,
+          "z": 1704.9400964131912
+        },
+        "vehicle": {
+          "x": 3217.9953715962642,
+          "z": 1704.9400964131912,
+          "heading": -3.141592653589793,
+          "speed": 2.6111436285403546,
+          "steering": 0,
+          "distance": 934.2043972577259,
+          "fuel": 8.499758162385227,
+          "gear": "D",
+          "damage": 0,
+          "disabled": false
+        },
+        "mode": "driving",
+        "destination": 1,
+        "parkedAt": [],
+        "tutorial": "complete",
+        "thoughtsSeen": [],
+        "homeReviewed": true
+      }
+    },
+    "arrivedBanner": {
+      "phase": "arrived",
+      "text": "Police on sceneYour vehicle is being impounded.",
+      "bounds": {
+        "x": 202.0078125,
+        "y": 164,
+        "width": 235.984375,
+        "height": 63.515625,
+        "left": 202.0078125,
+        "right": 437.9921875,
+        "top": 164,
+        "bottom": 227.515625
+      },
+      "brand": {
+        "x": 25,
+        "y": 23,
+        "width": 165.078125,
+        "height": 41.78125,
+        "left": 25,
+        "right": 190.078125,
+        "top": 23,
+        "bottom": 64.78125
+      },
+      "actions": {
+        "x": 384,
+        "y": 24.890625,
+        "width": 96,
+        "height": 38,
+        "left": 384,
+        "right": 480,
+        "top": 24.890625,
+        "bottom": 62.890625
+      },
+      "overlapsBrand": false,
+      "overlapsActions": false
+    },
+    "nativePoliceImpound": {
+      "before": {
+        "x": 3217.9953715962642,
+        "z": 1704.9400964131912,
+        "heading": -3.141592653589793,
+        "speed": 0,
+        "steering": 0,
+        "distance": 934.2043972577259,
+        "fuel": 8.499758162385227,
+        "gear": "D",
+        "damage": 0,
+        "disabled": false
+      },
+      "after": {
+        "x": 3045,
+        "z": 2100,
+        "heading": 0,
+        "speed": 0,
+        "steering": 0,
+        "distance": 934.2043972577259,
+        "fuel": 8.499758162385227,
+        "gear": "D",
+        "damage": 0,
+        "disabled": false
+      },
+      "station": "eastmere-fuel",
+      "law": {
+        "schema": 1,
+        "sequence": 1,
+        "handled": [
+          "law:1:pedestrian:eastmere-plaza-column-8-1"
+        ],
+        "response": null,
+        "last": {
+          "id": "law:1:pedestrian:eastmere-plaza-column-8-1",
+          "npcId": "pedestrian:eastmere-plaza-column-8-1",
+          "position": {
+            "x": 3217.9999999341007,
+            "z": 1700.6260801578073
+          },
+          "speed": 4.968742896754838,
+          "week": 1,
+          "tier": 0,
+          "loss": {
+            "fine": 18900,
+            "reputation": 40,
+            "missions": 2,
+            "actions": 6,
+            "trust": 45,
+            "morale": 30
+          },
+          "resolved": true
+        }
+      }
+    },
+    "settledIncidentCareer": {
+      "version": 1,
+      "seed": 2177729349,
+      "tier": 0,
+      "week": 1,
+      "cash": 23100,
+      "reputation": 33,
+      "actions": 0,
+      "candidates": [
+        {
+          "id": "t0-0",
+          "name": "Maya Chen",
+          "role": "Engineering",
+          "origin": "Open-source maintainer",
+          "bio": "Maintains a payment library after her day job. No degree; thousands of people rely on her code.",
+          "hook": "Fixed a race condition that three senior engineers missed.",
+          "skills": {
+            "craft": 84,
+            "insight": 88,
+            "nerve": 70,
+            "teamwork": 78
+          },
+          "ranges": {},
+          "growth": 3,
+          "reliability": 95,
+          "motive": "autonomy",
+          "salary": 1400,
+          "deadline": 6,
+          "discovered": true,
+          "starred": false,
+          "status": "hired",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37,
+          "hiredWeek": 1,
+          "wage": 1500,
+          "morale": 62,
+          "verified": true,
+          "completed": 3
+        },
+        {
+          "id": "t0-1",
+          "name": "Theo Mercer",
+          "role": "Design",
+          "origin": "Independent designer",
+          "bio": "Left a large agency to build tools for people with limited vision.",
+          "hook": "The prototype works with a keyboard alone.",
+          "skills": {
+            "craft": 80,
+            "insight": 86,
+            "nerve": 77,
+            "teamwork": 84
+          },
+          "ranges": {},
+          "growth": 3,
+          "reliability": 89,
+          "motive": "purpose",
+          "salary": 1500,
+          "deadline": 9,
+          "discovered": true,
+          "starred": false,
+          "status": "hired",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37,
+          "hiredWeek": 1,
+          "wage": 1500,
+          "morale": 62,
+          "verified": true,
+          "completed": 3
+        },
+        {
+          "id": "t0-2",
+          "name": "Nia Okafor",
+          "role": "Operations",
+          "origin": "Community organizer",
+          "bio": "Runs a volunteer repair network with almost no money and very little fuss.",
+          "hook": "Coordinated 60 volunteers through a citywide outage.",
+          "skills": {
+            "craft": 78,
+            "insight": 79,
+            "nerve": 89,
+            "teamwork": 93
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 96,
+          "motive": "purpose",
+          "salary": 1600,
+          "deadline": 6,
+          "discovered": true,
+          "starred": false,
+          "status": "hired",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37,
+          "hiredWeek": 1,
+          "wage": 1500,
+          "morale": 62,
+          "verified": true,
+          "completed": 3
+        },
+        {
+          "id": "t0-3",
+          "name": "Elliot Vance",
+          "role": "Engineering",
+          "origin": "Prestigious résumé",
+          "bio": "An impressive list of employers and titles. His portfolio credits large teams.",
+          "hook": "Claims to have led a complete platform migration.",
+          "skills": {
+            "craft": 62,
+            "insight": 52,
+            "nerve": 75,
+            "teamwork": 48
+          },
+          "ranges": {},
+          "growth": 1,
+          "reliability": 69,
+          "motive": "security",
+          "salary": 1350,
+          "deadline": 8,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-4",
+          "name": "Sana Patel",
+          "role": "Design",
+          "origin": "Student portfolio",
+          "bio": "A quiet final-year student with an unusual eye for interaction design.",
+          "hook": "Her unfinished project has a remarkably clear onboarding flow.",
+          "skills": {
+            "craft": 67,
+            "insight": 90,
+            "nerve": 49,
+            "teamwork": 73
+          },
+          "ranges": {},
+          "growth": 5,
+          "reliability": 79,
+          "motive": "mentorship",
+          "salary": 1350,
+          "deadline": 7,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-5",
+          "name": "Rafael Cruz",
+          "role": "Operations",
+          "origin": "Startup operator",
+          "bio": "Knows everyone in the local startup scene. Enjoys solving urgent problems.",
+          "hook": "His former team grew fast, then missed two launches.",
+          "skills": {
+            "craft": 72,
+            "insight": 65,
+            "nerve": 84,
+            "teamwork": 65
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 67,
+          "motive": "autonomy",
+          "salary": 1200,
+          "deadline": 6,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-6",
+          "name": "Jun Park",
+          "role": "Engineering",
+          "origin": "Repair shop programmer",
+          "bio": "Automated the family repair shop between customer appointments.",
+          "hook": "The inventory tool is faster than the commercial one it replaced.",
+          "skills": {
+            "craft": 79,
+            "insight": 91,
+            "nerve": 66,
+            "teamwork": 71
+          },
+          "ranges": {},
+          "growth": 4,
+          "reliability": 90,
+          "motive": "mentorship",
+          "salary": 1450,
+          "deadline": 9,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-7",
+          "name": "Amara Bell",
+          "role": "Design",
+          "origin": "Museum technician",
+          "bio": "Builds exhibits that make complex ideas accessible to children.",
+          "hook": "A visitor figured out the exhibit without reading a word.",
+          "skills": {
+            "craft": 88,
+            "insight": 84,
+            "nerve": 86,
+            "teamwork": 82
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 96,
+          "motive": "purpose",
+          "salary": 1350,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-8",
+          "name": "Levi Brooks",
+          "role": "Operations",
+          "origin": "Logistics specialist",
+          "bio": "A warehouse coordinator who quietly eliminated a major delivery bottleneck.",
+          "hook": "The improvement survived after he moved to another shift.",
+          "skills": {
+            "craft": 90,
+            "insight": 75,
+            "nerve": 88,
+            "teamwork": 87
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 99,
+          "motive": "security",
+          "salary": 1150,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-9",
+          "name": "Iris Vale",
+          "role": "Engineering",
+          "origin": "Competition finalist",
+          "bio": "Solved every programming challenge, but prefers to work alone.",
+          "hook": "Her code is elegant; nobody else could maintain it.",
+          "skills": {
+            "craft": 94,
+            "insight": 89,
+            "nerve": 83,
+            "teamwork": 35
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 84,
+          "motive": "autonomy",
+          "salary": 1700,
+          "deadline": 9,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-10",
+          "name": "Felix Reed",
+          "role": "Design",
+          "origin": "Award-winning creative",
+          "bio": "A persuasive presenter with a beautifully polished portfolio.",
+          "hook": "Every case study looks excellent; user outcomes are missing.",
+          "skills": {
+            "craft": 60,
+            "insight": 67,
+            "nerve": 91,
+            "teamwork": 71
+          },
+          "ranges": {},
+          "growth": 1,
+          "reliability": 76,
+          "motive": "security",
+          "salary": 1250,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        },
+        {
+          "id": "t0-11",
+          "name": "Aisha Noor",
+          "role": "Operations",
+          "origin": "Front-desk problem solver",
+          "bio": "Works reception at a busy clinic. Patients ask for her by name.",
+          "hook": "Built a scheduling system that reduced missed visits.",
+          "skills": {
+            "craft": 73,
+            "insight": 85,
+            "nerve": 91,
+            "teamwork": 94
+          },
+          "ranges": {},
+          "growth": 4,
+          "reliability": 95,
+          "motive": "mentorship",
+          "salary": 1100,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 37
+        }
+      ],
+      "completed": 4,
+      "attempts": 8,
+      "exposure": 0,
+      "missionThisWeek": false,
+      "log": [
+        {
+          "id": 2,
+          "week": 1,
+          "text": "Police suspended your field work and impounded your compact at Eastmere Roadside. The career penalties remain; fuel and repairs are arranged separately.",
+          "tone": "warn"
+        },
+        {
+          "id": 1,
+          "week": 1,
+          "text": "A pedestrian was struck. Police are responding. $18,900 in fines and damages; reputation −40, completed assignments −2. This week's work is suspended.",
+          "tone": "warn"
+        },
+        {
+          "id": 0,
+          "week": 1,
+          "text": "Welcome to Cirrus Works. Three great hires could change this company.",
+          "tone": "neutral"
+        }
+      ],
+      "prestige": 0,
+      "history": [],
+      "report": null,
+      "briefing": false,
+      "event": 3,
+      "mentoring": 0,
+      "rescueUsed": false,
+      "won": false,
+      "field": {
+        "scene": "district",
+        "player": {
+          "x": 1536,
+          "y": 1024
+        },
+        "car": {
+          "x": 1536,
+          "y": 1024
+        },
+        "heading": 0,
+        "driving": false,
+        "fuel": 8.499758162385227,
+        "visited": [
+          0
+        ],
+        "met": [],
+        "destination": 1
+      },
+      "style": {
+        "name": "Linux QA 1",
+        "avatar": 0,
+        "car": "compact",
+        "paint": "slate",
+        "plate": "SCOUT",
+        "camera": "cockpit",
+        "radio": false,
+        "station": 0,
+        "music": true,
+        "sound": true,
+        "engine": true
+      },
+      "story": {
+        "phase": "complete",
+        "choice": null
+      },
+      "law": {
+        "schema": 1,
+        "sequence": 1,
+        "handled": [
+          "law:1:pedestrian:eastmere-plaza-column-8-1"
+        ],
+        "response": null,
+        "last": {
+          "id": "law:1:pedestrian:eastmere-plaza-column-8-1",
+          "npcId": "pedestrian:eastmere-plaza-column-8-1",
+          "position": {
+            "x": 3217.9999999341007,
+            "z": 1700.6260801578073
+          },
+          "speed": 4.968742896754838,
+          "week": 1,
+          "tier": 0,
+          "loss": {
+            "fine": 18900,
+            "reputation": 40,
+            "missions": 2,
+            "actions": 6,
+            "trust": 45,
+            "morale": 30
+          },
+          "resolved": true
+        }
+      },
+      "immersion": {
+        "schema": 2,
+        "tier": 0,
+        "interior": null,
+        "player": {
+          "x": 3048,
+          "z": 2100,
+          "yaw": 1.5707963267948966,
+          "pitch": 0
+        },
+        "vehicle": {
+          "x": 3045,
+          "z": 2100,
+          "heading": 0,
+          "speed": 0,
+          "steering": 0,
+          "distance": 934.2043972577259,
+          "fuel": 8.499758162385227,
+          "gear": "D",
+          "damage": 0,
+          "disabled": false
+        },
+        "mode": "foot",
+        "destination": 1,
+        "parkedAt": [],
+        "tutorial": "complete",
+        "thoughtsSeen": [],
+        "homeReviewed": true
+      }
+    },
+    "sameChapterRestart": {
+      "before": {
+        "schema": 2,
+        "tier": 0,
+        "interior": null,
+        "player": {
+          "yaw": 0,
+          "pitch": 0,
+          "x": 3046.3,
+          "z": 2106.3
+        },
+        "vehicle": {
+          "heading": 0,
+          "speed": 0,
+          "steering": 0,
+          "distance": 1523.4,
+          "fuel": 4.25,
+          "gear": "D",
+          "damage": 0.42,
+          "disabled": false,
+          "x": 3045,
+          "z": 2100
+        },
+        "mode": "foot",
+        "destination": null,
+        "parkedAt": [],
+        "tutorial": "complete",
+        "thoughtsSeen": [],
+        "homeReviewed": true
+      },
+      "reset": {
+        "schema": 2,
+        "tier": 0,
+        "interior": 0,
+        "player": {
+          "x": 387,
+          "z": 221,
+          "yaw": 0,
+          "pitch": 0
+        },
+        "vehicle": {
+          "x": 387,
+          "z": 266,
+          "heading": 3.141592653589793,
+          "speed": 0,
+          "steering": 0,
+          "distance": 0,
+          "fuel": 12,
+          "gear": "D",
+          "damage": 0,
+          "disabled": false
+        },
+        "mode": "foot",
+        "destination": null,
+        "parkedAt": [
+          0
+        ],
+        "tutorial": "complete",
+        "thoughtsSeen": [],
+        "homeReviewed": true
+      },
+      "replacedCanvas": true,
+      "afterInput": {
+        "schema": 2,
+        "tier": 0,
+        "interior": 0,
+        "player": {
+          "x": 391.565456013211,
+          "z": 221,
+          "yaw": 0,
+          "pitch": 0
+        },
+        "vehicle": {
+          "x": 387,
+          "z": 266,
+          "heading": 3.141592653589793,
+          "speed": 0,
+          "steering": 0,
+          "distance": 0,
+          "fuel": 12,
+          "gear": "D",
+          "damage": 0,
+          "disabled": false
+        },
+        "mode": "foot",
+        "destination": null,
+        "parkedAt": [
+          0
+        ],
+        "tutorial": "complete",
+        "thoughtsSeen": [],
+        "homeReviewed": true
+      }
+    }
+  },
+  "screenshots": [
+    "native-linux-title.png",
+    "native-linux-on-foot.png",
+    "native-linux-cockpit.png",
+    "native-linux-active-slow-frames.png",
+    "native-linux-settings.png",
+    "native-linux-after-drive-exterior.png",
+    "native-linux-regional-map.png",
+    "native-linux-nearby-map.png",
+    "native-linux-service.png",
+    "native-linux-service-reentered-cockpit.png",
+    "native-linux-stranded.png",
+    "native-linux-towed.png",
+    "native-linux-save-and-exit.png",
+    "native-linux-reopened.png",
+    "native-linux-reopened-nearby-map.png",
+    "native-linux-eastmere-interstate-sign.png",
+    "native-linux-eastmere-welcome-sign.png",
+    "native-linux-tideglass-coast-overlook.png",
+    "native-linux-community-plaza-before-contact.png",
+    "native-linux-pedestrian-ragdoll-and-police-response.png",
+    "native-linux-pending-police-save-and-exit.png",
+    "native-linux-pending-police-reopened.png",
+    "native-linux-police-arrival.png",
+    "native-linux-police-impound.png",
+    "native-linux-resolved-police-save-and-exit.png",
+    "native-linux-settled-police-reopened.png",
+    "native-linux-chapter-restart-confirm.png",
+    "native-linux-chapter-restart-headquarters.png",
+    "native-linux-settled-police-save-and-exit.png"
+  ],
+  "sourceMainSHA256": "8c426138df9b0f4eb52aaac4782c77c56363fd21883c3021185eb1e6908417cf",
+  "distHTMLSHA256": "f451f1a0f8d71137c2ca33ffb9aaeef92bf45bc5d45aae2b581dfbb6dcfd6c3a",
+  "diagnostics": {
+    "gpuFeatures": {
+      "2d_canvas": "enabled",
+      "direct_rendering_display_compositor": "disabled_off_ok",
+      "gpu_compositing": "enabled",
+      "multiple_raster_threads": "enabled_on",
+      "opengl": "enabled_on",
+      "rasterization": "enabled",
+      "raw_draw": "disabled_off_ok",
+      "skia_graphite": "disabled_off",
+      "trees_in_viz": "disabled_off",
+      "video_decode": "enabled",
+      "video_encode": "disabled_software",
+      "vulkan": "disabled_off",
+      "webgl": "enabled",
+      "webgpu": "unavailable_software",
+      "webgpu_on_vk_via_gl_interop": "disabled_off",
+      "webnn": "disabled_off"
+    },
+    "gpu": {
+      "auxAttributes": {
+        "amdSwitchable": false,
+        "canSupportThreadedTextureMailbox": false,
+        "glImplementationParts": "(gl=none,angle=none)",
+        "glResetNotificationStrategy": 0,
+        "hardwareSupportsVulkan": false,
+        "inProcessGpu": true,
+        "initializationTime": 0,
+        "isAsan": false,
+        "isClangCoverage": false,
+        "jpegDecodeAcceleratorSupported": false,
+        "optimus": false,
+        "passthroughCmdDecoder": false,
+        "sandboxed": false,
+        "skiaBackendType": "None",
+        "subpixelFontRendering": true,
+        "targetCpuBits": 64,
+        "visibilityCallbackCallCount": 0
+      },
+      "gpuDevice": [
+        {
+          "active": false,
+          "deviceId": 0,
+          "gpuPreference": 0,
+          "vendorId": 0
+        }
+      ]
+    },
+    "page": {
+      "ready": "complete",
+      "body": "M\nMap\nSCOUT\nCirrus Works · Week 1",
+      "canvases": [
+        {
+          "width": 448,
+          "height": 336
+        }
+      ]
+    }
+  },
+  "nativeQuitObserved": true,
+  "stage": "Completed",
+  "reopenObserved": true,
+  "completedPhase": "settled"
+}

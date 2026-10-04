@@ -1,0 +1,87 @@
+[28:1004/172442.812080:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to open socket: Operation not permitted
+[28:1004/172442.815621:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172442.863494:ERROR:net/base/address_tracker_linux.cc:224] Could not create NETLINK socket: Operation not permitted (1)
+[28:1004/172442.863871:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to open socket: Operation not permitted
+[28:1004/172442.863891:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to open socket: Operation not permitted
+[28:1004/172442.864419:ERROR:device/udev_linux/udev_watcher.cc:51] Failed to initialize a udev monitor.
+[28:1004/172442.865210:ERROR:content/browser/zygote_host/zygote_host_impl_linux.cc:300] Failed to adjust OOM score of renderer with pid 53: No such file or directory (2)
+QA Electron ready
+QA beginning native services
+[28:1004/172442.871927:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[28:1004/172442.872007:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172442.874537:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+QA registering native bridge
+QA services ready
+QA enter real createWindow
+QA monitor selected
+QA constructing native window
+[28:1004/172442.880459:ERROR:content/browser/zygote_host/zygote_host_impl_linux.cc:300] Failed to adjust OOM score of renderer with pid 79: No such file or directory (2)
+QA real native window created
+[28:1004/172442.888329:ERROR:content/browser/zygote_host/zygote_host_impl_linux.cc:300] Failed to adjust OOM score of renderer with pid 94: No such file or directory (2)
+QA renderer DOM ready
+QA real native window ready to show
+PASS Real sandbox preload exposes three empty isolated native save slots
+PASS Three schema-2 careers write and reload through the real native save store
+QA renderer DOM ready
+socket(): Operation not permitted
+socket(): Operation not permitted
+[28:1004/172448.664569:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.664585:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.664588:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.664591:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.664595:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.664598:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.664602:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.664604:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.664607:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.664610:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.664613:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.664616:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.664619:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.664621:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.776642:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.776686:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[28:1004/172448.777187:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172448.777214:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[53:1004/172449.384725:ERROR:gpu/command_buffer/service/gl_utils.cc:430] [.WebGL-0x2984001b5000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+PASS Actual first-person world paints distinct visible WebGL2 pixels
+PASS Cockpit has no floating mph/fuel gauges or permanent storage/objective clutter
+PASS Driving route card stays clear of the lower cockpit instruments
+PASS Automatic quality reduces full-scene backing pixels during sustained active slow frames
+PASS Live driving snapshots do not write the career every few seconds
+PASS Native keyboard acceleration and steering produce real distance, fuel use and heading changes
+PASS Sustained active frames over 250 ms continue bounded simulation rather than freezing it
+PASS Settings pause discards held input and does not advance vehicle state
+[28:1004/172506.539214:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172506.540036:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[28:1004/172506.540102:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172506.540129:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+PASS Resuming a paused scene does not repay the unseen pause as a simulation jump
+PASS Brake, handbrake and grounded car exit preserve the driven career
+PASS Regional map hides the background header and its controls
+PASS Regional map uses the real 12 km by 10 km bounds and shows service destinations
+PASS Region view keeps complete settlement names inside the map at the small viewport
+PASS Nearby view keeps complete settlement names inside the map at the small viewport
+PASS Closing the regional map restores the header and hit-tested controls
+[28:1004/172517.093855:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172517.094106:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[28:1004/172517.095444:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172517.095489:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+PASS Save, title and career reload retain vehicle pose, fuel, damage and mileage
+[28:1004/172520.880511:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172520.880546:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[28:1004/172520.880562:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172520.880569:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+PASS Physical pump service hides the background header and its controls
+PASS Closing physical pump service restores the header and hit-tested controls
+PASS Fuel is purchased at the modeled pump without repairing damage or resetting mileage
+PASS Paid repairs restore vehicle condition while keeping fuel and mileage
+PASS E prompt matches its action and the car can be re-entered after pump service
+[28:1004/172535.677869:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172535.677931:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[28:1004/172535.678185:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[28:1004/172535.678229:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+PASS Actual T roadside tow charges $150 and preserves fuel, damage, gear and mileage
+PASS Final walking movement remains live until the exit checkpoint
+PASS Linux development update manager does not block the offline local world
+PASS Real native Save and exit flushes the latest movement before app shutdown

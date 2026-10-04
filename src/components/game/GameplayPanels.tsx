@@ -16,6 +16,8 @@ import {
 import type { GameplayPanelsProps, RunAction } from "@/lib/game-ui";
 import { FIELD_LOCATIONS, candidateLocation, fieldOf, locationOf, atVenue, GAS_PRICES, FUEL_CAPACITY } from "@/lib/expedition";
 import { assignmentReadiness, candidateAssignmentClue } from "@/lib/scouting-advice";
+import { getImmersiveLocations, REGIONAL_SETTLEMENTS, WORLD_ROADS, WORLD_SIZE } from "@/lib/immersive-locations";
+import { findRegionalRoute } from "@/lib/regional-roads";
 
 type PanelProps = { game: Game; run: RunAction; close: () => void };
 type TestMethod = "interview" | "sample" | "reference" | "trial";
@@ -210,23 +212,25 @@ function OfferChoice({ candidate: c, game: g, run, close, contactReason }: Panel
 function SourcesPanel({ game: g, travel, findCandidate }: { game: Game; travel: (source: number) => void; findCandidate: (id: string) => void }) {
   const t = TIERS[g.tier], field = fieldOf(g), locations = FIELD_LOCATIONS[g.tier].filter(location => location.source !== null);
   const cost = intelCost(g, t.sourceCost), gas = FIELD_LOCATIONS[g.tier][4], gasPrice = GAS_PRICES[g.tier];
+  const worldLocations = getImmersiveLocations(g.tier), car = g.immersion?.vehicle ?? {x:field.car.x,z:field.car.y};
   return <>
     <PanelHeading label="ROUTE PLANNER / FIELD SCOUTING" title="Your next recruit is out there." description="Set your GPS, get behind the wheel, and follow the roads to a real scouting venue. Driving uses fuel, but no weekly actions." />
-    <div className="gp-route-map" aria-label="District locations">
-      <span className="gp-route-compass">NORTH</span>
-      <span className="gp-route-road gp-route-road-horizontal" />
-      <span className="gp-route-road gp-route-road-vertical-one" />
-      <span className="gp-route-road gp-route-road-vertical-two" />
-      <button type="button" className="gp-route-hq" aria-label={`Set route to ${t.employer} headquarters`} onClick={() => travel(-1)}><b>HQ</b><span>{t.employer}</span><small>Garage & team</small></button>
-      {locations.map(location => <button type="button" key={location.id} className={`gp-route-pin gp-route-pin-${location.id} ${field.destination === location.id ? "gp-route-pin-active" : ""}`} aria-label={`Set route to ${location.name}`} onClick={() => travel(location.source!)}><b>{location.id}</b><span>{location.name}</span><small>{field.visited.includes(location.id) ? "✓ VISITED" : "NEW DESTINATION"}</small></button>)}
-      <button type="button" className="gp-route-gas-pin" aria-label={`Set route to ${gas.name}`} onClick={() => travel(3)}><b>GAS</b><span>${gasPrice.toFixed(2)}/gal</span></button>
+    <div className="gp-region-survey" aria-label="Cirrus regional roads and settlements">
+      <svg viewBox={`0 0 ${WORLD_SIZE.width} ${WORLD_SIZE.depth}`} role="img" aria-label="Roads connecting seven settlements">
+        <rect width={WORLD_SIZE.width} height={WORLD_SIZE.depth} fill="#d5deba"/>
+        {REGIONAL_SETTLEMENTS.map(region=><g key={region.id}><ellipse cx={region.center.x} cy={region.center.z} rx="590" ry="470" fill="#ebdfc4"/><text x={region.center.x} y={region.center.z-530} textAnchor="middle" fill="#234b56" fontSize="280">{region.name}</text></g>)}
+        {WORLD_ROADS.map(road=><rect key={road.id} x={road.x-road.width/2} y={road.z-road.depth/2} width={road.width} height={road.depth} fill={road.kind==='highway'?'#b89b69':'#8faaa0'}/>)}
+        {worldLocations.filter(location=>location.id>=1&&location.id<=3).map(location=><g key={location.id}><circle cx={location.parking.x} cy={location.parking.z} r="145" fill="#234b56"/><text x={location.parking.x} y={location.parking.z+90} textAnchor="middle" fontSize="260" fill="#fff4df">{location.id}</text></g>)}
+      </svg>
+      <span>Cirrus region · interstate, town roads & quiet lanes</span>
     </div>
+    <div className="gp-button-row"><PixelButton onClick={()=>travel(-1)}>Headquarters</PixelButton><PixelButton onClick={()=>travel(3)}>Highway Fuel</PixelButton></div>
     <div className="gp-route-instructions"><span className="gp-label">GET THERE ON YOUR OWN TERMS</span><p><kbd>E</kbd> Get in beside your car · <kbd>WASD</kbd> / arrows to drive · <kbd>E</kbd> Park and exit · walk to a person and press <kbd>E</kbd>.</p></div>
     <div className="gp-route-cards">{locations.map(location => {
       const leads = g.candidates.filter(c => c.discovered && c.status === "available" && candidateLocation(c.id) === location.id);
       const visited = field.visited.includes(location.id);
       return <article className="gp-route-card" key={location.id}>
-        <div className="gp-route-card-top"><span className="gp-destination-marker">{location.id}</span><div><span className="gp-label">{visited ? "✓ VISITED" : "UNEXPLORED"} / {t.sources[location.source!].tag}</span><h3>{location.name}</h3><p>{location.subtitle}</p></div></div>
+        <div className="gp-route-card-top"><span className="gp-destination-marker">{location.id}</span><div><span className="gp-label">{visited ? "✓ VISITED" : "UNEXPLORED"} / {t.sources[location.source!].tag}</span><h3>{location.name}</h3><p>{location.subtitle} · {(findRegionalRoute(car,worldLocations[location.id].parking).distance/1000).toFixed(1)} km by road</p></div></div>
         <div className="gp-route-known"><span className="gp-label">KNOWN LEADS / {leads.length}</span>{leads.length ? leads.slice(0, 4).map(c => <button type="button" key={c.id} onClick={() => findCandidate(c.id)}><span>{c.name}</span><b>{field.met.includes(c.id) ? "✓ MET" : "NOT MET"}</b></button>) : <p>No open contacts yet. Search when you arrive.</p>}{leads.length > 4 && <p>+{leads.length - 4} more contacts at this venue</p>}</div>
         <PixelButton className="gp-primary gp-wide" onClick={() => travel(location.source!)}>Set route to {location.name}</PixelButton>
         <span className="gp-small">GPS is free · Search after arrival: {money(cost)} + 1 action for 3 leads</span>
@@ -246,7 +250,7 @@ function VenuePanel({ game: g, run, close, source, findCandidate, travel }: Pane
   const reason = here ? resourceReason(g, 1, cost) : `Park and step out near ${location.name}'s entrance to search this venue.`;
   return <>
     <PanelHeading label={here ? "FIELD VISIT / ARRIVED" : "FIELD VISIT / VENUE NOTES"} title={location.name} description={`${location.subtitle}. ${t.sources[sourceIndex].detail}`} />
-    <div className="gp-venue-intro"><span className="gp-destination-marker">{location.id}</span><div><span className="gp-label">{field.visited.includes(location.id) ? "✓ LOCATION VISITED" : "LOCATION NOT YET VISITED"}</span><p>Meet the people around the entrance. Walk to a recruit and press E to begin the conversation.</p></div></div>
+    <div className="gp-venue-intro"><span className="gp-destination-marker">{location.id}</span><div><span className="gp-label">{field.visited.includes(location.id) ? "✓ LOCATION VISITED" : "LOCATION NOT YET VISITED"}</span><p>Explore the building and find the people working inside. Press E near a recruit to begin a conversation.</p></div></div>
     <section className="gp-venue-contacts"><div className="gp-section-heading"><h3>People to meet</h3><span>{leads.length} OPEN LEADS</span></div>{leads.length ? <div className="gp-roster">{leads.map(c => <button type="button" className="gp-roster-member gp-venue-person" key={c.id} onClick={() => findCandidate(c.id)}><PersonPortrait id={c.id} size={80} /><span><strong>{c.name}</strong><small>{c.role} · {c.origin}</small><small>{field.met.includes(c.id) ? "✓ You have met" : "First meeting still ahead"} · {c.deadline <= g.week ? "Last chance this week" : `${c.deadline - g.week} weeks before rival offer`}</small></span><b>Find in person</b></button>)}</div> : <div className="gp-quest"><p>No open contacts remain at this venue. Search for another three leads.</p></div>}</section>
     <div className="gp-venue-search"><div><span className="gp-label">FOLLOW THE LOCAL NETWORK</span><h3>Find three more leads</h3><p>A search spends 1 action and {money(cost)}. New contacts appear here for you to meet.</p></div><PixelButton className="gp-primary gp-wide" disabled={!!reason} onClick={() => { if (atVenue(g, location.id)) perform(run, { type: "scout", source: sourceIndex }, close); }}>Search this venue · {money(cost)} · 1 action</PixelButton>{reason && <ActionReason>{reason}</ActionReason>}</div>
     {!here && <PixelButton className="gp-wide" onClick={() => travel(sourceIndex)}>Set route to {location.name}</PixelButton>}
@@ -302,13 +306,14 @@ function WeekPanel({ game: g, run, close }: PanelProps) {
 
 function HelpPanel({ close }: { close: () => void }) {
   return <>
-    <PanelHeading label="FIELD GUIDE / CONTROLS" title="Take the wheel. Look closer." description="Settle into the town, drive to real venues, and get to know the people inside." />
+    <PanelHeading label="FIELD GUIDE / CONTROLS" title="Take the wheel. Look closer." description="Explore the region, drive to real venues, and get to know the people inside." />
     <div className="gp-controls">
       <div><kbd>W A S D</kbd><span>Walk · In car: W gas, S brake/reverse, A/D steer. Arrows also work.</span></div>
       <div><kbd>E</kbd><span>Enter car / park & exit / interact</span></div>
       <div><kbd>SPACE</kbd><span>Hold to brake while driving</span></div>
       <div><kbd>MOUSE</kbd><span>Look around. Click the world to capture the mouse; Escape releases it.</span></div>
-      <div><kbd>M</kbd><span>Open the town map and choose a driving destination.</span></div>
+      <div><kbd>M</kbd><span>Open the regional map and choose a driving destination.</span></div>
+      <div><kbd>T</kbd><span>Call a tow while standing beside a stranded car.</span></div>
       <div><kbd>J / TAB</kbd><span>Open your field journal.</span></div>
       <div><kbd>RIGHT CLICK</kbd><span>Walk to a nearby place while the mouse is free. Left click never moves you.</span></div>
       <div><kbd>ESC</kbd><span>Pause the world / close a menu</span></div>
@@ -321,8 +326,8 @@ function HelpPanel({ close }: { close: () => void }) {
       <li><span>5</span><div><strong>Build the right lineup.</strong><p>Choose 2–3 hires for an assignment. Cover the required specialties and compare your estimated score range with the target. Unknown abilities and reliability widen that range. Field work verifies abilities. Mentoring raises skills and morale.</p></div></li>
       <li><span>6</span><div><strong>Advance, then prestige.</strong><p>The week clock pays support and payroll and restores actions; rival deadlines get closer. Meet your chapter mandate in the director’s office to prestige. Each prestige adds an action; the second reduces investigation costs. Final clearance needs exposure below 60.</p></div></li>
     </ol>
-    <div className="gp-quest"><span className="gp-label">KEEP AN EYE ON THE GAS GAUGE</span><p>Drive to the fuel stop, park, then walk to the pump. Gas costs cash at the posted price. If the tank runs dry, step out and call roadside assistance for $150; the tow takes you to the station, where you still need to buy fuel.</p></div>
-    <p className="gp-small">Settings has separate volume sliders for music, ambience, footsteps and interactions, and your engine. Display and mouse comfort settings are there too. Your preferences and career save on this device, including while offline.</p>
+    <div className="gp-quest"><span className="gp-label">TAKE CARE OF YOUR COMPACT</span><p>Your dashboard shows speed, fuel and condition. Service stations sell fuel and repairs. If the tank runs dry or a serious crash disables the engine, stop, step out, and press T beside the car. A $150 tow takes you to the nearest station; fuel and repairs are purchased there.</p></div>
+    <p className="gp-small">Settings has audio sliders, display and mouse comfort controls, and Save & exit.</p>
     <PixelButton className="gp-primary gp-wide" onClick={close}>Back to the field</PixelButton>
   </>;
 }

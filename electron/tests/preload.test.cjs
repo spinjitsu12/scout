@@ -28,13 +28,20 @@ test("sandboxed capabilities send explicit slot identities and named display act
     ["scout:load-career", 1], ["scout:save-career", "legacy-json", 1], ["scout:get-display-mode"], ["scout:set-display-mode", "windowed"]]);
   assert.ok(Object.isFrozen(bridge)); assert.equal(bridge.invoke, undefined);
 });
-test("the single close acknowledgement waits for every final save even if a listener fails", async () => {
+test("the close acknowledgement waits for every save and reports failure instead of allowing silent data loss", async () => {
   const { bridge, ipc, sent } = preload(); let complete;
   const finalSave = new Promise(resolve => { complete = resolve; }); let finalSaved = false;
   bridge.onBeforeClose(() => { throw new Error("Failed world listener"); }); bridge.onBeforeClose(async () => { await finalSave; finalSaved = true; }); bridge.onBeforeClose(() => {});
   assert.equal(ipc.listenerCount("scout:before-close"), 1); ipc.emit("scout:before-close", {}, "checkpoint-42"); await nextTurn();
   assert.equal(finalSaved, false); assert.deepEqual(sent, []); complete(); await nextTurn();
-  assert.equal(finalSaved, true); assert.deepEqual(sent, [["scout:close-ready", "checkpoint-42"]]);
+  assert.equal(finalSaved, true); assert.deepEqual(JSON.parse(JSON.stringify(sent)), [["scout:close-ready", "checkpoint-42", { ok: false, error: "Failed world listener" }]]);
+});
+test("a successful close acknowledges only after its final durable write completes", async () => {
+  const { bridge, ipc, sent } = preload(); let complete;
+  bridge.onBeforeClose(() => new Promise(resolve => { complete = resolve; }));
+  ipc.emit("scout:before-close", {}, "final-save"); await nextTurn();
+  assert.deepEqual(sent, []); complete(); await nextTurn();
+  assert.deepEqual(sent, [["scout:close-ready", "final-save"]]);
 });
 test("released subscriptions cannot stall exit or keep receiving display changes", async () => {
   const { bridge, ipc, sent } = preload(); let called = false;
@@ -42,4 +49,7 @@ test("released subscriptions cannot stall exit or keep receiving display changes
   ipc.emit("scout:before-close", {}, "checkpoint-9"); await nextTurn(); assert.equal(called, false); assert.deepEqual(sent, [["scout:close-ready", "checkpoint-9"]]);
   let mode; const stopMode = bridge.onDisplayMode(next => { mode = next; }); ipc.emit("scout:display-mode", {}, "fullscreen"); assert.equal(mode, "fullscreen");
   stopMode(); ipc.emit("scout:display-mode", {}, "windowed"); assert.equal(mode, "fullscreen");
+  let canceled = 0; const stopCancel = bridge.onCloseCancelled(() => { canceled++; });
+  ipc.emit("scout:close-canceled", {}); assert.equal(canceled, 1); stopCancel();
+  ipc.emit("scout:close-canceled", {}); assert.equal(canceled, 1);
 });

@@ -1,5 +1,194 @@
 // Generated from src/lib/game.ts. Run npm run build to refresh; edit the shared TypeScript engine instead.
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+//#region src/lib/regional-roads.ts
+const WORLD_SIZE = Object.freeze({
+	width: 12e3,
+	depth: 1e4
+});
+const REGIONAL_VENUE_ANCHORS = Object.freeze({
+	1: {
+		parking: {
+			x: 3300,
+			z: 1500
+		},
+		access: {
+			x: 3150,
+			z: 1500
+		},
+		regionId: "eastmere"
+	},
+	2: {
+		parking: {
+			x: 5280,
+			z: 2800
+		},
+		access: {
+			x: 5050,
+			z: 2800
+		},
+		regionId: "bellweather"
+	},
+	3: {
+		parking: {
+			x: 6710,
+			z: 2850
+		},
+		access: {
+			x: 6500,
+			z: 2850
+		},
+		regionId: "aster"
+	}
+});
+const REGIONAL_SERVICE_POINTS = [
+	{
+		id: "highway-fuel",
+		name: "Highway Fuel",
+		parking: {
+			x: 840,
+			z: 620
+		},
+		access: {
+			x: 840,
+			z: 650
+		},
+		locationId: 4
+	},
+	{
+		id: "eastmere-fuel",
+		name: "Eastmere Roadside",
+		parking: {
+			x: 3045,
+			z: 2100
+		},
+		access: {
+			x: 3e3,
+			z: 2100
+		},
+		locationId: -1
+	},
+	{
+		id: "bellweather-fuel",
+		name: "Lantern Road Services",
+		parking: {
+			x: 4945,
+			z: 2040
+		},
+		access: {
+			x: 4900,
+			z: 2040
+		},
+		locationId: -1
+	},
+	{
+		id: "aster-fuel",
+		name: "Tideglass Services",
+		parking: {
+			x: 6545,
+			z: 4740
+		},
+		access: {
+			x: 6500,
+			z: 4740
+		},
+		locationId: -1
+	},
+	{
+		id: "meridian-fuel",
+		name: "Meridian Motor Stop",
+		parking: {
+			x: 10045,
+			z: 7440
+		},
+		access: {
+			x: 1e4,
+			z: 7440
+		},
+		locationId: -1
+	}
+];
+const horizontal = (id, name, fromX, toX, z, width = 12, kind = "street", regionId) => ({
+	id,
+	name,
+	kind,
+	x: (fromX + toX) / 2,
+	z,
+	width: Math.abs(toX - fromX),
+	depth: width,
+	speedLimit: kind === "highway" ? 29 : kind === "country" ? 22 : kind === "access" ? 8 : 13.4,
+	regionId
+});
+const vertical = (id, name, x, fromZ, toZ, width = 12, kind = "street", regionId) => ({
+	id,
+	name,
+	kind,
+	x,
+	z: (fromZ + toZ) / 2,
+	width,
+	depth: Math.abs(toZ - fromZ),
+	speedLimit: kind === "highway" ? 29 : kind === "country" ? 22 : kind === "access" ? 8 : 13.4,
+	regionId
+});
+[
+	vertical("harbor-west", "West Harbor Road", 125, 110, 950, 12, "street", "cirrus"),
+	vertical("harbor-east", "Riverside Road", 1400, 110, 1100, 12, "street", "cirrus"),
+	horizontal("harbor-north", "Lighthouse Avenue", 119, 1406, 110, 12, "street", "cirrus"),
+	horizontal("harbor-south", "Harbor Promenade", 119, 1406, 950, 12, "street", "cirrus"),
+	vertical("harbor-office", "Company Avenue", 500, 110, 1100, 12, "street", "cirrus"),
+	vertical("harbor-market", "Market Street", 1040, 110, 950, 12, "street", "cirrus"),
+	horizontal("harbor-cross-north", "Willow Street", 119, 1406, 350, 14, "street", "cirrus"),
+	horizontal("harbor-cross-south", "Juniper Street", 119, 1406, 650, 14, "street", "cirrus"),
+	vertical("harbor-center", "Foundry Road", 768, 110, 950, 14, "street", "cirrus"),
+	horizontal("home-lane", "Apartment Lane", 125, 505, 525, 9, "access", "cirrus"),
+	horizontal("harbor-east-lane", "River Lane", 858, 1260, 480, 9, "access", "cirrus"),
+	...[266, 275].map((z, i) => horizontal(`office-lane-${i}`, "Company Forecourt", 375, 500, z, 9.2, "access", "cirrus")),
+	vertical("home-parking", "Apartment Forecourt", 220, 510, 525, 9, "access", "cirrus"),
+	horizontal("fuel-lane", "Highway Fuel Approach", 768, 840, 650, 11, "access", "cirrus"),
+	vertical("fuel-parking", "Highway Fuel Forecourt", 840, 620, 650, 11, "access", "cirrus"),
+	horizontal("interstate-7", "Interstate 7 · Coastbound", 500, 11e3, 1100, 26, "highway"),
+	vertical("interstate-19", "Interstate 19 · Valleybound", 3e3, 1100, 8300, 26, "highway"),
+	vertical("coastal-parkway", "Coastal Parkway", 6500, 1100, 8300, 22, "country"),
+	horizontal("valley-route", "Juniper Valley Route", 1600, 10400, 6100, 22, "country"),
+	horizontal("garden-route", "Larkspur Scenic Route", 1600, 11e3, 8200, 20, "country"),
+	vertical("meridian-route", "Meridian Expressway", 1e4, 1100, 8200, 24, "highway"),
+	vertical("eastmere-avenue", "College Avenue · Exit 3", 3150, 1100, 1940, 14, "street", "eastmere"),
+	horizontal("eastmere-north", "Library Walk", 2740, 3560, 1280, 11, "street", "eastmere"),
+	horizontal("eastmere-center", "Eastmere Green", 2740, 3560, 1640, 12, "street", "eastmere"),
+	horizontal("eastmere-south", "Faculty Row", 2740, 3560, 1780, 11, "street", "eastmere"),
+	vertical("eastmere-west", "West College Drive", 2820, 1280, 1870, 11, "street", "eastmere"),
+	vertical("eastmere-east", "East College Drive", 3470, 1280, 1870, 11, "street", "eastmere"),
+	vertical("bellweather-exit", "Bellweather Road · Exit 5", 4900, 1100, 3250, 16, "country", "bellweather"),
+	vertical("bellweather-avenue", "Lantern Avenue", 5050, 2350, 3260, 14, "street", "bellweather"),
+	vertical("bellweather-west", "Atelier Street", 4620, 2400, 3180, 12, "street", "bellweather"),
+	vertical("bellweather-east", "Terrace Street", 5510, 2400, 3180, 12, "street", "bellweather"),
+	horizontal("bellweather-north", "Old Tram Road", 4540, 5600, 2430, 13, "street", "bellweather"),
+	horizontal("bellweather-center", "Palette Boulevard", 4540, 5600, 2670, 14, "street", "bellweather"),
+	horizontal("bellweather-south", "Evening Market Road", 4540, 5600, 3130, 12, "street", "bellweather"),
+	horizontal("aster-north", "Tideglass Avenue", 6140, 7090, 2470, 12, "street", "aster"),
+	horizontal("aster-center", "Aster Bay Esplanade", 6140, 7090, 2700, 14, "street", "aster"),
+	horizontal("aster-south", "Research Quay", 6140, 7090, 3240, 12, "street", "aster"),
+	vertical("aster-west", "West Bay Road", 6230, 2380, 3330, 12, "street", "aster"),
+	vertical("aster-east", "East Bay Road", 6980, 2380, 3330, 12, "street", "aster"),
+	horizontal("juniper-north", "Orchard Lane", 2300, 3080, 5860, 10, "street", "juniper"),
+	horizontal("juniper-south", "Mill Lane", 2300, 3080, 6380, 10, "street", "juniper"),
+	vertical("juniper-square", "Juniper Village Green", 2630, 5800, 6460, 12, "street", "juniper"),
+	vertical("juniper-west", "Old Mill Road", 2350, 5800, 6460, 10, "street", "juniper"),
+	horizontal("larkspur-north", "Camellia Avenue", 6e3, 7040, 7610, 12, "street", "larkspur"),
+	horizontal("larkspur-center", "Garden Boulevard", 6e3, 7040, 7890, 14, "street", "larkspur"),
+	vertical("larkspur-east", "Conservatory Drive", 6900, 7520, 8320, 12, "street", "larkspur"),
+	vertical("larkspur-center-north", "Larkspur Approach", 6650, 7610, 8320, 12, "street", "larkspur"),
+	vertical("larkspur-west", "Rose Terrace", 6140, 7520, 8320, 11, "street", "larkspur"),
+	horizontal("meridian-north", "Civic Avenue", 9430, 10580, 6100, 16, "street", "meridian"),
+	horizontal("meridian-center", "Meridian Central", 9430, 10580, 6500, 16, "street", "meridian"),
+	horizontal("meridian-south", "Station Boulevard", 9430, 10580, 6920, 16, "street", "meridian"),
+	vertical("meridian-west", "West Civic Road", 9560, 5940, 7090, 14, "street", "meridian"),
+	vertical("meridian-east", "East Civic Road", 10400, 5940, 7090, 14, "street", "meridian"),
+	horizontal("coast-access", "Lighthouse Coast Road", 1e4, 11100, 4800, 16, "country"),
+	vertical("coast-overlook", "Lighthouse Overlook", 11e3, 1100, 8700, 16, "country"),
+	...Object.entries(REGIONAL_VENUE_ANCHORS).map(([id, anchor]) => horizontal(`venue-${id}-access`, "Visitor Forecourt", anchor.access.x, anchor.parking.x, anchor.parking.z, 9.2, "access", anchor.regionId)),
+	...REGIONAL_SERVICE_POINTS.filter((service) => service.locationId === -1).map((service) => horizontal(`${service.id}-lane`, service.name, service.access.x, service.parking.x, service.parking.z, 12, "access"))
+];
+//#endregion
 //#region src/lib/immersive-locations.ts
 const HOME_CENTER = {
 	x: 220,
@@ -32,7 +221,8 @@ function getImmersiveLocations(tier) {
 		"market"
 	];
 	const locations = FIELD_LOCATIONS[tier].map((location) => {
-		const north = location.id < 2, parking = {
+		const anchor = location.id >= 1 && location.id <= 3 ? REGIONAL_VENUE_ANCHORS[location.id] : void 0;
+		const north = location.id < 2, parking = anchor ? { ...anchor.parking } : {
 			x: location.point.x,
 			z: location.point.y
 		};
@@ -40,8 +230,15 @@ function getImmersiveLocations(tier) {
 			x: 850,
 			z: 595
 		} : {
-			x: location.point.x,
-			z: location.point.y + (north ? -63 : 63)
+			x: parking.x,
+			z: parking.z + (north ? -63 : 63)
+		};
+		const access = anchor ? { ...anchor.access } : location.id === 4 ? {
+			x: parking.x,
+			z: 650
+		} : {
+			x: 500,
+			z: parking.z
 		};
 		const width = location.id === 0 ? 60 : location.id === 4 ? 24 : 68, depth = location.id === 0 ? 42 : location.id === 4 ? 16 : 46;
 		const door = {
@@ -79,10 +276,12 @@ function getImmersiveLocations(tier) {
 		return {
 			id: location.id,
 			name: location.name,
-			subtitle: location.subtitle,
+			subtitle: anchor ? `${anchor.regionId === "eastmere" ? "Eastmere Campus" : anchor.regionId === "bellweather" ? "Bellweather" : "Aster Bay"} · ${location.subtitle}` : location.subtitle,
 			center,
 			door,
 			parking,
+			access,
+			regionId: anchor?.regionId ?? "cirrus",
 			interiorSpawn: {
 				x: door.x,
 				z: door.z + (north || location.id === 4 ? -3 : 3)
@@ -103,6 +302,11 @@ function getImmersiveLocations(tier) {
 			z: 488.5
 		},
 		parking: { ...HOME_CAR_SPAWN$1 },
+		access: {
+			x: 220,
+			z: 525
+		},
+		regionId: "cirrus",
 		interiorSpawn: {
 			x: 220,
 			z: 485.8
@@ -467,14 +671,17 @@ function canMeet(game, id) {
 }
 function canRefuel(game) {
 	const field = fieldOf(game);
-	if (game.immersion) return atVenue(game, 4) && Math.hypot(game.immersion.player.x - game.immersion.vehicle.x, game.immersion.player.z - game.immersion.vehicle.z) <= 6;
+	if (game.immersion) {
+		const { player, vehicle, mode } = game.immersion;
+		return mode === "foot" && Math.abs(vehicle.speed) < .65 && Math.hypot(player.x - vehicle.x, player.z - vehicle.z) <= 11 && REGIONAL_SERVICE_POINTS.some((station) => Math.hypot(vehicle.x - station.parking.x, vehicle.z - station.parking.z) <= 25 && Math.hypot(player.x - station.parking.x, player.z - station.parking.z) <= 18);
+	}
 	return atVenue(game, 4) && distance(field.car, FIELD_LOCATIONS[game.tier][4].point) <= 100;
 }
-const record$1 = (value) => !!value && typeof value === "object" && !Array.isArray(value);
-const finite$1 = (value) => typeof value === "number" && Number.isFinite(value);
-const validPoint = (value, bounded) => record$1(value) && finite$1(value.x) && finite$1(value.y) && (!bounded || value.x >= 0 && value.x <= 1536 && value.y >= 0 && value.y <= 1024);
+const record$2 = (value) => !!value && typeof value === "object" && !Array.isArray(value);
+const finite$2 = (value) => typeof value === "number" && Number.isFinite(value);
+const validPoint = (value, bounded) => record$2(value) && finite$2(value.x) && finite$2(value.y) && (!bounded || value.x >= 0 && value.x <= 1536 && value.y >= 0 && value.y <= 1024);
 function validScoutStyle(value) {
-	return record$1(value) && typeof value.name === "string" && value.name.length >= 1 && value.name.length <= 24 && value.name.trim().length > 0 && !/[\u0000-\u001f\u007f]/u.test(value.name) && Number.isInteger(value.avatar) && value.avatar >= 0 && value.avatar <= 15 && typeof value.car === "string" && Object.hasOwn(CAR_NAMES, value.car) && typeof value.paint === "string" && Object.hasOwn(PAINTS, value.paint) && typeof value.plate === "string" && /^[A-Z0-9-]{1,8}$/u.test(value.plate) && (value.camera === void 0 || typeof value.camera === "string" && [
+	return record$2(value) && typeof value.name === "string" && value.name.length >= 1 && value.name.length <= 24 && value.name.trim().length > 0 && !/[\u0000-\u001f\u007f]/u.test(value.name) && Number.isInteger(value.avatar) && value.avatar >= 0 && value.avatar <= 15 && typeof value.car === "string" && Object.hasOwn(CAR_NAMES, value.car) && typeof value.paint === "string" && Object.hasOwn(PAINTS, value.paint) && typeof value.plate === "string" && /^[A-Z0-9-]{1,8}$/u.test(value.plate) && (value.camera === void 0 || typeof value.camera === "string" && [
 		"overhead",
 		"cockpit",
 		"chase",
@@ -482,7 +689,7 @@ function validScoutStyle(value) {
 	].includes(value.camera)) && (value.radio === void 0 || typeof value.radio === "boolean") && (value.music === void 0 || typeof value.music === "boolean") && (value.sound === void 0 || typeof value.sound === "boolean") && (value.engine === void 0 || typeof value.engine === "boolean") && (value.station === void 0 || Number.isInteger(value.station) && value.station >= 0 && value.station <= 2);
 }
 function validField(value, bounded = true, legacyFuel = false) {
-	if (!record$1(value) || !["office", "district"].includes(value.scene) || !validPoint(value.player, bounded) || !validPoint(value.car, bounded) || !finite$1(value.heading) || bounded && (value.heading < 0 || value.heading >= FULL_TURN) || typeof value.driving !== "boolean" || value.scene === "office" && value.driving || !(legacyFuel && value.fuel === void 0) && (!finite$1(value.fuel) || bounded && (value.fuel < 0 || value.fuel > 12)) || !Array.isArray(value.visited) || value.visited.length > 5 || new Set(value.visited).size !== value.visited.length || !value.visited.every((id) => Number.isInteger(id) && id >= 0 && id <= 4) || !Array.isArray(value.met) || value.met.length > 200 || new Set(value.met).size !== value.met.length || !value.met.every((id) => typeof id === "string" && id.length > 0 && id.length <= 100) || value.destination !== null && (!Number.isInteger(value.destination) || value.destination < 0 || value.destination > 4)) return false;
+	if (!record$2(value) || !["office", "district"].includes(value.scene) || !validPoint(value.player, bounded) || !validPoint(value.car, bounded) || !finite$2(value.heading) || bounded && (value.heading < 0 || value.heading >= FULL_TURN) || typeof value.driving !== "boolean" || value.scene === "office" && value.driving || !(legacyFuel && value.fuel === void 0) && (!finite$2(value.fuel) || bounded && (value.fuel < 0 || value.fuel > 12)) || !Array.isArray(value.visited) || value.visited.length > 5 || new Set(value.visited).size !== value.visited.length || !value.visited.every((id) => Number.isInteger(id) && id >= 0 && id <= 4) || !Array.isArray(value.met) || value.met.length > 200 || new Set(value.met).size !== value.met.length || !value.met.every((id) => typeof id === "string" && id.length > 0 && id.length <= 100) || value.destination !== null && (!Number.isInteger(value.destination) || value.destination < 0 || value.destination > 4)) return false;
 	return true;
 }
 function boundedField(field) {
@@ -537,8 +744,7 @@ function validPrologue(value) {
 	const state = value;
 	return PROLOGUE_PHASES.includes(state.phase) && (state.choice === null || DREAM_PITCHES.some((pitch) => pitch.id === state.choice)) && (!["sky", "cruise"].includes(state.phase) || state.choice === null);
 }
-//#endregion
-//#region src/lib/immersive-runtime.ts
+WORLD_SIZE.width - 8, WORLD_SIZE.depth - 8;
 const DREAM_CAR_SPAWN = {
 	x: 500,
 	z: 870,
@@ -548,18 +754,19 @@ const HOME_CAR_SPAWN = {
 	...HOME_CAR_SPAWN$1,
 	heading: Math.PI
 };
-const finite = (value) => typeof value === "number" && Number.isFinite(value);
-const record = (value) => !!value && typeof value === "object" && !Array.isArray(value);
-const point = (value) => record(value) && finite(value.x) && finite(value.z) && value.x >= 0 && value.x <= 1536 && value.z >= 0 && value.z <= 1024;
+const finite$1 = (value) => typeof value === "number" && Number.isFinite(value);
+const record$1 = (value) => !!value && typeof value === "object" && !Array.isArray(value);
+const point = (value, schema) => record$1(value) && finite$1(value.x) && finite$1(value.z) && value.x >= 0 && value.x <= (schema === 1 ? 1536 : WORLD_SIZE.width) && value.z >= 0 && value.z <= (schema === 1 ? 1024 : WORLD_SIZE.depth);
+const worldDistance = (first, second) => Math.hypot(first.x - second.x, first.z - second.z);
 function validImmersion(value) {
-	if (!record(value) || value.schema !== 1 || ![
+	if (!record$1(value) || ![1, 2].includes(value.schema) || ![
 		0,
 		1,
 		2
-	].includes(value.tier) || !["foot", "driving"].includes(value.mode) || !point(value.player) || !point(value.vehicle) || !record(value.player) || !record(value.vehicle)) return false;
+	].includes(value.tier) || !["foot", "driving"].includes(value.mode) || !point(value.player, value.schema) || !point(value.vehicle, value.schema) || !record$1(value.player) || !record$1(value.vehicle)) return false;
 	const player = value.player, vehicle = value.vehicle;
 	const id = (value) => value === null || Number.isInteger(value) && value >= 0 && value <= 5;
-	return finite(player.yaw) && Math.abs(player.yaw) <= Math.PI + .001 && finite(player.pitch) && Math.abs(player.pitch) <= 1.4 && finite(vehicle.heading) && Math.abs(vehicle.heading) <= Math.PI + .001 && finite(vehicle.speed) && Math.abs(vehicle.speed) <= 65 && finite(vehicle.steering) && Math.abs(vehicle.steering) <= 1 && finite(vehicle.distance) && vehicle.distance >= 0 && vehicle.distance < 1e9 && finite(vehicle.fuel) && vehicle.fuel >= 0 && vehicle.fuel <= 12 && ["D", "R"].includes(vehicle.gear) && id(value.interior) && id(value.destination) && Array.isArray(value.parkedAt) && value.parkedAt.length <= 6 && new Set(value.parkedAt).size === value.parkedAt.length && value.parkedAt.every((id) => Number.isInteger(id) && id >= 0 && id <= 5) && [
+	return finite$1(player.yaw) && Math.abs(player.yaw) <= Math.PI + .001 && finite$1(player.pitch) && Math.abs(player.pitch) <= 1.4 && finite$1(vehicle.heading) && Math.abs(vehicle.heading) <= Math.PI + .001 && finite$1(vehicle.speed) && Math.abs(vehicle.speed) <= 65 && finite$1(vehicle.steering) && Math.abs(vehicle.steering) <= 1 && finite$1(vehicle.distance) && vehicle.distance >= 0 && vehicle.distance < 1e9 && finite$1(vehicle.fuel) && vehicle.fuel >= 0 && vehicle.fuel <= 12 && ["D", "R"].includes(vehicle.gear) && (vehicle.damage === void 0 || finite$1(vehicle.damage) && vehicle.damage >= 0 && vehicle.damage <= 1) && (vehicle.disabled === void 0 || typeof vehicle.disabled === "boolean") && id(value.interior) && id(value.destination) && Array.isArray(value.parkedAt) && value.parkedAt.length <= 6 && new Set(value.parkedAt).size === value.parkedAt.length && value.parkedAt.every((id) => Number.isInteger(id) && id >= 0 && id <= 5) && [
 		"accelerate",
 		"brake",
 		"steer",
@@ -574,7 +781,7 @@ function freshImmersion(game) {
 		heading: Math.PI
 	};
 	return {
-		schema: 1,
+		schema: 2,
 		tier: game.tier,
 		interior: dream ? null : waking ? 5 : 0,
 		player: dream ? {
@@ -597,7 +804,9 @@ function freshImmersion(game) {
 			steering: 0,
 			distance: 0,
 			fuel: game.field?.fuel ?? 12,
-			gear: "D"
+			gear: "D",
+			damage: 0,
+			disabled: false
 		},
 		mode: dream ? "driving" : "foot",
 		destination: dream ? 1 : waking ? 0 : null,
@@ -606,6 +815,158 @@ function freshImmersion(game) {
 		thoughtsSeen: [],
 		homeReviewed: !waking
 	};
+}
+/** Move existing 3.0 careers to relocated venues once; retain their progress and vehicle condition. */
+function migrateImmersion(stored) {
+	const state = structuredClone(stored);
+	state.vehicle.damage ??= 0;
+	state.vehicle.disabled = state.vehicle.damage >= .86;
+	if (state.schema === 2) return state;
+	const legacy = [
+		[
+			{
+				x: 1159,
+				z: 266
+			},
+			{
+				x: 388,
+				z: 718
+			},
+			{
+				x: 1138,
+				z: 718
+			}
+		],
+		[
+			{
+				x: 1170,
+				z: 275
+			},
+			{
+				x: 375,
+				z: 752
+			},
+			{
+				x: 1170,
+				z: 752
+			}
+		],
+		[
+			{
+				x: 1167,
+				z: 266
+			},
+			{
+				x: 384,
+				z: 702
+			},
+			{
+				x: 1185,
+				z: 702
+			}
+		]
+	][state.tier], locations = getImmersiveLocations(state.tier);
+	const parked = legacy.findIndex((point) => worldDistance(state.vehicle, point) < 90);
+	if (parked >= 0) {
+		const next = locations[parked + 1].parking, previous = legacy[parked], dx = next.x - previous.x, dz = next.z - previous.z;
+		const playerNearby = worldDistance(state.player, state.vehicle) < 180 || state.interior === parked + 1;
+		state.vehicle.x += dx;
+		state.vehicle.z += dz;
+		if (playerNearby) {
+			state.player.x += dx;
+			state.player.z += dz;
+		}
+	} else if (state.interior !== null && state.interior >= 1 && state.interior <= 3) {
+		const previous = legacy[state.interior - 1], next = locations[state.interior].parking;
+		state.player.x += next.x - previous.x;
+		state.player.z += next.z - previous.z;
+	}
+	state.schema = 2;
+	return state;
+}
+const record = (value) => !!value && typeof value === "object" && !Array.isArray(value);
+const finite = (value, min, max) => typeof value === "number" && Number.isFinite(value) && value >= min && value <= max;
+const integer = (value, min, max) => finite(value, min, max) && Number.isSafeInteger(value);
+const validNpcId = (value) => typeof value === "string" && /^[A-Za-z0-9][A-Za-z0-9_.:-]{0,159}$/.test(value);
+const validPosition = (value) => record(value) && finite(value.x, 0, WORLD_SIZE.width) && finite(value.z, 0, WORLD_SIZE.depth);
+function idParts(value) {
+	if (typeof value !== "string" || value.length > 185) return null;
+	const match = /^law:([1-9][0-9]*):(.+)$/.exec(value);
+	if (!match || !validNpcId(match[2])) return null;
+	const sequence = Number(match[1]);
+	return Number.isSafeInteger(sequence) ? {
+		sequence,
+		npcId: match[2]
+	} : null;
+}
+const freshLaw = () => ({
+	schema: 1,
+	sequence: 0,
+	handled: [],
+	response: null,
+	last: null
+});
+const lawOf = (game) => game.law ?? freshLaw();
+const incidentIdFor = (game, npcId) => `law:${lawOf(game).sequence + 1}:${npcId}`;
+function validPedestrianIncident(value) {
+	if (!record(value)) return false;
+	const id = idParts(value.id);
+	return !!id && id.npcId === value.npcId && validPosition(value.position) && finite(value.speed, 2.5, 65);
+}
+/** The monotonic sequence survives history pruning, chapter changes and process restarts. */
+function validLaw(value) {
+	if (!record(value) || value.schema !== 1 || !integer(value.sequence, 0, Number.MAX_SAFE_INTEGER) || !Array.isArray(value.handled) || value.handled.length !== Math.min(value.sequence, 64)) return false;
+	const sequence = value.sequence, handled = value.handled;
+	if (!handled.every((id, index) => idParts(id)?.sequence === sequence - handled.length + index + 1)) return false;
+	if (sequence === 0) return value.response === null && value.last === null;
+	const last = value.last;
+	if (!record(last) || !validPedestrianIncident(last) || last.id !== handled.at(-1) || !integer(last.week, 1, Number.MAX_SAFE_INTEGER) || !integer(last.tier, 0, 2) || typeof last.resolved !== "boolean" || !record(last.loss)) return false;
+	const loss = last.loss;
+	if (!finite(loss.fine, 0, Number.MAX_SAFE_INTEGER) || !finite(loss.reputation, 0, 40) || !integer(loss.missions, 0, 2) || !integer(loss.actions, 0, 8) || !finite(loss.trust, 0, 45) || !finite(loss.morale, 0, 30)) return false;
+	if (value.response === null) return last.resolved;
+	const response = value.response;
+	if (!record(response) || !validPedestrianIncident(response) || last.resolved || response.id !== last.id || response.npcId !== last.npcId || response.position.x !== last.position.x || response.position.z !== last.position.z || response.speed !== last.speed || !finite(response.elapsedSeconds, 0, 30)) return false;
+	return response.phase === (response.elapsedSeconds >= 18 ? "arrived" : "dispatched");
+}
+/** Shared towing/impound placement: no free fuel, repair, mileage reset or gear change. */
+function impoundVehicle(game) {
+	const state = game.immersion;
+	if (!state) throw new Error("A vehicle must be in the world before it can be impounded.");
+	const car = state.vehicle;
+	const station = REGIONAL_SERVICE_POINTS.reduce((nearest, point) => Math.hypot(car.x - point.parking.x, car.z - point.parking.z) < Math.hypot(car.x - nearest.parking.x, car.z - nearest.parking.z) ? point : nearest);
+	state.vehicle = {
+		...car,
+		...station.parking,
+		speed: 0,
+		heading: 0,
+		steering: 0
+	};
+	state.player = {
+		...state.player,
+		x: station.parking.x + 3,
+		z: station.parking.z,
+		yaw: Math.PI / 2,
+		pitch: 0
+	};
+	state.interior = null;
+	state.mode = "foot";
+	if (station.locationId === 4) state.parkedAt = [...new Set([...state.parkedAt, 4])];
+	game.field = boundedField({
+		...game.field ?? freshField(game.tier),
+		scene: "district",
+		driving: false,
+		car: {
+			x: state.vehicle.x,
+			y: state.vehicle.z
+		},
+		player: {
+			x: state.player.x,
+			y: state.player.z
+		},
+		heading: 0,
+		fuel: car.fuel
+	});
+	return station;
 }
 //#endregion
 //#region src/lib/game.ts
@@ -1489,7 +1850,8 @@ function newGame(seed = Date.now() >>> 0) {
 		won: false,
 		field: freshField(),
 		style: { ...DEFAULT_STYLE },
-		story: initialPrologue()
+		story: initialPrologue(),
+		law: freshLaw()
 	};
 	g.candidates = Array.from({ length: 12 }, (_, i) => createCandidate(g, i));
 	log(g, "Welcome to Cirrus Works. Three great hires could change this company.");
@@ -1510,6 +1872,8 @@ function normalizeGame(game) {
 		choice: null
 	};
 	if (next.field.fuel === void 0) next.field.fuel = 12;
+	if (next.immersion?.schema === 1 && validImmersion(next.immersion)) next.immersion = migrateImmersion(next.immersion);
+	next.law ??= freshLaw();
 	return next;
 }
 const canPrestige = (g) => {
@@ -1749,6 +2113,76 @@ function act(original, action) {
 		if (!c || available && (c.status !== "available" || !c.discovered)) throw new Error("This candidate is no longer available.");
 		return c;
 	};
+	if (action.type === "pedestrianIncident") {
+		const law = lawOf(g), incident = action.incident;
+		if (!validPedestrianIncident(incident)) return g;
+		if (law.sequence >= Number.MAX_SAFE_INTEGER || incident.id !== incidentIdFor(g, incident.npcId)) return g;
+		const state = g.immersion;
+		if (!state || state.mode !== "driving" || Math.hypot(state.vehicle.x - incident.position.x, state.vehicle.z - incident.position.z) > 12) return g;
+		const fine = Math.min(g.cash, Math.round(t.budget * .45 * 100) / 100), reputation = Math.min(g.reputation, 40), missions = Math.min(g.completed, 2), actions = g.actions;
+		g.cash = Math.round((g.cash - fine) * 100) / 100;
+		g.reputation -= reputation;
+		g.completed -= missions;
+		g.actions = 0;
+		for (const person of g.candidates) {
+			person.trust = Math.max(0, person.trust - 45);
+			if (person.status === "hired") person.morale = Math.max(0, (person.morale ?? 85) - 30);
+		}
+		const confirmed = structuredClone(incident);
+		law.sequence++;
+		law.handled = [...law.handled, confirmed.id].slice(-64);
+		law.response = {
+			...confirmed,
+			phase: "dispatched",
+			elapsedSeconds: 0
+		};
+		law.last = {
+			...structuredClone(confirmed),
+			week: g.week,
+			tier: g.tier,
+			loss: {
+				fine,
+				reputation,
+				missions,
+				actions,
+				trust: 45,
+				morale: 30
+			},
+			resolved: false
+		};
+		g.law = law;
+		log(g, `A pedestrian was struck. Police are responding. ${money(fine)} in fines and damages; reputation −${reputation}, completed assignments −${missions}. This week's work is suspended.`, "warn");
+		g.report = null;
+		return g;
+	}
+	if (action.type === "policeAdvance") {
+		const response = lawOf(g).response;
+		if (!response || response.id !== action.id || !Number.isFinite(action.seconds) || action.seconds <= 0 || action.seconds > 5) return g;
+		response.elapsedSeconds = Math.min(30, response.elapsedSeconds + action.seconds);
+		response.phase = response.elapsedSeconds >= 18 ? "arrived" : "dispatched";
+		return g;
+	}
+	if (action.type === "policeResolve") {
+		const law = lawOf(g), response = law.response;
+		if (!response || response.id !== action.id || response.elapsedSeconds < 30) return g;
+		const station = impoundVehicle(g);
+		law.response = null;
+		if (law.last) law.last.resolved = true;
+		log(g, `Police suspended your field work and impounded your compact at ${station.name}. The career penalties remain; fuel and repairs are arranged separately.`, "warn");
+		return g;
+	}
+	if (lawOf(g).response && ![
+		"immersionSnapshot",
+		"fieldSnapshot",
+		"customize",
+		"preferences",
+		"setDestination",
+		"fieldEnter",
+		"fieldReturn",
+		"briefing",
+		"dismissReport",
+		"star"
+	].includes(action.type)) throw new Error("Police are responding to the collision. Field work and career changes are suspended until the response is complete.");
 	if (action.type === "story") {
 		if (!validPrologue(action.state)) throw new Error("The prologue could not be saved.");
 		const wasWaking = g.story?.phase === "wake";
@@ -1761,7 +2195,7 @@ function act(original, action) {
 	}
 	if (action.type === "immersionSnapshot") {
 		if (!validImmersion(action.snapshot) || action.snapshot.tier !== g.tier) throw new Error("Your position could not be saved.");
-		const snapshot = structuredClone(action.snapshot);
+		const snapshot = migrateImmersion(action.snapshot);
 		const locations = getImmersiveLocations(g.tier);
 		snapshot.parkedAt = [...new Set(g.immersion?.parkedAt ?? [])];
 		if (Math.abs(snapshot.vehicle.speed) < .65) {
@@ -1887,7 +2321,26 @@ function act(original, action) {
 		log(g, `Bought ${gallons.toFixed(2)} gallons at $${GAS_PRICES[g.tier].toFixed(2)} per gallon ($${cost.toFixed(2)} total).`);
 		return g;
 	}
+	if (action.type === "vehicleService") {
+		const state = g.immersion, station = REGIONAL_SERVICE_POINTS.find((point) => point.id === action.station);
+		if (!state || !station || state.mode !== "foot" || Math.abs(state.vehicle.speed) >= .65 || Math.hypot(state.vehicle.x - station.parking.x, state.vehicle.z - station.parking.z) > 25 || Math.hypot(state.player.x - state.vehicle.x, state.player.z - state.vehicle.z) > 11) throw new Error("Park at a service station and step out beside your car to arrange repairs.");
+		const damage = state.vehicle.damage ?? 0;
+		if (damage <= 1e-4) throw new Error("Your car is already in good condition.");
+		const cost = Math.max(20, Math.ceil(damage * 900));
+		need(0, cost);
+		state.vehicle.damage = 0;
+		state.vehicle.disabled = false;
+		log(g, `${station.name} repaired your compact for ${money(cost)}.`, "good");
+		return g;
+	}
 	if (action.type === "roadside") {
+		if (g.immersion) {
+			const state = g.immersion, car = state.vehicle;
+			if (state.mode !== "foot" || Math.abs(car.speed) >= .65 || Math.hypot(state.player.x - car.x, state.player.z - car.z) > 12 || car.fuel > .05 && (car.damage ?? 0) < .86) throw new Error("Step out beside your stopped, stranded car to call a tow.");
+			need(0, 150);
+			log(g, `Roadside assistance brought your car to ${impoundVehicle(g).name} for $150. Fuel and repairs are arranged at the station.`, "warn");
+			return g;
+		}
 		if (g.field.scene !== "district" || g.field.driving || g.field.fuel > .05) throw new Error("Roadside assistance is available when you are on foot beside an empty vehicle.");
 		need(0, 150);
 		const station = FIELD_LOCATIONS[g.tier][4];
@@ -1904,29 +2357,6 @@ function act(original, action) {
 			visited: [...new Set([...g.field.visited, 4])]
 		};
 		log(g, "Roadside assistance brought your vehicle to the fuel station for $150. Fuel is sold separately.", "warn");
-		if (g.immersion) {
-			g.immersion.vehicle = {
-				...g.immersion.vehicle,
-				x: station.point.x,
-				z: station.point.y,
-				speed: 0,
-				fuel: 0,
-				heading: 0
-			};
-			g.immersion.player = {
-				...g.immersion.player,
-				x: station.point.x + 2.5,
-				z: station.point.y
-			};
-			g.immersion.interior = null;
-			g.immersion.mode = "foot";
-			g.immersion.destination = 4;
-			g.immersion.parkedAt = [...new Set([...g.immersion.parkedAt, 4])];
-			g.field.player = {
-				x: g.immersion.player.x,
-				y: g.immersion.player.z
-			};
-		}
 		return g;
 	}
 	if (action.type === "meet") {
@@ -2289,6 +2719,8 @@ function validGame(value) {
 	if (g.story !== void 0 && !validPrologue(g.story)) return false;
 	if (g.field !== void 0 && (!validField(g.field, true, true) || !g.field.met.every((id) => ids.has(id)))) return false;
 	if (g.immersion !== void 0 && (!validImmersion(g.immersion) || g.immersion.tier !== g.tier)) return false;
+	if (g.law !== void 0 && !validLaw(g.law)) return false;
+	if (g.law?.response && (!g.immersion || g.law.last?.tier !== g.tier || g.law.last.week > g.week)) return false;
 	if (g.playerProfile !== void 0 && (!record(g.playerProfile) || ![
 		"observer",
 		"connector",

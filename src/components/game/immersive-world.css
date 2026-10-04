@@ -1,52 +1,182 @@
-.immersive-world{--iv-ink:#203b3a;--iv-paper:#f3f0e4;position:relative;isolation:isolate;width:100%;height:100%;min-height:420px;overflow:hidden;background:#b5ced3;color:var(--iv-paper);font-family:"Segoe UI",Arial,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:0}
-.immersive-world button{font-family:inherit;font-variant-numeric:tabular-nums;cursor:pointer}
-.immersive-world__surface{position:absolute;inset:0}
-.immersive-world__canvas{display:block;width:100%;height:100%;outline:none}
-.immersive-world__vignette{position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at center,transparent 43%,#162d3019 100%)}
-.immersive-world[data-phase=sky] .immersive-world__vignette{background:linear-gradient(90deg,#1f3a328c,transparent 75%),linear-gradient(0deg,#213a3550,transparent 70%)}
-.immersive-world__fade{position:absolute;inset:0;background:#111d1f;pointer-events:none;z-index:20}
-.immersive-world__loading,.immersive-world__error{position:absolute;inset:0;display:grid;place-content:center;gap:20px;text-align:center;color:var(--iv-ink);background:#dddccd;z-index:30;font-size:20px;line-height:1.6;padding:30px}
-.immersive-world__loading span{display:block;width:36px;height:36px;margin:auto;border-radius:50%;border:2px solid #244a4130;border-top-color:#244a41;animation:immersion-spin 1.4s linear infinite}
-.immersive-world__place{position:absolute;z-index:3;top:92px;left:30px;padding:14px 19px;min-width:200px;border-left:2px solid #d7e4c0;background:linear-gradient(90deg,#233d3bd4,#233d3b85);box-shadow:0 6px 26px #14313015;border-radius:0 4px 4px 0}
-.immersive-world__place>span,.immersive-world__navigation>span,.immersive-world__intro>span,.immersive-world__conversation>span,.immersive-world__thought>span,.immersive-world__map header span,.immersive-world__tutorial>span{display:block;color:#cfddc2;font-size:10px;font-weight:600;letter-spacing:2px;line-height:1.5;margin-bottom:5px}
-.immersive-world__place strong{font-size:19px;font-weight:500}
-.immersive-world__tools{position:absolute;z-index:5;top:94px;right:27px;display:flex;align-items:center;gap:8px}
-.immersive-world__tools button{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid #eee9d32b;background:#203b3acd;color:#eeeede;border-radius:5px;font-size:13px;transition:background .2s}
-.immersive-world__tools button:hover{background:#365e54}
-.immersive-world__key{display:inline-grid;place-items:center;min-width:25px;height:25px;padding:0 5px;border:1px solid #ebecd575;box-shadow:0 2px 0 #0d252a;border-radius:4px;font-family:Arial,sans-serif;font-weight:700;font-size:15px;color:#fbf6e6;line-height:1}
-.immersive-world__navigation{position:absolute;left:30px;top:185px;z-index:3;width:245px;padding:16px 19px 15px;border:1px solid #ebedd424;background:#203b3ac4;border-radius:6px;backdrop-filter:blur(8px);box-shadow:0 7px 22px #203d3315}
-.immersive-world__navigation strong{display:block;font-size:18px;font-weight:500;margin:0 0 11px;line-height:1.3}
-.immersive-world__navigation>div{font-size:23px;font-weight:400}
-.immersive-world__navigation small{font-size:11px;color:#c1ccc0;margin-left:2px}
-.immersive-world__navigation p{font-size:12px;line-height:1.55;color:#d8ddcb;margin:11px 0 0}
-.immersive-world__bottom{position:absolute;z-index:3;bottom:17px;left:28px;right:28px;display:flex;justify-content:space-between;gap:15px;color:#f7f7e7;font-size:12px;line-height:1.5;text-shadow:0 1px 2px #142b24,0 0 9px #142b24,0 0 18px #142b24;pointer-events:none}
-.immersive-world__bottom>span{background:#193332ae;border:1px solid #d0ddc21a;padding:6px 10px;border-radius:4px}
-.immersive-world__interact{position:absolute;z-index:4;left:50%;bottom:78px;transform:translateX(-50%);max-width:min(580px,85%);text-align:center}
-.immersive-world__interact button{display:flex;align-items:center;gap:12px;margin:auto;padding:12px 19px;border:1px solid #ecf1ce60;color:#f8f7e9;background:#193731dc;border-radius:6px;font-size:15px;font-weight:500;line-height:1.3;box-shadow:0 6px 26px #10252240;backdrop-filter:blur(10px)}
-.immersive-world__interact button:hover{background:#345d4c}
-.immersive-world__interact small{display:block;font-size:12px;line-height:1.5;margin-top:9px;color:#f1f0dc;text-shadow:0 2px 8px #122b21}
-.immersive-world__reticle{position:absolute;z-index:2;left:50%;top:50%;width:4px;height:4px;border-radius:50%;background:#fff6dfb0;box-shadow:0 0 2px #162c24;pointer-events:none}
-.immersive-world__driving{position:absolute;z-index:3;right:34px;bottom:73px;display:flex;align-items:center;gap:18px;color:#f3f1df;background:#132d2ad6;padding:14px 20px;border:1px solid #c9d6bb30;border-radius:6px;box-shadow:0 4px 25px #14252130;backdrop-filter:blur(8px)}
-.immersive-world__speed{display:flex;align-items:baseline;gap:7px}.immersive-world__speed b{font-family:"Segoe UI",Arial,sans-serif;font-size:42px;font-weight:300;line-height:1;letter-spacing:-1px}.immersive-world__speed>span{color:#b4c3af;font-size:11px}.immersive-world__gear{color:#dce6c8;font-size:16px;min-width:14px}
-.immersive-world__fuel{width:64px}.immersive-world__fuel>span{font-size:9px;letter-spacing:1.5px;color:#b8c5b1}.immersive-world__fuel>div{margin:6px 0;height:3px;background:#91ac8735;border-radius:2px;overflow:hidden}.immersive-world__fuel i{display:block;height:100%;background:#c7d9a7}.immersive-world__fuel small{color:#c9d2c1;font-size:10px}
-.immersive-world__tutorial{position:absolute;z-index:4;top:43%;left:50%;transform:translate(-50%,-50%);padding:22px 35px 23px;width:min(430px,70vw);text-align:center;border-radius:9px;background:#182e2fd1;border:1px solid #d7e6c740;box-shadow:0 12px 60px #132b2140;backdrop-filter:blur(8px);pointer-events:none}
-.immersive-world__tutorial>span{margin-bottom:18px;font-size:9px}
-.immersive-world__tutorial-key{width:69px;height:68px;display:grid;place-items:center;margin:0 auto 20px;font-family:Arial,sans-serif;font-size:36px;font-weight:600;line-height:1;color:#2b433d;background:#eeeedd;border:1px solid #fafbe6;border-bottom:6px solid #aaaf94;border-radius:8px;box-shadow:0 5px 14px #11282540;animation:immersion-key-guide 2.7s ease-in-out infinite}
-.immersive-world__tutorial-key.is-pressed{transform:translateY(4px);border-bottom-width:2px;background:#cbe4b0;animation:none}
-.immersive-world__tutorial-steer{display:flex;gap:12px;justify-content:center}.immersive-world__tutorial-steer .immersive-world__tutorial-key{margin-left:0;margin-right:0}
-.immersive-world__tutorial h2{font-family:"Segoe UI",Arial,sans-serif;font-size:20px;line-height:1.35;margin:0 0 8px;font-weight:500;letter-spacing:0;color:#f4f3e1}.immersive-world__tutorial p{font-size:13px;line-height:1.6;color:#d0dac4;margin:0}
-.immersive-world__toast{position:absolute;z-index:6;max-width:min(610px,70%);left:50%;top:93px;transform:translateX(-50%);padding:13px 21px;color:#eef1da;border:1px solid #d4e2bd40;background:#213f37ef;border-radius:6px;box-shadow:0 6px 28px #21342a25;font-size:13px;line-height:1.5;text-align:center;pointer-events:none}
-.immersive-world__intro{position:absolute;z-index:8;left:7%;bottom:13%;max-width:690px;text-shadow:0 2px 25px #182e2250}.immersive-world__intro>span{color:#edf1cf;font-size:11px;letter-spacing:4px;margin-bottom:20px}.immersive-world__intro h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(35px,4.7vw,74px);font-weight:400;letter-spacing:-1.5px;color:#faf3df;line-height:1.1}.immersive-world__intro p{color:#f0eeda;margin:21px 0 29px;font-size:16px;line-height:1.5}
-.immersive-world__intro>button{color:#29413a;background:#eff0dc;border:1px solid #f7f5e4;border-radius:4px;padding:13px 22px;font-size:15px;min-width:170px;box-shadow:0 4px 20px #152e2626}.immersive-world__intro>button span{margin-left:18px}.immersive-world__intro>button:hover{background:#d6e0ba}.immersive-world__intro>.immersive-world__quiet{display:block;padding:10px 0;color:#e7ecd5;border:0;background:none;box-shadow:none;font-size:12px;margin-top:10px;text-align:left}
-.immersive-world__conversation{position:absolute;z-index:9;bottom:9%;left:50%;transform:translateX(-50%);width:min(740px,87%);padding:28px 34px;color:#f4efda;background:#172e2bef;border:1px solid #d4dab147;border-radius:7px;box-shadow:0 12px 55px #142a2240;backdrop-filter:blur(16px)}
-.immersive-world__conversation>span{font-size:10px;color:#dce3bd;margin:0 0 11px}.immersive-world__conversation h2{font-family:Georgia,"Times New Roman",serif;margin:0 0 12px;font-weight:400;font-size:25px;line-height:1.45;color:#f6efda;letter-spacing:0}.immersive-world__conversation p{margin:0 0 18px;color:#d3dfca;font-size:14px;line-height:1.7;white-space:pre-line}.immersive-world__conversation button{border:1px solid #d5e1b45e;color:#ecedd6;border-radius:4px;padding:11px 15px;background:#31564b;text-align:left;font-size:14px;line-height:1.5;transition:background .15s}.immersive-world__conversation button:hover{background:#4a6e55}.immersive-world__conversation>div{display:grid;grid-template-columns:1fr;gap:8px}.immersive-world__phone{width:min(600px,80%);left:auto;right:4%;bottom:9%;transform:none}
-.immersive-world__modal-backdrop{position:absolute;inset:0;z-index:15;display:grid;place-items:center;padding:30px;background:#142c2b70;backdrop-filter:blur(6px)}
-.immersive-world__thought{width:min(610px,100%);padding:35px 40px 36px;border-radius:8px;background:#eeeadd;color:#24433b;box-shadow:0 20px 80px #15382c45;border:1px solid #f5f4e3}.immersive-world__thought>span{color:#627852;font-size:9px}.immersive-world__thought h2{font-family:Georgia,"Times New Roman",serif;margin:12px 0 20px;font-size:31px;line-height:1.2;letter-spacing:-.5px;font-weight:400;color:#24433b}.immersive-world__thought p{font-size:15px;line-height:1.8;margin:0 0 25px;white-space:pre-line;color:#3e5348}.immersive-world__thought button{border:0;border-radius:4px;background:#385a4a;color:#f1f0dc;padding:13px 20px;font-size:14px}
-.immersive-world__map{width:min(1050px,96%);max-height:91%;overflow:auto;padding:28px 33px 24px;border-radius:8px;color:#24433b;background:#e9e6d8;border:1px solid #f1f0df;box-shadow:0 15px 70px #17322b55}.immersive-world__map header{display:flex;align-items:center;justify-content:space-between;gap:20px}.immersive-world__map header span{color:#637650;font-size:9px}.immersive-world__map header h2{font-family:Georgia,"Times New Roman",serif;color:#274238;font-weight:400;font-size:30px;line-height:1.2;margin:7px 0 0}.immersive-world__map header button{border:1px solid #60795330;border-radius:5px;background:transparent;color:#35513e;font-size:28px;line-height:1;width:35px;height:35px}.immersive-world__map>p{max-width:690px;color:#56654f;font-size:13px;line-height:1.6;margin:17px 0 24px}
-.immersive-world__map-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:24px}.immersive-world__map-drawing{position:relative;min-height:390px;border:1px solid #7e907647;background:#c5d0b6;border-radius:5px;overflow:hidden;background-image:repeating-linear-gradient(0deg,#8c9f7a18 0,#8c9f7a18 1px,transparent 1px,transparent 35px),repeating-linear-gradient(90deg,#8c9f7a18 0,#8c9f7a18 1px,transparent 1px,transparent 35px)}
-.map-road{position:absolute;display:block;background:#8f9d86;min-width:3px;min-height:3px;border:1px solid #e0e4cba0}.map-place{position:absolute;z-index:2;border:1px solid #f1f0d7;background:#355544;color:#f2edd5;border-radius:5px;width:29px;height:29px;font-size:14px;line-height:1;transform:translate(-50%,-50%);box-shadow:0 2px 6px #24443225}.map-place.is-destination{background:#b77541}.map-place>span{position:absolute;left:50%;bottom:36px;transform:translateX(-50%);padding:4px 7px;background:#eae8d7df;border-radius:3px;color:#2e4a3c;font-size:10px;white-space:nowrap}.map-you{position:absolute;z-index:3;color:#b15b30;text-shadow:0 0 3px #fff,0 0 3px #fff;font-size:16px;line-height:1}
-.immersive-world__map-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}.immersive-world__map-list button{padding:16px 14px;border:1px solid #6f815535;border-radius:5px;background:#f1eee0;text-align:left;color:#24463b;transition:background .15s}.immersive-world__map-list button:hover{background:#d9e1c5}.immersive-world__map-list b{display:block;font-size:15px;font-weight:600;line-height:1.3}.immersive-world__map-list span{display:block;font-size:11px;color:#6b755d;margin-top:5px;line-height:1.4}.immersive-world__map-list small{display:block;font-size:10px;line-height:1.5;margin-top:13px;color:#566d51}.immersive-world__map footer{font-size:11px;color:#66775b;margin-top:18px}
-@keyframes immersion-key-guide{0%,52%,100%{transform:translateY(0)}60%,78%{transform:translateY(4px);background:#c5dcae}}
-@keyframes immersion-spin{to{transform:rotate(360deg)}}
-@media(max-width:850px){.immersive-world__place{top:86px;left:17px;min-width:160px;padding:10px 13px}.immersive-world__place strong{font-size:16px}.immersive-world__tools{top:87px;right:17px}.immersive-world__tools button{font-size:11px}.immersive-world__navigation{left:17px;top:164px;width:195px;padding:13px}.immersive-world__navigation>div{font-size:20px}.immersive-world__navigation strong{font-size:15px}.immersive-world__driving{right:17px;bottom:73px;padding:11px 14px;gap:11px}.immersive-world__speed b{font-size:32px}.immersive-world__bottom{left:17px;right:17px;font-size:10px}.immersive-world__bottom>span:last-child{display:none}.immersive-world__map-layout{grid-template-columns:1fr}.immersive-world__map-drawing{min-height:290px}.immersive-world__map{padding:20px}.immersive-world__conversation{padding:21px 24px}.immersive-world__conversation h2{font-size:21px}.immersive-world__interact{bottom:61px}}
-@media(prefers-reduced-motion:reduce){.immersive-world__tutorial-key{animation:none}}
+.immersive-world {
+  --iv-ink: #234b56;
+  --iv-paper: #f3e8ce;
+  --iv-coral: #d77b64;
+  --iv-brass: #d2ae69;
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  overflow: hidden;
+  background: #b9dcec;
+  color: var(--iv-paper);
+  font-family: "Avenir Next", "Segoe UI", Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+.immersive-world button { font-family: inherit; font-variant-numeric: tabular-nums; cursor: pointer; }
+.immersive-world button:focus-visible { outline: 3px solid var(--iv-brass); outline-offset: 4px; }
+.immersive-world button:disabled { cursor: default; opacity: .48; }
+.immersive-world__surface { position: absolute; inset: 0; }
+.immersive-world__canvas { display: block; width: 100%; height: 100%; outline: none; }
+.immersive-world__vignette { position: absolute; inset: 0; pointer-events: none; z-index: 1; background: radial-gradient(ellipse at center, transparent 55%, #234b5617 100%); }
+.immersive-world[data-phase=sky] .immersive-world__vignette { background: linear-gradient(90deg, #234b568c, transparent 80%), linear-gradient(0deg, #234b5650, transparent 70%); }
+.immersive-world__fade { position: absolute; inset: 0; background: #132c35; pointer-events: none; z-index: 20; }
+.immersive-world__loading, .immersive-world__error { position: absolute; inset: 0; display: grid; place-content: center; gap: 20px; text-align: center; color: var(--iv-ink); background: var(--iv-paper); z-index: 30; font-size: 20px; line-height: 1.6; padding: 30px; }
+.immersive-world__loading span { display: block; width: 36px; height: 36px; margin: auto; border-radius: 50%; border: 2px solid #234b5630; border-top-color: var(--iv-ink); animation: immersion-spin 1.4s linear infinite; }
+.immersive-world__place { position: absolute; z-index: 3; top: 95px; left: 29px; padding: 9px 0 9px 14px; border-left: 2px solid var(--iv-brass); text-shadow: 0 1px 8px #132c35; pointer-events: none; animation: immersion-place .5s ease both; }
+.immersive-world__place > span, .immersive-world__intro > span, .immersive-world__conversation > span, .immersive-world__thought > span, .immersive-world__service header span, .immersive-world__map header span, .immersive-world__tutorial > span { display: block; color: #f3e8cebd; font-size: 10px; font-weight: 600; letter-spacing: 2px; line-height: 1.5; margin-bottom: 5px; }
+.immersive-world__place strong { font-family: Georgia, "Times New Roman", serif; font-size: 25px; font-weight: 400; }
+.immersive-world__tools { position: absolute; z-index: 5; top: 94px; right: 27px; }
+.immersive-world__tools button { display: inline-flex; align-items: center; gap: 8px; padding: 8px 11px; border: 1px solid #f3e8ce45; background: #234b56cc; color: var(--iv-paper); border-radius: 5px; font-size: 12px; transition: background .18s; }
+.immersive-world__tools button:hover { background: #315e68; }
+.immersive-world__key { display: inline-grid; place-items: center; min-width: 25px; height: 25px; padding: 0 5px; border: 1px solid #f3e8ce70; box-shadow: 0 2px 0 #132c35; border-radius: 4px; font-family: Arial, sans-serif; font-weight: 700; font-size: 15px; color: var(--iv-paper); line-height: 1; }
+.immersive-world__navigation { position: absolute; left: 29px; bottom: 37px; z-index: 3; max-width: 270px; padding: 11px 15px 11px 14px; border-left: 2px solid var(--iv-brass); background: linear-gradient(90deg, #234b56dd, #234b5677); border-radius: 0 4px 4px 0; pointer-events: none; }
+.immersive-world__navigation strong { display: block; font-size: 15px; font-weight: 600; line-height: 1.4; }
+.immersive-world__navigation small { display: block; font-size: 12px; line-height: 1.4; color: #f3e8ceb0; margin-top: 3px; }
+.immersive-world[data-mode=driving] .immersive-world__navigation { top: 164px; bottom: auto; }
+.immersive-world__interact { position: absolute; z-index: 4; left: 50%; bottom: 39px; transform: translateX(-50%); max-width: min(480px, 65%); text-align: center; }
+.immersive-world__interact button { display: flex; align-items: center; gap: 11px; margin: auto; padding: 9px 14px; border: 1px solid #f3e8ce60; color: var(--iv-paper); background: #234b56df; border-radius: 5px; font-size: 14px; font-weight: 500; line-height: 1.3; box-shadow: 0 6px 26px #132c3520; backdrop-filter: blur(8px); transition: background .18s; }
+.immersive-world__interact button:hover { background: #315e68; }
+.immersive-world__roadside { position: absolute; z-index: 4; left: 50%; bottom: 97px; transform: translateX(-50%); padding: 10px 15px; background: #f3e8ceee; border: 1px solid #d2ae69; color: var(--iv-ink); font-size: 13px; border-radius: 5px; }
+.immersive-world__roadside span { margin-left: 15px; font-weight: 600; }
+.immersive-world__reticle { position: absolute; z-index: 2; left: 50%; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: #f3e8ceb0; box-shadow: 0 0 2px #234b56; pointer-events: none; }
+.immersive-world__tutorial { position: absolute; z-index: 4; top: 43%; left: 50%; transform: translate(-50%, -50%); padding: 22px 35px 23px; width: min(430px, 70vw); text-align: center; border-radius: 9px; background: #234b56e8; border: 1px solid #f3e8ce40; box-shadow: 0 12px 60px #132c3525; backdrop-filter: blur(8px); pointer-events: none; }
+.immersive-world__tutorial > span { margin-bottom: 18px; font-size: 9px; }
+.immersive-world__tutorial-key { width: 69px; height: 68px; display: grid; place-items: center; margin: 0 auto 20px; font-family: Arial, sans-serif; font-size: 36px; font-weight: 600; line-height: 1; color: var(--iv-ink); background: var(--iv-paper); border: 1px solid #fff4df; border-bottom: 6px solid var(--iv-brass); border-radius: 8px; box-shadow: 0 5px 14px #132c3520; animation: immersion-key-guide 2.7s ease-in-out infinite; }
+.immersive-world__tutorial-key.is-pressed { transform: translateY(4px); border-bottom-width: 2px; background: #b5d2b9; animation: none; }
+.immersive-world__tutorial-steer { display: flex; gap: 12px; justify-content: center; }
+.immersive-world__tutorial-steer .immersive-world__tutorial-key { margin-left: 0; margin-right: 0; }
+.immersive-world__tutorial h2 { font-family: inherit; font-size: 20px; line-height: 1.35; margin: 0 0 8px; font-weight: 500; letter-spacing: 0; color: var(--iv-paper); }
+.immersive-world__tutorial p { font-size: 13px; line-height: 1.6; color: #f3e8cebd; margin: 0; }
+.immersive-world__status-stack { position: absolute; z-index: 6; top: 164px; left: 50%; transform: translateX(-50%); width: min(610px, 65%); display: flex; flex-direction: column; align-items: center; gap: 12px; pointer-events: none; }
+.immersive-world__status-stack--toast { top: 94px; }
+.immersive-world__toast { width: 100%; padding: 11px 19px; color: var(--iv-paper); border: 1px solid #f3e8ce40; background: #234b56ed; border-radius: 5px; box-shadow: 0 6px 28px #132c3520; font-size: 13px; line-height: 1.5; text-align: center; pointer-events: none; }
+.immersive-world__intro { position: absolute; z-index: 8; left: 7%; bottom: 13%; max-width: 690px; text-shadow: 0 2px 25px #132c3550; }
+.immersive-world__intro > span { color: var(--iv-paper); font-size: 11px; letter-spacing: 4px; margin-bottom: 20px; }
+.immersive-world__intro h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(35px, 4.7vw, 74px); font-weight: 400; letter-spacing: -1.5px; color: #fff4df; line-height: 1.1; }
+.immersive-world__intro p { color: var(--iv-paper); margin: 21px 0 29px; font-size: 16px; line-height: 1.5; }
+.immersive-world__intro > button { color: var(--iv-ink); background: var(--iv-paper); border: 1px solid #fff4df; border-radius: 4px; padding: 13px 22px; font-size: 15px; min-width: 170px; box-shadow: 0 4px 20px #132c3526; }
+.immersive-world__intro > button span { margin-left: 18px; }
+.immersive-world__intro > button:hover { background: #fff4df; }
+.immersive-world__intro > .immersive-world__quiet { display: block; padding: 10px 0; color: var(--iv-paper); border: 0; background: none; box-shadow: none; font-size: 12px; margin-top: 10px; text-align: left; }
+.immersive-world__conversation { position: absolute; z-index: 9; bottom: 9%; left: 50%; transform: translateX(-50%); width: min(740px, 87%); padding: 28px 34px; color: var(--iv-paper); background: #234b56f0; border: 1px solid #d2ae6955; border-radius: 7px; box-shadow: 0 12px 55px #132c3530; backdrop-filter: blur(16px); }
+.immersive-world__conversation > span { font-size: 10px; color: var(--iv-brass); margin: 0 0 11px; }
+.immersive-world__conversation h2 { font-family: Georgia, "Times New Roman", serif; margin: 0 0 12px; font-weight: 400; font-size: 25px; line-height: 1.45; color: var(--iv-paper); letter-spacing: 0; }
+.immersive-world__conversation p { margin: 0 0 18px; color: #f3e8ced0; font-size: 14px; line-height: 1.7; white-space: pre-line; }
+.immersive-world__conversation button { border: 1px solid #f3e8ce5e; color: var(--iv-paper); border-radius: 4px; padding: 11px 15px; background: #315e68; text-align: left; font-size: 14px; line-height: 1.5; transition: background .15s; }
+.immersive-world__conversation button:hover { background: #487984; }
+.immersive-world__conversation > div { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.immersive-world__phone { width: min(600px, 80%); left: auto; right: 4%; bottom: 9%; transform: none; }
+.immersive-world__modal-backdrop { position: absolute; inset: 0; z-index: 40; display: grid; place-items: center; padding: 30px; background: #132c3570; backdrop-filter: blur(6px); }
+.immersive-world__thought { width: min(610px, 100%); max-height: 90%; overflow: auto; padding: 35px 40px 36px; border-radius: 8px; background: var(--iv-paper); color: var(--iv-ink); box-shadow: 0 20px 80px #132c3545; border: 1px solid #fff4df; }
+.immersive-world__thought > span { color: #61897d; font-size: 9px; }
+.immersive-world__thought h2 { font-family: Georgia, "Times New Roman", serif; margin: 12px 0 20px; font-size: 31px; line-height: 1.2; letter-spacing: -.5px; font-weight: 400; color: var(--iv-ink); }
+.immersive-world__thought p { font-size: 15px; line-height: 1.8; margin: 0 0 25px; white-space: pre-line; color: #3f6468; }
+.immersive-world__thought button { border: 0; border-radius: 4px; background: var(--iv-ink); color: var(--iv-paper); padding: 13px 20px; font-size: 14px; }
+.immersive-world__service { width: min(560px, 100%); max-height: 90%; overflow: auto; padding: 28px 31px; background: var(--iv-paper); color: var(--iv-ink); border: 1px solid #fff4df; border-radius: 8px; box-shadow: 0 20px 80px #132c3545; }
+.immersive-world__service header, .immersive-world__map header { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.immersive-world__service header span, .immersive-world__map header span { color: #61897d; font-size: 9px; }
+.immersive-world__service h2 { font-family: Georgia, "Times New Roman", serif; font-size: 30px; line-height: 1.2; font-weight: 400; margin: 8px 0 0; }
+.immersive-world__close, .immersive-world__map header button { flex-shrink: 0; border: 1px solid #234b5630; border-radius: 5px; background: transparent; color: var(--iv-ink); font-size: 28px; line-height: 1; width: 35px; height: 35px; }
+.immersive-world__service > p { color: #527479; font-size: 14px; margin: 20px 0; }
+.immersive-world__service-status { display: flex; gap: 25px; padding: 16px 0; border-top: 1px solid #234b5620; border-bottom: 1px solid #234b5620; font-size: 12px; color: #527479; }
+.immersive-world__service-status strong { display: block; color: var(--iv-ink); font-size: 21px; font-weight: 500; margin-top: 5px; }
+.immersive-world__service-actions { display: grid; gap: 10px; margin: 22px 0; }
+.immersive-world__service-actions button { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; border: 1px solid #234b5633; border-radius: 5px; padding: 15px; background: #fff4df; color: var(--iv-ink); text-align: left; transition: background .18s; }
+.immersive-world__service-actions button:hover:not(:disabled) { background: #dbe6ce; }
+.immersive-world__service-actions b { font-size: 14px; font-weight: 600; }
+.immersive-world__service-actions small { display: block; font-size: 12px; color: #527479; margin-top: 5px; }
+.immersive-world__service-actions strong { font-size: 16px; font-weight: 600; }
+.immersive-world__service footer { display: flex; align-items: center; gap: 10px; padding-top: 18px; border-top: 1px solid #234b5620; font-size: 12px; color: #527479; flex-wrap: wrap; }
+.immersive-world__service footer button { margin-left: auto; border: 0; background: var(--iv-ink); color: var(--iv-paper); padding: 11px 13px; border-radius: 4px; font-size: 12px; }
+.immersive-world__map { width: min(1140px, 96%); max-height: 94%; overflow: auto; padding: 25px 29px 22px; border-radius: 8px; color: var(--iv-ink); background: var(--iv-paper); border: 1px solid #fff4df; box-shadow: 0 15px 70px #132c3555; }
+.immersive-world__map header h2 { font-family: Georgia, "Times New Roman", serif; color: var(--iv-ink); font-weight: 400; font-size: 31px; line-height: 1.2; margin: 7px 0 0; }
+.immersive-world__map > p { color: #527479; font-size: 13px; line-height: 1.6; margin: 14px 0 19px; }
+.immersive-world__map-layout { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 22px; }
+.immersive-world__map-drawing { position: relative; align-self: start; aspect-ratio: 1.2; min-height: 300px; border: 1px solid #7ca28d66; background: #c7d8b5; border-radius: 5px; overflow: hidden; background-image: radial-gradient(ellipse at 34% 55%, #7ea58055 0, transparent 48%), repeating-linear-gradient(0deg, #7ca28d18 0, #7ca28d18 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, #7ca28d18 0, #7ca28d18 1px, transparent 1px, transparent 40px); }
+.map-coast { position: absolute; top: -10%; bottom: -10%; right: -10%; width: 16%; background: #9ecfdf; border-radius: 44% 0 0 29%; border-left: 4px solid #f3e8cea0; }
+.map-region { position: absolute; transform: translate(-50%, -50%); background: #f3e8ce70; border: 1px solid #f3e8ce9e; border-radius: 38%; }
+.map-region--city { border-radius: 13%; background: #aec8c5; }
+.map-region--arts { background: #dfc9a5; }
+.map-region--coast { background: #adcbd0; }
+.map-region--garden { background: #b9c7a0; }
+.map-region span { position: absolute; left: 50%; bottom: -20px; transform: translateX(-50%); font-family: Georgia, "Times New Roman", serif; color: #456a67; font-size: 12px; white-space: nowrap; z-index: 1; }
+.map-road { position: absolute; display: block; background: #628386; min-width: 2px; min-height: 2px; opacity: .6; }
+.map-road--highway { background: var(--iv-ink); min-width: 3px; min-height: 3px; opacity: .8; }
+.map-road--country { background: #958766; opacity: .8; }
+.map-road--access { opacity: .4; }
+.map-place, .map-service { position: absolute; z-index: 2; border: 1px solid #fff4df; background: var(--iv-ink); color: var(--iv-paper); border-radius: 50%; width: 22px; height: 22px; font-size: 11px; font-weight: 600; line-height: 1; transform: translate(-50%, -50%); box-shadow: 0 2px 6px #234b5625; }
+.map-place.is-destination { background: #be6553; box-shadow: 0 0 0 3px #fff4dfb0; }
+.map-place:hover, .map-place:focus-visible, .map-service:hover, .map-service:focus-visible { z-index: 5; background: #be6553; }
+.map-place > span { display: none; position: absolute; left: 50%; top: 28px; transform: translateX(-50%); padding: 5px 7px; background: #fff4df; border-radius: 3px; color: var(--iv-ink); font-size: 10px; white-space: nowrap; pointer-events: none; }
+.map-place:hover > span, .map-place:focus-visible > span { display: block; }
+.map-region[data-label-align=start] > span, .map-place[data-label-align=start] > span { transform: translateX(6px); }
+.map-region[data-label-align=end] > span, .map-place[data-label-align=end] > span { transform: translateX(calc(-100% - 6px)); }
+.map-service { width: 18px; height: 18px; border-radius: 4px; background: #9e7844; font-size: 10px; }
+.map-you { position: absolute; z-index: 4; color: #d45f42; text-shadow: 0 0 3px #fff4df, 0 0 3px #fff4df; font-size: 15px; line-height: 1; pointer-events: none; }
+.map-compass { position: absolute; right: 17px; top: 14px; font-size: 13px; text-align: center; line-height: 1.4; color: #234b5690; }
+.map-scale { position: absolute; left: 17px; bottom: 13px; font-size: 10px; color: #234b5690; }
+.map-scale i { display: block; width: 100px; height: 6px; border: 1px solid #234b5690; border-top: 0; margin-bottom: 4px; }
+.immersive-world__map-list { display: grid; align-content: start; gap: 7px; max-height: 540px; overflow: auto; padding: 2px 5px 2px 2px; }
+.map-list-heading { display: block; color: #61897d; font-size: 9px; text-transform: uppercase; letter-spacing: 1.8px; padding: 1px 1px 8px; }
+.map-list-heading:not(:first-child) { padding-top: 18px; }
+.immersive-world__map-list button { padding: 12px 13px; border: 1px solid #234b5628; border-radius: 4px; background: #fff4df88; text-align: left; color: var(--iv-ink); transition: background .15s; }
+.immersive-world__map-list button:hover { background: #dce7cf; }
+.immersive-world__map-list button.is-destination { border-color: #d77b64aa; background: #f3d8bd; }
+.immersive-world__map-list b { display: block; font-size: 13px; font-weight: 600; line-height: 1.3; }
+.immersive-world__map-list span:not(.map-list-heading) { display: block; font-size: 11px; color: #527479; margin-top: 4px; line-height: 1.4; }
+.immersive-world__map footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: #527479; font-size: 11px; margin-top: 17px; line-height: 1.4; }
+.map-legend { display: inline-flex; align-items: center; gap: 7px; }
+.map-legend i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #be6553; }
+.map-legend i:not(:first-child) { margin-left: 10px; }
+.map-legend i:nth-of-type(2) { border-radius: 2px; background: #9e7844; }
+.map-legend i:nth-of-type(3) { background: #d45f42; }
+@keyframes immersion-place { from { opacity: 0; transform: translateX(-7px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes immersion-key-guide { 0%,52%,100% { transform: translateY(0); } 60%,78% { transform: translateY(4px); background: #b5d2b9; } }
+@keyframes immersion-spin { to { transform: rotate(360deg); } }
+@media (max-width: 850px) {
+  .immersive-world__place { top: 86px; left: 17px; padding: 7px 0 7px 11px; }
+  .immersive-world__place strong { font-size: 20px; }
+  .immersive-world__tools { top: 87px; right: 17px; }
+  .immersive-world__tools button { font-size: 11px; }
+  .immersive-world__navigation { left: 17px; bottom: 104px; max-width: 220px; padding: 9px 12px; }
+  .immersive-world__navigation strong { font-size: 13px; }
+  .immersive-world__navigation small { font-size: 11px; }
+  .immersive-world__map-layout { grid-template-columns: 1fr; gap: 17px; }
+  .immersive-world__map-drawing { min-height: 290px; }
+  .immersive-world__map-list { grid-template-columns: 1fr 1fr; max-height: 220px; }
+  .map-list-heading { grid-column: 1 / -1; }
+  .immersive-world__map { padding: 20px; }
+  .immersive-world__modal-backdrop { padding: 17px; }
+  .immersive-world__conversation { padding: 21px 24px; }
+  .immersive-world__conversation h2 { font-size: 21px; }
+  .immersive-world__interact { bottom: 32px; max-width: 90%; }
+  .immersive-world__roadside { bottom: 87px; max-width: 90%; white-space: nowrap; }
+  .immersive-world__toast { font-size: 12px; }
+  .immersive-world__tutorial { padding: 20px; width: min(430px, 85vw); }
+  .immersive-world__service { padding: 24px; }
+}
+@media (max-height: 760px) and (min-width: 851px) {
+  .immersive-world__map-layout { grid-template-columns: minmax(0, 1fr) 310px; }
+  .immersive-world__map-drawing { max-height: 390px; aspect-ratio: auto; height: 390px; }
+  .immersive-world__map-list { max-height: 390px; }
+  .immersive-world__map { padding-top: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .immersive-world__tutorial-key, .immersive-world__place { animation: none; }
+  .immersive-world button { transition: none; }
+}
+.immersive-world__map-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin: 14px 0 19px; }
+.immersive-world__map-toolbar p { color: #527479; font-size: 13px; line-height: 1.6; margin: 0; }
+.map-view-toggle { display: flex; flex-shrink: 0; border: 1px solid #234b5633; border-radius: 4px; padding: 3px; gap: 3px; }
+.map-view-toggle button { border: 0; border-radius: 3px; background: transparent; color: #527479; font-size: 11px; padding: 7px 11px; }
+.map-view-toggle button[aria-pressed=true] { background: var(--iv-ink); color: var(--iv-paper); }
+.map-scale { width: calc(100% - 34px); }
+.map-scale i { min-width: 0; }
+.immersive-world__roadside kbd { display: inline-block; font-family: Arial, sans-serif; font-size: 12px; border: 1px solid #234b5644; border-radius: 3px; padding: 2px 4px; margin-right: 6px; }
+@media (max-width: 700px) { .immersive-world__map-toolbar { align-items: start; } .immersive-world__map-toolbar p { max-width: 190px; font-size: 11px; } }
+.immersive-world__police{display:flex;flex-direction:column;gap:.2rem;max-width:100%;padding:.65rem 1.05rem;border:1px solid rgba(243,232,206,.34);border-left:3px solid #d6ae69;border-radius:5px;background:rgba(28,60,69,.91);color:#fff2d9;box-shadow:0 .3rem 1.3rem rgba(23,46,50,.16);pointer-events:none}
+.immersive-world__police strong{font-size:.9rem;font-weight:650;letter-spacing:.015em}
+.immersive-world__police span{font-size:.75rem;line-height:1.45;color:#e8dec7}

@@ -1,7 +1,8 @@
 import { DEFAULT_STYLE, FIELD_LOCATIONS, FUEL_CAPACITY, GAS_PRICES, atVenue, boundedField, candidateLocation, canMeet, canRefuel, freshField, validField, validScoutStyle, type FieldState, type ScoutStyle } from "./expedition.ts";
 import { initialPrologue, validPrologue, type PrologueState } from "./prologue.ts";
-import { freshImmersion, validImmersion, type ImmersionSnapshot } from "./immersive-runtime.ts";
-import { getImmersiveLocations, publicInteriorContains } from "./immersive-locations.ts";
+import { freshImmersion, migrateImmersion, validImmersion, type ImmersionSnapshot } from "./immersive-runtime.ts";
+import { getImmersiveLocations, publicInteriorContains, REGIONAL_SERVICE_POINTS } from "./immersive-locations.ts";
+import { freshLaw, impoundVehicle, incidentIdFor, LAW_HISTORY_LIMIT, lawOf, POLICE_ARRIVAL_SECONDS, POLICE_RESOLVE_SECONDS, validLaw, validPedestrianIncident, type LawState, type PedestrianIncident } from "./immersive-law.ts";
 
 export type Skill = "craft" | "insight" | "nerve" | "teamwork";
 export type Motive = "autonomy" | "security" | "mentorship" | "purpose" | "privacy";
@@ -26,6 +27,7 @@ export type Game = {
   mentoring: number; rescueUsed: boolean; won: boolean;
   field?: FieldState; style?: ScoutStyle; story?: PrologueState;
   immersion?: ImmersionSnapshot;
+  law?: LawState;
   playerProfile?: { background: "observer" | "connector" | "analyst" };
 };
 export const SKILLS: Skill[] = ["craft", "insight", "nerve", "teamwork"];
@@ -106,7 +108,7 @@ function createCandidate(g: Game, index: number): Candidate {
   return { id: `t${g.tier}-${index}`, name, role: TIERS[g.tier].roles[p[1]], origin: p[2], bio: p[3], hook: p[4], skills, ranges: {}, growth: p[8], reliability: p[7], motive: p[6], salary: Math.round((baseSalary + (random(g) * .6) * baseSalary) / 50) * 50, deadline: g.week + 4 + Math.floor(random(g) * 5), discovered: index < 6, starred: false, status: "available", evidence: [], tested: [], lastOffer: 0, trust: 0 };
 }
 export function newGame(seed = Date.now() >>> 0): Game {
-  const g: Game = { version: 1, seed, tier: 0, week: 1, cash: TIERS[0].budget, reputation: 0, actions: 6, candidates: [], completed: 0, attempts: 0, exposure: 0, missionThisWeek: false, log: [], prestige: 0, history: [], report: null, briefing: true, event: 0, mentoring: 0, rescueUsed: false, won: false, field: freshField(), style: { ...DEFAULT_STYLE }, story: initialPrologue() };
+  const g: Game = { version: 1, seed, tier: 0, week: 1, cash: TIERS[0].budget, reputation: 0, actions: 6, candidates: [], completed: 0, attempts: 0, exposure: 0, missionThisWeek: false, log: [], prestige: 0, history: [], report: null, briefing: true, event: 0, mentoring: 0, rescueUsed: false, won: false, field: freshField(), style: { ...DEFAULT_STYLE }, story: initialPrologue(), law: freshLaw() };
   g.candidates = Array.from({ length: 12 }, (_, i) => createCandidate(g, i));
   log(g, "Welcome to Cirrus Works. Three great hires could change this company.");
   return g;
@@ -123,6 +125,8 @@ export function normalizeGame(game: Game): Game & { field: FieldState; style: Sc
   next.style = { ...DEFAULT_STYLE, ...next.style };
   if (next.story === undefined) next.story = { phase: "complete", choice: null };
   if (next.field.fuel === undefined) next.field.fuel = FUEL_CAPACITY;
+  if (next.immersion?.schema === 1 && validImmersion(next.immersion)) next.immersion = migrateImmersion(next.immersion);
+  next.law ??= freshLaw();
   return next as Game & { field: FieldState; style: ScoutStyle };
 }
 export const canPrestige = (g: Game) => {
@@ -154,6 +158,9 @@ export function projectScore(g: Game, mission: Mission, ids: string[]) {
   return { score: Math.max(0, Math.round(contributions.reduce((sum,c) => sum+c.score,0) / team.length + coverageBonus + institutionBonus - agencyPenalty)), contributions, coverage };
 }
 export type Action =
+  | { type: "pedestrianIncident"; incident: PedestrianIncident }
+  | { type: "policeAdvance"; id: string; seconds: number }
+  | { type: "policeResolve"; id: string }
   | { type: "story"; state: PrologueState }
   | { type: "immersionSnapshot"; snapshot: ImmersionSnapshot }
   | { type: "scout"; source: number }
@@ -176,6 +183,7 @@ export type Action =
   | { type: "customize"; style: ScoutStyle }
   | { type: "refuel"; gallons?: number }
   | { type: "roadside" }
+  | { type: "vehicleService"; station: string }
   | { type: "preferences"; camera?: ScoutStyle["camera"]; radio?: boolean; station?: 0 | 1 | 2; music?: boolean; sound?: boolean; engine?: boolean }
   | { type: "briefing" }
   | { type: "dismissReport" };
@@ -184,6 +192,46 @@ export function act(original: Game, action: Action): Game {
   const t = TIERS[g.tier];
   const need = (actions: number, cost = 0) => { if(g.actions < actions) throw new Error("No time left this week. Advance to next week to continue."); if(g.cash < cost) throw new Error("Your budget cannot cover this action."); g.actions -= actions; g.cash -= cost; };
   const find = (id: string, available = false) => { const c = g.candidates.find(c => c.id === id); if(!c || (available && (c.status !== "available" || !c.discovered))) throw new Error("This candidate is no longer available."); return c; };
+  if (action.type === 'pedestrianIncident') {
+    const law = lawOf(g), incident = action.incident;
+    if (!validPedestrianIncident(incident)) return g;
+    // Accept exactly the next contact sequence. A pruned incident can never be charged twice.
+    if (law.sequence >= Number.MAX_SAFE_INTEGER || incident.id !== incidentIdFor(g, incident.npcId)) return g;
+    const state = g.immersion;
+    if (!state || state.mode !== 'driving' || Math.hypot(state.vehicle.x - incident.position.x, state.vehicle.z - incident.position.z) > 12) return g;
+    const fine = Math.min(g.cash, Math.round(t.budget * .45 * 100) / 100), reputation = Math.min(g.reputation, 40), missions = Math.min(g.completed, 2), actions = g.actions;
+    g.cash = Math.round((g.cash - fine) * 100) / 100; g.reputation -= reputation; g.completed -= missions; g.actions = 0;
+    for (const person of g.candidates) {
+      person.trust = Math.max(0, person.trust - 45);
+      if (person.status === 'hired') person.morale = Math.max(0, (person.morale ?? 85) - 30);
+    }
+    const confirmed = structuredClone(incident);
+    law.sequence++; law.handled = [...law.handled, confirmed.id].slice(-LAW_HISTORY_LIMIT);
+    law.response = { ...confirmed, phase: 'dispatched', elapsedSeconds: 0 };
+    law.last = { ...structuredClone(confirmed), week: g.week, tier: g.tier, loss: { fine, reputation, missions, actions, trust: 45, morale: 30 }, resolved: false };
+    g.law = law;
+    log(g, `A pedestrian was struck. Police are responding. ${money(fine)} in fines and damages; reputation −${reputation}, completed assignments −${missions}. This week's work is suspended.`, 'warn');
+    g.report = null;
+    return g;
+  }
+  if (action.type === 'policeAdvance') {
+    const response = lawOf(g).response;
+    if (!response || response.id !== action.id || !Number.isFinite(action.seconds) || action.seconds <= 0 || action.seconds > 5) return g;
+    response.elapsedSeconds = Math.min(POLICE_RESOLVE_SECONDS, response.elapsedSeconds + action.seconds);
+    response.phase = response.elapsedSeconds >= POLICE_ARRIVAL_SECONDS ? 'arrived' : 'dispatched';
+    return g;
+  }
+  if (action.type === 'policeResolve') {
+    const law = lawOf(g), response = law.response;
+    if (!response || response.id !== action.id || response.elapsedSeconds < POLICE_RESOLVE_SECONDS) return g;
+    const station = impoundVehicle(g);
+    law.response = null; if (law.last) law.last.resolved = true;
+    log(g, `Police suspended your field work and impounded your compact at ${station.name}. The career penalties remain; fuel and repairs are arranged separately.`, 'warn');
+    return g;
+  }
+  if (lawOf(g).response && !['immersionSnapshot', 'fieldSnapshot', 'customize', 'preferences', 'setDestination', 'fieldEnter', 'fieldReturn', 'briefing', 'dismissReport', 'star'].includes(action.type)) {
+    throw new Error('Police are responding to the collision. Field work and career changes are suspended until the response is complete.');
+  }
   if (action.type === "story") {
     if (!validPrologue(action.state)) throw new Error("The prologue could not be saved.");
     const wasWaking = g.story?.phase === "wake";
@@ -193,7 +241,7 @@ export function act(original: Game, action: Action): Game {
   }
   if (action.type === "immersionSnapshot") {
     if (!validImmersion(action.snapshot) || action.snapshot.tier !== g.tier) throw new Error("Your position could not be saved.");
-    const snapshot = structuredClone(action.snapshot);
+    const snapshot = migrateImmersion(action.snapshot);
     const locations = getImmersiveLocations(g.tier);
     // Arrival is earned by bringing the vehicle to the actual parking area.
     snapshot.parkedAt = [...new Set(g.immersion?.parkedAt ?? [])];
@@ -280,20 +328,33 @@ export function act(original: Game, action: Action): Game {
     log(g, `Bought ${gallons.toFixed(2)} gallons at $${GAS_PRICES[g.tier].toFixed(2)} per gallon ($${cost.toFixed(2)} total).`);
     return g;
   }
+  if (action.type === "vehicleService") {
+    const state = g.immersion, station = REGIONAL_SERVICE_POINTS.find(point => point.id === action.station);
+    if (!state || !station || state.mode !== 'foot' || Math.abs(state.vehicle.speed) >= .65 ||
+      Math.hypot(state.vehicle.x-station.parking.x,state.vehicle.z-station.parking.z) > 25 ||
+      Math.hypot(state.player.x-state.vehicle.x,state.player.z-state.vehicle.z) > 11) throw new Error('Park at a service station and step out beside your car to arrange repairs.');
+    const damage = state.vehicle.damage ?? 0;
+    if (damage <= .0001) throw new Error('Your car is already in good condition.');
+    const cost = Math.max(20,Math.ceil(damage*900)); need(0,cost);
+    state.vehicle.damage = 0; state.vehicle.disabled = false;
+    log(g,`${station.name} repaired your compact for ${money(cost)}.`, 'good');
+    return g;
+  }
   if (action.type === "roadside") {
+    if (g.immersion) {
+      const state = g.immersion, car = state.vehicle;
+      if (state.mode !== 'foot' || Math.abs(car.speed) >= .65 || Math.hypot(state.player.x-car.x,state.player.z-car.z) > 12 || (car.fuel > .05 && (car.damage ?? 0) < .86)) throw new Error('Step out beside your stopped, stranded car to call a tow.');
+      need(0,150);
+      const station = impoundVehicle(g);
+      log(g,`Roadside assistance brought your car to ${station.name} for $150. Fuel and repairs are arranged at the station.`, 'warn');
+      return g;
+    }
     if (g.field.scene !== "district" || g.field.driving || g.field.fuel > 0.05) throw new Error("Roadside assistance is available when you are on foot beside an empty vehicle.");
     need(0, 150);
     const station = FIELD_LOCATIONS[g.tier][4];
     g.field = { ...g.field, car: { ...station.point }, player: { x: station.door.x + 40, y: station.door.y + 30 },
       fuel: 0, heading: 0, destination: 4, visited: [...new Set([...g.field.visited, 4])] };
     log(g, "Roadside assistance brought your vehicle to the fuel station for $150. Fuel is sold separately.", "warn");
-    if (g.immersion) {
-      g.immersion.vehicle = { ...g.immersion.vehicle, x: station.point.x, z: station.point.y, speed: 0, fuel: 0, heading: 0 };
-      g.immersion.player = { ...g.immersion.player, x: station.point.x + 2.5, z: station.point.y };
-      g.immersion.interior = null; g.immersion.mode = "foot"; g.immersion.destination = 4;
-      g.immersion.parkedAt = [...new Set([...g.immersion.parkedAt, 4])];
-      g.field.player = { x: g.immersion.player.x, y: g.immersion.player.z };
-    }
     return g;
   }
   if (action.type === "meet") {
@@ -500,6 +561,8 @@ export function validGame(value: unknown): value is Game {
   if (g.story !== undefined && !validPrologue(g.story)) return false;
   if (g.field !== undefined && (!validField(g.field, true, true) || !g.field.met.every(id => ids.has(id)))) return false;
   if (g.immersion !== undefined && (!validImmersion(g.immersion) || g.immersion.tier !== g.tier)) return false;
+  if (g.law !== undefined && !validLaw(g.law)) return false;
+  if (g.law?.response && (!g.immersion || g.law.last?.tier !== g.tier || g.law.last.week > g.week)) return false;
   if (g.playerProfile !== undefined && (!record(g.playerProfile) || !["observer", "connector", "analyst"].includes(g.playerProfile.background as string))) return false;
   return true;
 }

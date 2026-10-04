@@ -1,5 +1,5 @@
 import type { Game, Tier } from "./game";
-import { candidateAnchor, getImmersiveLocations, publicInteriorContains } from "./immersive-locations.ts";
+import { candidateAnchor, getImmersiveLocations, publicInteriorContains, REGIONAL_SERVICE_POINTS } from "./immersive-locations.ts";
 
 export type Point = { x: number; y: number };
 export type ScoutStyle = { name: string; avatar: number; car: "compact" | "wagon" | "coupe"; paint: "mint" | "coral" | "gold" | "violet" | "slate"; plate: string; camera?: "overhead" | "cockpit" | "chase" | "far"; radio?: boolean; station?: 0 | 1 | 2; music?: boolean; sound?: boolean; engine?: boolean };
@@ -88,7 +88,11 @@ export function canMeet(game: Game, id: string): boolean {
 }
 export function canRefuel(game: Game): boolean {
   const field = fieldOf(game);
-  if (game.immersion) return atVenue(game, 4) && Math.hypot(game.immersion.player.x - game.immersion.vehicle.x, game.immersion.player.z - game.immersion.vehicle.z) <= 6;
+  if (game.immersion) {
+    const {player,vehicle,mode} = game.immersion;
+    return mode === 'foot' && Math.abs(vehicle.speed) < .65 && Math.hypot(player.x-vehicle.x,player.z-vehicle.z) <= 11 &&
+      REGIONAL_SERVICE_POINTS.some(station => Math.hypot(vehicle.x-station.parking.x,vehicle.z-station.parking.z) <= 25 && Math.hypot(player.x-station.parking.x,player.z-station.parking.z) <= 18);
+  }
   return atVenue(game, 4) && distance(field.car, FIELD_LOCATIONS[game.tier][4].point) <= 100;
 }
 

@@ -60,7 +60,7 @@ assert((await fs.stat(path.join(contents, 'Resources', 'icon.icns'))).size > 0, 
 const bundle = path.join(contents, 'Resources', 'app.asar');
 const entries = listArchiveEntries(bundle);
 assert.equal(JSON.parse(readArchiveFile(bundle, 'package.json').toString('utf8')).version, metadata.version);
-for (const name of ['main.cjs', 'preload.cjs', 'save-store.cjs', 'display-mode.cjs', 'credit-links.cjs', 'desktop-options.cjs',
+for (const name of ['main.cjs', 'preload.cjs', 'save-store.cjs', 'exit-checkpoint.cjs', 'game-permissions.cjs', 'display-mode.cjs', 'credit-links.cjs', 'desktop-options.cjs',
   'mac-updates.cjs', 'game-engine.cjs', 'update-manager.cjs', 'update-worker.ps1', 'update-config.json']) {
   const relative = `electron/${name}`;
   assert(entries.has(relative), `The Mac app must include ${relative}`);

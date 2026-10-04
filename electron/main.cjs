@@ -11,6 +11,8 @@ const { creditWindowHandler } = require("./credit-links.cjs");
 const { UpdateManager } = require("./update-manager.cjs");
 const { MacUpdateManager } = require("./mac-updates.cjs");
 const { titleBarOptions, applicationMenu } = require("./desktop-options.cjs");
+const { createExitCheckpoint } = require("./exit-checkpoint.cjs");
+const { createGamePermissionHandlers } = require("./game-permissions.cjs");
 const updateConfig = require("./update-config.json");
 
 app.setName("SCOUT");
@@ -24,37 +26,56 @@ const entryURL = pathToFileURL(entry).href;
 let mainWindow = null;
 let store = null;
 let updates = null;
-let exiting = false;
 let readyToExit = false;
 let closeCheckpoint = null;
+let rendererReady = false;
+let rendererGone = false;
 let displayPreferences = null;
 let display = null;
 let initialDisplay = { mode: "borderless" };
 
-async function requestExit() {
-  if (exiting) return;
-  exiting = true;
-  let waitForRenderer = Promise.resolve();
+async function checkpointRenderer() {
+  if (!mainWindow || mainWindow.isDestroyed() || mainWindow.webContents.isDestroyed()) return;
+  if (rendererGone) throw new Error("The game stopped responding before its latest progress could be saved.");
+  if (!rendererReady) return;
+  const token = randomUUID();
   try {
-    if (mainWindow && !mainWindow.isDestroyed() && !mainWindow.webContents.isDestroyed()) {
-      const token = randomUUID();
-      waitForRenderer = new Promise((resolve) => {
-        const timer = setTimeout(resolve, 5000);
-        closeCheckpoint = { token, resolve: () => { clearTimeout(timer); resolve(); } };
-      });
-      mainWindow.webContents.send("scout:before-close", token);
-    }
-  } catch { /* A crashed renderer must not prevent closing the native window. */ }
-  // The sandboxed preload acknowledges only after its close listener has
-  // flushed live driving state. A crashed renderer cannot stall exit forever.
-  await waitForRenderer;
-  closeCheckpoint = null;
-  try {
-    if (store) await store.flush();
-    if (display) await display.checkpoint().catch(() => {});
-  }
-  finally { readyToExit = true; app.quit(); }
+    await new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error("The game did not finish saving in time. Try again or export a career backup.")), 15000);
+      closeCheckpoint = { token, resolve: result => {
+        clearTimeout(timer);
+        if (result?.ok === false) reject(new Error(result.error || "Your latest progress could not be saved."));
+        else resolve();
+      } };
+      try { mainWindow.webContents.send("scout:before-close", token); }
+      catch (error) { clearTimeout(timer); reject(error); }
+    });
+  } finally { closeCheckpoint = null; }
 }
+
+const exitCheckpoint = createExitCheckpoint({
+  checkpoint: checkpointRenderer,
+  flush: async () => {
+    if (store) await store.flushStrict();
+    if (display) await display.checkpoint().catch(() => {});
+  },
+  finish: () => { readyToExit = true; setImmediate(() => app.quit()); },
+  failed: async error => {
+    // A write failure keeps the career open. Quitting without its latest
+    // checkpoint is an explicit player choice, including a crashed renderer.
+    if (mainWindow && !mainWindow.isDestroyed() && !mainWindow.webContents.isDestroyed()) mainWindow.webContents.send("scout:close-canceled");
+    const options = {
+      type: "error", title: "Your journey needs a moment", message: "Your latest progress has not been saved.",
+      detail: `${error.message}\n\nKeep playing to try saving again or export a career backup.`,
+      buttons: ["Keep playing", "Quit without saving"], defaultId: 0, cancelId: 0, noLink: true,
+    };
+    const result = mainWindow && !mainWindow.isDestroyed()
+      ? await dialog.showMessageBox(mainWindow, options)
+      : await dialog.showMessageBox(options);
+    return result.response === 1;
+  },
+});
+const requestExit = () => exitCheckpoint.request();
 
 function trustedSender(event) {
   if (!mainWindow || mainWindow.isDestroyed() || event.sender !== mainWindow.webContents ||
@@ -72,10 +93,10 @@ function handle(channel, action) {
 }
 
 function registerBridge() {
-  ipcMain.on("scout:close-ready", (event, token) => {
+  ipcMain.on("scout:close-ready", (event, token, result) => {
     try { trustedSender(event); }
     catch { return; }
-    if (closeCheckpoint && closeCheckpoint.token === token) closeCheckpoint.resolve();
+    if (closeCheckpoint && closeCheckpoint.token === token) closeCheckpoint.resolve(result);
   });
   handle("scout:list-save-slots", () => store.list());
   handle("scout:load-career", (slot) => store.load(slot));
@@ -110,7 +131,7 @@ function registerBridge() {
     return validateCareerJSON(await fs.readFile(filename, "utf8"));
   });
   handle("scout:get-update-status", () => updates.getStatus());
-  handle("scout:confirm-ready", () => updates.confirmLaunch());
+  handle("scout:confirm-ready", () => { rendererReady = true; return updates.confirmLaunch(); });
   handle("scout:set-update-repository", (repository) => updates.setRepository(repository));
   handle("scout:check-update", () => updates.check());
   handle("scout:download-update", () => updates.download());
@@ -135,10 +156,12 @@ function registerBridge() {
   handle("scout:get-display-mode", () => display.getMode());
   handle("scout:set-display-mode", (mode) => display.setMode(mode));
   handle("scout:toggle-fullscreen", () => display.toggleFullscreen());
-  handle("scout:quit", () => { setImmediate(() => app.quit()); });
+  handle("scout:quit", () => requestExit());
 }
 
 function createWindow() {
+  rendererReady = false;
+  rendererGone = false;
   const monitor = screen.getDisplayNearestPoint(screen.getCursorScreenPoint());
   const bounds = initialDisplay.mode === "windowed" ? windowedBoundsFor(monitor, initialDisplay.windowedBounds) : { ...monitor.bounds };
   mainWindow = new BrowserWindow({
@@ -176,6 +199,7 @@ function createWindow() {
     if (destination.split("#")[0] !== entryURL) event.preventDefault();
   });
   mainWindow.webContents.on("will-attach-webview", (event) => event.preventDefault());
+  mainWindow.webContents.on("render-process-gone", () => { rendererGone = true; });
   mainWindow.webContents.on("before-input-event", (event, input) => {
     if (input.type === "keyDown" && input.key === "F11" && !input.isAutoRepeat) {
       event.preventDefault();
@@ -241,8 +265,9 @@ if (!app.requestSingleInstanceLock()) {
     try { await updates.initialize(); }
     catch { updates.report({ state: "error", message: "The update cache could not be read. You can keep playing offline." }); }
     registerBridge();
-    session.defaultSession.setPermissionRequestHandler((_contents, _permission, callback) => callback(false));
-    session.defaultSession.setPermissionCheckHandler(() => false);
+    const gamePermissions = createGamePermissionHandlers({ getWindow: () => mainWindow, entryURL });
+    session.defaultSession.setPermissionRequestHandler(gamePermissions.request);
+    session.defaultSession.setPermissionCheckHandler(gamePermissions.check);
     // All game content is bundled; the desktop build needs no network service.
     session.defaultSession.webRequest.onBeforeRequest({ urls: ["http://*/*", "https://*/*", "ws://*/*", "wss://*/*"] }, (_details, callback) => callback({ cancel: true }));
     createWindow();

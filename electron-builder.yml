@@ -16,6 +16,8 @@ files:
   - electron/main.cjs
   - electron/preload.cjs
   - electron/save-store.cjs
+  - electron/exit-checkpoint.cjs
+  - electron/game-permissions.cjs
   - electron/display-mode.cjs
   - electron/credit-links.cjs
   - electron/desktop-options.cjs

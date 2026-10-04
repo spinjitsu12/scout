@@ -1,0 +1,18 @@
+# Fresh native Linux integration fixture
+
+This fixture exercises the current production renderer through the real Electron main process, sandbox preload, native save store, and player UI. It is developer QA and is not included in the player app. It must be run after one coordinated production build of the current source; an old `dist` is not evidence for new code.
+
+Use the locked project dependencies and supported Node.js on Linux. `prepare.mjs` produces valid careers using the current shared game engine. The runner uses the project's Linux Electron binary. Run these phases in order with the same isolated profile:
+
+1. Default `run.mjs` phase: three slots, normal grounded/cockpit views, deliberately delayed 300 ms active frames, automatic graphics adaptation, keyboard driving, pause/resume, map scopes, fuel, repairs, car re-entry, tow, latest-position Save and exit.
+2. `SCOUT_LINUX_QA_PHASE=reopen`: fresh-process career reload and Nearby map, actual grounded highway/campus sign captures, then a progressed career starts 7 m behind a deterministic real plaza resident. W must produce a physics contact; the fixture never injects a strike or law action. It checks immediate durable penalties and quits with police still responding.
+3. `SCOUT_LINUX_QA_PHASE=resolve`: fresh-process reload preserves the pending response and penalties. Actual active simulation advances to police arrival and impound, then Save and exit preserves the settled career.
+4. `SCOUT_LINUX_QA_PHASE=settled`: another fresh process verifies the final impound and penalties, resumes and saves, and confirms no second charge or reopened response. It then restarts an isolated progressed slot through the real Career UI, verifies a new live canvas and fresh headquarters placement, walks with WASD, saves, and checks the other careers are byte-for-byte unchanged.
+
+The legacy `SCOUT_LINUX_QA_REOPEN=1` flag also selects the `reopen` phase. Each invocation has a 15-minute timeout to accommodate software rendering. A failed phase stops the sequence; do not continue into later phases with a failed report.
+
+Results, screenshots, and phase logs go into `qa/3.01-polish/native-linux`. The temporary profile is separate from all player saves. HTTP/HTTPS renderer requests are blocked throughout; bundled resources remain usable offline. Headless-only adjustments supply a synthetic monitor/cursor, offscreen surface, omit native titlebar chrome, bypass the unavailable singleton socket, and immediately reject unavailable pointer capture. Product main/preload sources are loaded directly; their files are not edited by this fixture.
+
+These checks establish state, persistence, visible rendering, and bounded simulation under Linux SwiftShader. They do not establish Apple silicon Metal behavior, native Mac/Windows window and pointer behavior, signing, installers, audio listening quality, or target-hardware frame rates. Ragdoll captures need visual review; articulated bodies, contact geometry, and constraint trajectories are covered separately by the physics regressions. Read the report's limitations and the current `QA-3.01.md` before interpreting a pass.
+
+An optional **`SCOUT_LINUX_QA_PHASE=art-review`** phase uses another fresh profile and writes to `qa/3.01-polish/native-linux-art-review`. It retakes the cockpit, actual Region/Nearby dialogs and highway/campus/coast views. It does not overwrite the four-process law/save report. The screenshot helper waits for renderer animation frames and an invalidated native compositor paint so a preceding UI frame is not mistaken for the requested dialog. Reports retain paint sequences and real map text bounds.

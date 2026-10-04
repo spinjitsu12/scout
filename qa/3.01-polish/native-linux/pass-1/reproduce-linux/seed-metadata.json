@@ -1,0 +1,4613 @@
+{
+  "version": "3.0.1",
+  "world": {
+    "width": 12000,
+    "depth": 10000
+  },
+  "station": {
+    "id": "eastmere-fuel",
+    "name": "Eastmere Roadside",
+    "parking": {
+      "x": 3045,
+      "z": 2100
+    },
+    "access": {
+      "x": 3000,
+      "z": 2100
+    },
+    "locationId": -1
+  },
+  "services": [
+    {
+      "id": "highway-fuel",
+      "name": "Highway Fuel",
+      "parking": {
+        "x": 840,
+        "z": 620
+      },
+      "access": {
+        "x": 840,
+        "z": 650
+      },
+      "locationId": 4
+    },
+    {
+      "id": "eastmere-fuel",
+      "name": "Eastmere Roadside",
+      "parking": {
+        "x": 3045,
+        "z": 2100
+      },
+      "access": {
+        "x": 3000,
+        "z": 2100
+      },
+      "locationId": -1
+    },
+    {
+      "id": "bellweather-fuel",
+      "name": "Lantern Road Services",
+      "parking": {
+        "x": 4945,
+        "z": 2040
+      },
+      "access": {
+        "x": 4900,
+        "z": 2040
+      },
+      "locationId": -1
+    },
+    {
+      "id": "aster-fuel",
+      "name": "Tideglass Services",
+      "parking": {
+        "x": 6545,
+        "z": 4740
+      },
+      "access": {
+        "x": 6500,
+        "z": 4740
+      },
+      "locationId": -1
+    },
+    {
+      "id": "meridian-fuel",
+      "name": "Meridian Motor Stop",
+      "parking": {
+        "x": 10045,
+        "z": 7440
+      },
+      "access": {
+        "x": 10000,
+        "z": 7440
+      },
+      "locationId": -1
+    }
+  ],
+  "venues": [
+    {
+      "id": 0,
+      "name": "Cirrus Works",
+      "subtitle": "Headquarters & garage",
+      "center": {
+        "x": 387,
+        "z": 203
+      },
+      "door": {
+        "x": 387,
+        "z": 224
+      },
+      "parking": {
+        "x": 387,
+        "z": 266
+      },
+      "access": {
+        "x": 500,
+        "z": 266
+      },
+      "regionId": "cirrus",
+      "interiorSpawn": {
+        "x": 387,
+        "z": 221
+      },
+      "footprint": {
+        "minX": 357,
+        "maxX": 417,
+        "minZ": 182,
+        "maxZ": 224
+      },
+      "candidateSpawns": [
+        {
+          "x": 364,
+          "z": 199
+        },
+        {
+          "x": 372.5,
+          "z": 199
+        },
+        {
+          "x": 381,
+          "z": 199
+        },
+        {
+          "x": 389.5,
+          "z": 199
+        },
+        {
+          "x": 398,
+          "z": 199
+        },
+        {
+          "x": 406.5,
+          "z": 199
+        },
+        {
+          "x": 364,
+          "z": 210
+        },
+        {
+          "x": 372.5,
+          "z": 210
+        },
+        {
+          "x": 381,
+          "z": 210
+        },
+        {
+          "x": 389.5,
+          "z": 210
+        },
+        {
+          "x": 398,
+          "z": 210
+        },
+        {
+          "x": 406.5,
+          "z": 210
+        }
+      ],
+      "pointsOfInterest": [
+        {
+          "id": "office-missions",
+          "type": "missions",
+          "label": "Read the assignments board",
+          "position": {
+            "x": 401,
+            "z": 191
+          },
+          "range": 2.8,
+          "locationId": 0
+        },
+        {
+          "id": "office-career",
+          "type": "career",
+          "label": "Review your career notebook",
+          "position": {
+            "x": 373,
+            "z": 191
+          },
+          "range": 2.8,
+          "locationId": 0
+        },
+        {
+          "id": "office-team",
+          "type": "team",
+          "label": "Check the team lounge",
+          "position": {
+            "x": 404,
+            "z": 213
+          },
+          "range": 3,
+          "locationId": 0
+        },
+        {
+          "id": "office-week",
+          "type": "week",
+          "label": "Finish the scouting week",
+          "position": {
+            "x": 372,
+            "z": 213
+          },
+          "range": 2.8,
+          "locationId": 0
+        }
+      ],
+      "theme": "studio"
+    },
+    {
+      "id": 1,
+      "name": "Maker Yard",
+      "subtitle": "Eastmere Campus · Community meetup",
+      "center": {
+        "x": 3300,
+        "z": 1437
+      },
+      "door": {
+        "x": 3300,
+        "z": 1460
+      },
+      "parking": {
+        "x": 3300,
+        "z": 1500
+      },
+      "access": {
+        "x": 3150,
+        "z": 1500
+      },
+      "regionId": "eastmere",
+      "interiorSpawn": {
+        "x": 3300,
+        "z": 1457
+      },
+      "footprint": {
+        "minX": 3266,
+        "maxX": 3334,
+        "minZ": 1414,
+        "maxZ": 1460
+      },
+      "candidateSpawns": [
+        {
+          "x": 3277,
+          "z": 1433
+        },
+        {
+          "x": 3285.5,
+          "z": 1433
+        },
+        {
+          "x": 3294,
+          "z": 1433
+        },
+        {
+          "x": 3302.5,
+          "z": 1433
+        },
+        {
+          "x": 3311,
+          "z": 1433
+        },
+        {
+          "x": 3319.5,
+          "z": 1433
+        },
+        {
+          "x": 3277,
+          "z": 1444
+        },
+        {
+          "x": 3285.5,
+          "z": 1444
+        },
+        {
+          "x": 3294,
+          "z": 1444
+        },
+        {
+          "x": 3302.5,
+          "z": 1444
+        },
+        {
+          "x": 3311,
+          "z": 1444
+        },
+        {
+          "x": 3319.5,
+          "z": 1444
+        }
+      ],
+      "pointsOfInterest": [
+        {
+          "id": "venue-1-sources",
+          "type": "sources",
+          "label": "Ask about the Maker Yard community",
+          "position": {
+            "x": 3324,
+            "z": 1424
+          },
+          "range": 3,
+          "locationId": 1
+        },
+        {
+          "id": "venue-1-notice",
+          "type": "thought",
+          "label": "Read the local noticeboard",
+          "position": {
+            "x": 3276,
+            "z": 1451
+          },
+          "range": 2.5,
+          "locationId": 1,
+          "detail": "The best discoveries begin with listening. Members share their projects here; walk around and get to know them."
+        }
+      ],
+      "theme": "workshop"
+    },
+    {
+      "id": 2,
+      "name": "Palette House",
+      "subtitle": "Bellweather · Portfolio circuit",
+      "center": {
+        "x": 5280,
+        "z": 2863
+      },
+      "door": {
+        "x": 5280,
+        "z": 2840
+      },
+      "parking": {
+        "x": 5280,
+        "z": 2800
+      },
+      "access": {
+        "x": 5050,
+        "z": 2800
+      },
+      "regionId": "bellweather",
+      "interiorSpawn": {
+        "x": 5280,
+        "z": 2843
+      },
+      "footprint": {
+        "minX": 5246,
+        "maxX": 5314,
+        "minZ": 2840,
+        "maxZ": 2886
+      },
+      "candidateSpawns": [
+        {
+          "x": 5257,
+          "z": 2859
+        },
+        {
+          "x": 5265.5,
+          "z": 2859
+        },
+        {
+          "x": 5274,
+          "z": 2859
+        },
+        {
+          "x": 5282.5,
+          "z": 2859
+        },
+        {
+          "x": 5291,
+          "z": 2859
+        },
+        {
+          "x": 5299.5,
+          "z": 2859
+        },
+        {
+          "x": 5257,
+          "z": 2870
+        },
+        {
+          "x": 5265.5,
+          "z": 2870
+        },
+        {
+          "x": 5274,
+          "z": 2870
+        },
+        {
+          "x": 5282.5,
+          "z": 2870
+        },
+        {
+          "x": 5291,
+          "z": 2870
+        },
+        {
+          "x": 5299.5,
+          "z": 2870
+        }
+      ],
+      "pointsOfInterest": [
+        {
+          "id": "venue-2-sources",
+          "type": "sources",
+          "label": "Ask about the Palette House community",
+          "position": {
+            "x": 5304,
+            "z": 2850
+          },
+          "range": 3,
+          "locationId": 2
+        },
+        {
+          "id": "venue-2-notice",
+          "type": "thought",
+          "label": "Read the local noticeboard",
+          "position": {
+            "x": 5256,
+            "z": 2877
+          },
+          "range": 2.5,
+          "locationId": 2,
+          "detail": "Take your time with the exhibits. A portfolio tells you what someone makes; a conversation tells you why."
+        }
+      ],
+      "theme": "gallery"
+    },
+    {
+      "id": 3,
+      "name": "Junction Café",
+      "subtitle": "Aster Bay · Industry referrals",
+      "center": {
+        "x": 6710,
+        "z": 2913
+      },
+      "door": {
+        "x": 6710,
+        "z": 2890
+      },
+      "parking": {
+        "x": 6710,
+        "z": 2850
+      },
+      "access": {
+        "x": 6500,
+        "z": 2850
+      },
+      "regionId": "aster",
+      "interiorSpawn": {
+        "x": 6710,
+        "z": 2893
+      },
+      "footprint": {
+        "minX": 6676,
+        "maxX": 6744,
+        "minZ": 2890,
+        "maxZ": 2936
+      },
+      "candidateSpawns": [
+        {
+          "x": 6687,
+          "z": 2909
+        },
+        {
+          "x": 6695.5,
+          "z": 2909
+        },
+        {
+          "x": 6704,
+          "z": 2909
+        },
+        {
+          "x": 6712.5,
+          "z": 2909
+        },
+        {
+          "x": 6721,
+          "z": 2909
+        },
+        {
+          "x": 6729.5,
+          "z": 2909
+        },
+        {
+          "x": 6687,
+          "z": 2920
+        },
+        {
+          "x": 6695.5,
+          "z": 2920
+        },
+        {
+          "x": 6704,
+          "z": 2920
+        },
+        {
+          "x": 6712.5,
+          "z": 2920
+        },
+        {
+          "x": 6721,
+          "z": 2920
+        },
+        {
+          "x": 6729.5,
+          "z": 2920
+        }
+      ],
+      "pointsOfInterest": [
+        {
+          "id": "venue-3-sources",
+          "type": "sources",
+          "label": "Ask about the Junction Café community",
+          "position": {
+            "x": 6734,
+            "z": 2900
+          },
+          "range": 3,
+          "locationId": 3
+        },
+        {
+          "id": "venue-3-notice",
+          "type": "thought",
+          "label": "Read the local noticeboard",
+          "position": {
+            "x": 6686,
+            "z": 2927
+          },
+          "range": 2.5,
+          "locationId": 3,
+          "detail": "People return here for the quiet corners, the conversations, and the familiar faces. Take a little time before asking for an introduction."
+        }
+      ],
+      "theme": "cafe"
+    },
+    {
+      "id": 4,
+      "name": "Highway Fuel",
+      "subtitle": "Fuel & roadside assistance",
+      "center": {
+        "x": 850,
+        "z": 595
+      },
+      "door": {
+        "x": 850,
+        "z": 603
+      },
+      "parking": {
+        "x": 840,
+        "z": 620
+      },
+      "access": {
+        "x": 840,
+        "z": 650
+      },
+      "regionId": "cirrus",
+      "interiorSpawn": {
+        "x": 850,
+        "z": 600
+      },
+      "footprint": {
+        "minX": 838,
+        "maxX": 862,
+        "minZ": 587,
+        "maxZ": 603
+      },
+      "candidateSpawns": [
+        {
+          "x": 827,
+          "z": 591
+        },
+        {
+          "x": 835.5,
+          "z": 591
+        },
+        {
+          "x": 844,
+          "z": 591
+        },
+        {
+          "x": 852.5,
+          "z": 591
+        },
+        {
+          "x": 861,
+          "z": 591
+        },
+        {
+          "x": 869.5,
+          "z": 591
+        },
+        {
+          "x": 827,
+          "z": 602
+        },
+        {
+          "x": 835.5,
+          "z": 602
+        },
+        {
+          "x": 844,
+          "z": 602
+        },
+        {
+          "x": 852.5,
+          "z": 602
+        },
+        {
+          "x": 861,
+          "z": 602
+        },
+        {
+          "x": 869.5,
+          "z": 602
+        }
+      ],
+      "pointsOfInterest": [
+        {
+          "id": "fuel",
+          "type": "fuel",
+          "label": "Refuel at the pump",
+          "position": {
+            "x": 840,
+            "z": 620
+          },
+          "range": 4,
+          "locationId": 4
+        }
+      ],
+      "theme": "fuel"
+    },
+    {
+      "id": 5,
+      "name": "Home",
+      "subtitle": "Your apartment",
+      "center": {
+        "x": 220,
+        "z": 480
+      },
+      "door": {
+        "x": 220,
+        "z": 488.5
+      },
+      "parking": {
+        "x": 220,
+        "z": 510
+      },
+      "access": {
+        "x": 220,
+        "z": 525
+      },
+      "regionId": "cirrus",
+      "interiorSpawn": {
+        "x": 220,
+        "z": 485.8
+      },
+      "footprint": {
+        "minX": 210,
+        "maxX": 230,
+        "minZ": 471.5,
+        "maxZ": 488.5
+      },
+      "candidateSpawns": [],
+      "theme": "home",
+      "pointsOfInterest": [
+        {
+          "id": "home-laptop",
+          "type": "laptop",
+          "label": "Sit at your laptop",
+          "position": {
+            "x": 225.8,
+            "z": 476.2
+          },
+          "range": 1.6,
+          "locationId": 5
+        },
+        {
+          "id": "home-rest",
+          "type": "week",
+          "label": "Wind down for the week",
+          "position": {
+            "x": 212.4,
+            "z": 480.8
+          },
+          "range": 2,
+          "locationId": 5
+        },
+        {
+          "id": "home-window",
+          "type": "thought",
+          "label": "Take a moment by the window",
+          "position": {
+            "x": 228.8,
+            "z": 483.2
+          },
+          "range": 1.7,
+          "locationId": 5,
+          "detail": "The town is in no rush. Neither are you. One thoughtful conversation can be worth an entire day of chasing leads."
+        }
+      ]
+    }
+  ],
+  "seeds": [
+    {
+      "version": 1,
+      "seed": 2177729349,
+      "tier": 0,
+      "week": 1,
+      "cash": 42000,
+      "reputation": 0,
+      "actions": 6,
+      "candidates": [
+        {
+          "id": "t0-0",
+          "name": "Maya Chen",
+          "role": "Engineering",
+          "origin": "Open-source maintainer",
+          "bio": "Maintains a payment library after her day job. No degree; thousands of people rely on her code.",
+          "hook": "Fixed a race condition that three senior engineers missed.",
+          "skills": {
+            "craft": 84,
+            "insight": 88,
+            "nerve": 70,
+            "teamwork": 78
+          },
+          "ranges": {},
+          "growth": 3,
+          "reliability": 95,
+          "motive": "autonomy",
+          "salary": 1400,
+          "deadline": 6,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-1",
+          "name": "Theo Mercer",
+          "role": "Design",
+          "origin": "Independent designer",
+          "bio": "Left a large agency to build tools for people with limited vision.",
+          "hook": "The prototype works with a keyboard alone.",
+          "skills": {
+            "craft": 80,
+            "insight": 86,
+            "nerve": 77,
+            "teamwork": 84
+          },
+          "ranges": {},
+          "growth": 3,
+          "reliability": 89,
+          "motive": "purpose",
+          "salary": 1500,
+          "deadline": 9,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-2",
+          "name": "Nia Okafor",
+          "role": "Operations",
+          "origin": "Community organizer",
+          "bio": "Runs a volunteer repair network with almost no money and very little fuss.",
+          "hook": "Coordinated 60 volunteers through a citywide outage.",
+          "skills": {
+            "craft": 78,
+            "insight": 79,
+            "nerve": 89,
+            "teamwork": 93
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 96,
+          "motive": "purpose",
+          "salary": 1600,
+          "deadline": 6,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-3",
+          "name": "Elliot Vance",
+          "role": "Engineering",
+          "origin": "Prestigious résumé",
+          "bio": "An impressive list of employers and titles. His portfolio credits large teams.",
+          "hook": "Claims to have led a complete platform migration.",
+          "skills": {
+            "craft": 62,
+            "insight": 52,
+            "nerve": 75,
+            "teamwork": 48
+          },
+          "ranges": {},
+          "growth": 1,
+          "reliability": 69,
+          "motive": "security",
+          "salary": 1350,
+          "deadline": 8,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-4",
+          "name": "Sana Patel",
+          "role": "Design",
+          "origin": "Student portfolio",
+          "bio": "A quiet final-year student with an unusual eye for interaction design.",
+          "hook": "Her unfinished project has a remarkably clear onboarding flow.",
+          "skills": {
+            "craft": 67,
+            "insight": 90,
+            "nerve": 49,
+            "teamwork": 73
+          },
+          "ranges": {},
+          "growth": 5,
+          "reliability": 79,
+          "motive": "mentorship",
+          "salary": 1350,
+          "deadline": 7,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-5",
+          "name": "Rafael Cruz",
+          "role": "Operations",
+          "origin": "Startup operator",
+          "bio": "Knows everyone in the local startup scene. Enjoys solving urgent problems.",
+          "hook": "His former team grew fast, then missed two launches.",
+          "skills": {
+            "craft": 72,
+            "insight": 65,
+            "nerve": 84,
+            "teamwork": 65
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 67,
+          "motive": "autonomy",
+          "salary": 1200,
+          "deadline": 6,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-6",
+          "name": "Jun Park",
+          "role": "Engineering",
+          "origin": "Repair shop programmer",
+          "bio": "Automated the family repair shop between customer appointments.",
+          "hook": "The inventory tool is faster than the commercial one it replaced.",
+          "skills": {
+            "craft": 79,
+            "insight": 91,
+            "nerve": 66,
+            "teamwork": 71
+          },
+          "ranges": {},
+          "growth": 4,
+          "reliability": 90,
+          "motive": "mentorship",
+          "salary": 1450,
+          "deadline": 9,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-7",
+          "name": "Amara Bell",
+          "role": "Design",
+          "origin": "Museum technician",
+          "bio": "Builds exhibits that make complex ideas accessible to children.",
+          "hook": "A visitor figured out the exhibit without reading a word.",
+          "skills": {
+            "craft": 88,
+            "insight": 84,
+            "nerve": 86,
+            "teamwork": 82
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 96,
+          "motive": "purpose",
+          "salary": 1350,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-8",
+          "name": "Levi Brooks",
+          "role": "Operations",
+          "origin": "Logistics specialist",
+          "bio": "A warehouse coordinator who quietly eliminated a major delivery bottleneck.",
+          "hook": "The improvement survived after he moved to another shift.",
+          "skills": {
+            "craft": 90,
+            "insight": 75,
+            "nerve": 88,
+            "teamwork": 87
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 99,
+          "motive": "security",
+          "salary": 1150,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-9",
+          "name": "Iris Vale",
+          "role": "Engineering",
+          "origin": "Competition finalist",
+          "bio": "Solved every programming challenge, but prefers to work alone.",
+          "hook": "Her code is elegant; nobody else could maintain it.",
+          "skills": {
+            "craft": 94,
+            "insight": 89,
+            "nerve": 83,
+            "teamwork": 35
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 84,
+          "motive": "autonomy",
+          "salary": 1700,
+          "deadline": 9,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-10",
+          "name": "Felix Reed",
+          "role": "Design",
+          "origin": "Award-winning creative",
+          "bio": "A persuasive presenter with a beautifully polished portfolio.",
+          "hook": "Every case study looks excellent; user outcomes are missing.",
+          "skills": {
+            "craft": 60,
+            "insight": 67,
+            "nerve": 91,
+            "teamwork": 71
+          },
+          "ranges": {},
+          "growth": 1,
+          "reliability": 76,
+          "motive": "security",
+          "salary": 1250,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-11",
+          "name": "Aisha Noor",
+          "role": "Operations",
+          "origin": "Front-desk problem solver",
+          "bio": "Works reception at a busy clinic. Patients ask for her by name.",
+          "hook": "Built a scheduling system that reduced missed visits.",
+          "skills": {
+            "craft": 73,
+            "insight": 85,
+            "nerve": 91,
+            "teamwork": 94
+          },
+          "ranges": {},
+          "growth": 4,
+          "reliability": 95,
+          "motive": "mentorship",
+          "salary": 1100,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        }
+      ],
+      "completed": 0,
+      "attempts": 0,
+      "exposure": 0,
+      "missionThisWeek": false,
+      "log": [
+        {
+          "id": 0,
+          "week": 1,
+          "text": "Welcome to Cirrus Works. Three great hires could change this company.",
+          "tone": "neutral"
+        }
+      ],
+      "prestige": 0,
+      "history": [],
+      "report": null,
+      "briefing": false,
+      "event": 1,
+      "mentoring": 0,
+      "rescueUsed": false,
+      "won": false,
+      "field": {
+        "scene": "district",
+        "player": {
+          "x": 503,
+          "y": 870
+        },
+        "car": {
+          "x": 500,
+          "y": 870
+        },
+        "heading": 0,
+        "driving": false,
+        "fuel": 12,
+        "visited": [
+          0
+        ],
+        "met": [],
+        "destination": 1
+      },
+      "style": {
+        "name": "Linux QA 1",
+        "avatar": 0,
+        "car": "compact",
+        "paint": "slate",
+        "plate": "SCOUT",
+        "camera": "cockpit",
+        "radio": false,
+        "station": 0,
+        "music": true,
+        "sound": true,
+        "engine": true
+      },
+      "story": {
+        "phase": "complete",
+        "choice": null
+      },
+      "law": {
+        "schema": 1,
+        "sequence": 0,
+        "handled": [],
+        "response": null,
+        "last": null
+      },
+      "immersion": {
+        "schema": 2,
+        "tier": 0,
+        "interior": null,
+        "player": {
+          "yaw": 0,
+          "pitch": 0,
+          "x": 503,
+          "z": 870
+        },
+        "vehicle": {
+          "heading": 0,
+          "speed": 0,
+          "steering": 0,
+          "distance": 0,
+          "fuel": 12,
+          "gear": "D",
+          "damage": 0,
+          "disabled": false,
+          "x": 500,
+          "z": 870
+        },
+        "mode": "foot",
+        "destination": 1,
+        "parkedAt": [],
+        "tutorial": "complete",
+        "thoughtsSeen": [],
+        "homeReviewed": true
+      }
+    },
+    {
+      "version": 1,
+      "seed": 2485718950,
+      "tier": 0,
+      "week": 1,
+      "cash": 42000,
+      "reputation": 0,
+      "actions": 6,
+      "candidates": [
+        {
+          "id": "t0-0",
+          "name": "Maya Chen",
+          "role": "Engineering",
+          "origin": "Open-source maintainer",
+          "bio": "Maintains a payment library after her day job. No degree; thousands of people rely on her code.",
+          "hook": "Fixed a race condition that three senior engineers missed.",
+          "skills": {
+            "craft": 84,
+            "insight": 88,
+            "nerve": 70,
+            "teamwork": 78
+          },
+          "ranges": {},
+          "growth": 3,
+          "reliability": 95,
+          "motive": "autonomy",
+          "salary": 1400,
+          "deadline": 6,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-1",
+          "name": "Theo Mercer",
+          "role": "Design",
+          "origin": "Independent designer",
+          "bio": "Left a large agency to build tools for people with limited vision.",
+          "hook": "The prototype works with a keyboard alone.",
+          "skills": {
+            "craft": 80,
+            "insight": 86,
+            "nerve": 77,
+            "teamwork": 84
+          },
+          "ranges": {},
+          "growth": 3,
+          "reliability": 89,
+          "motive": "purpose",
+          "salary": 1300,
+          "deadline": 9,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-2",
+          "name": "Nia Okafor",
+          "role": "Operations",
+          "origin": "Community organizer",
+          "bio": "Runs a volunteer repair network with almost no money and very little fuss.",
+          "hook": "Coordinated 60 volunteers through a citywide outage.",
+          "skills": {
+            "craft": 78,
+            "insight": 79,
+            "nerve": 89,
+            "teamwork": 93
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 96,
+          "motive": "purpose",
+          "salary": 1350,
+          "deadline": 5,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-3",
+          "name": "Elliot Vance",
+          "role": "Engineering",
+          "origin": "Prestigious résumé",
+          "bio": "An impressive list of employers and titles. His portfolio credits large teams.",
+          "hook": "Claims to have led a complete platform migration.",
+          "skills": {
+            "craft": 62,
+            "insight": 52,
+            "nerve": 75,
+            "teamwork": 48
+          },
+          "ranges": {},
+          "growth": 1,
+          "reliability": 69,
+          "motive": "security",
+          "salary": 1650,
+          "deadline": 7,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-4",
+          "name": "Sana Patel",
+          "role": "Design",
+          "origin": "Student portfolio",
+          "bio": "A quiet final-year student with an unusual eye for interaction design.",
+          "hook": "Her unfinished project has a remarkably clear onboarding flow.",
+          "skills": {
+            "craft": 67,
+            "insight": 90,
+            "nerve": 49,
+            "teamwork": 73
+          },
+          "ranges": {},
+          "growth": 5,
+          "reliability": 79,
+          "motive": "mentorship",
+          "salary": 1650,
+          "deadline": 7,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-5",
+          "name": "Rafael Cruz",
+          "role": "Operations",
+          "origin": "Startup operator",
+          "bio": "Knows everyone in the local startup scene. Enjoys solving urgent problems.",
+          "hook": "His former team grew fast, then missed two launches.",
+          "skills": {
+            "craft": 72,
+            "insight": 65,
+            "nerve": 84,
+            "teamwork": 65
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 67,
+          "motive": "autonomy",
+          "salary": 1500,
+          "deadline": 5,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-6",
+          "name": "Jun Park",
+          "role": "Engineering",
+          "origin": "Repair shop programmer",
+          "bio": "Automated the family repair shop between customer appointments.",
+          "hook": "The inventory tool is faster than the commercial one it replaced.",
+          "skills": {
+            "craft": 79,
+            "insight": 91,
+            "nerve": 66,
+            "teamwork": 71
+          },
+          "ranges": {},
+          "growth": 4,
+          "reliability": 90,
+          "motive": "mentorship",
+          "salary": 1450,
+          "deadline": 9,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-7",
+          "name": "Amara Bell",
+          "role": "Design",
+          "origin": "Museum technician",
+          "bio": "Builds exhibits that make complex ideas accessible to children.",
+          "hook": "A visitor figured out the exhibit without reading a word.",
+          "skills": {
+            "craft": 88,
+            "insight": 84,
+            "nerve": 86,
+            "teamwork": 82
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 96,
+          "motive": "purpose",
+          "salary": 1500,
+          "deadline": 5,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-8",
+          "name": "Levi Brooks",
+          "role": "Operations",
+          "origin": "Logistics specialist",
+          "bio": "A warehouse coordinator who quietly eliminated a major delivery bottleneck.",
+          "hook": "The improvement survived after he moved to another shift.",
+          "skills": {
+            "craft": 90,
+            "insight": 75,
+            "nerve": 88,
+            "teamwork": 87
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 99,
+          "motive": "security",
+          "salary": 1250,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-9",
+          "name": "Iris Vale",
+          "role": "Engineering",
+          "origin": "Competition finalist",
+          "bio": "Solved every programming challenge, but prefers to work alone.",
+          "hook": "Her code is elegant; nobody else could maintain it.",
+          "skills": {
+            "craft": 94,
+            "insight": 89,
+            "nerve": 83,
+            "teamwork": 35
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 84,
+          "motive": "autonomy",
+          "salary": 1250,
+          "deadline": 8,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-10",
+          "name": "Felix Reed",
+          "role": "Design",
+          "origin": "Award-winning creative",
+          "bio": "A persuasive presenter with a beautifully polished portfolio.",
+          "hook": "Every case study looks excellent; user outcomes are missing.",
+          "skills": {
+            "craft": 60,
+            "insight": 67,
+            "nerve": 91,
+            "teamwork": 71
+          },
+          "ranges": {},
+          "growth": 1,
+          "reliability": 76,
+          "motive": "security",
+          "salary": 1700,
+          "deadline": 5,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-11",
+          "name": "Aisha Noor",
+          "role": "Operations",
+          "origin": "Front-desk problem solver",
+          "bio": "Works reception at a busy clinic. Patients ask for her by name.",
+          "hook": "Built a scheduling system that reduced missed visits.",
+          "skills": {
+            "craft": 73,
+            "insight": 85,
+            "nerve": 91,
+            "teamwork": 94
+          },
+          "ranges": {},
+          "growth": 4,
+          "reliability": 95,
+          "motive": "mentorship",
+          "salary": 1550,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        }
+      ],
+      "completed": 0,
+      "attempts": 0,
+      "exposure": 0,
+      "missionThisWeek": false,
+      "log": [
+        {
+          "id": 0,
+          "week": 1,
+          "text": "Welcome to Cirrus Works. Three great hires could change this company.",
+          "tone": "neutral"
+        }
+      ],
+      "prestige": 0,
+      "history": [],
+      "report": null,
+      "briefing": false,
+      "event": 1,
+      "mentoring": 0,
+      "rescueUsed": false,
+      "won": false,
+      "field": {
+        "scene": "district",
+        "player": {
+          "x": 1536,
+          "y": 1024
+        },
+        "car": {
+          "x": 1536,
+          "y": 1024
+        },
+        "heading": 0,
+        "driving": false,
+        "fuel": 4.25,
+        "visited": [
+          0
+        ],
+        "met": [],
+        "destination": null
+      },
+      "style": {
+        "name": "Linux QA 2",
+        "avatar": 0,
+        "car": "compact",
+        "paint": "slate",
+        "plate": "SCOUT",
+        "camera": "cockpit",
+        "radio": false,
+        "station": 0,
+        "music": true,
+        "sound": true,
+        "engine": true
+      },
+      "story": {
+        "phase": "complete",
+        "choice": null
+      },
+      "law": {
+        "schema": 1,
+        "sequence": 0,
+        "handled": [],
+        "response": null,
+        "last": null
+      },
+      "immersion": {
+        "schema": 2,
+        "tier": 0,
+        "interior": null,
+        "player": {
+          "yaw": 0,
+          "pitch": 0,
+          "x": 3046.3,
+          "z": 2106.3
+        },
+        "vehicle": {
+          "heading": 0,
+          "speed": 0,
+          "steering": 0,
+          "distance": 1523.4,
+          "fuel": 4.25,
+          "gear": "D",
+          "damage": 0.42,
+          "disabled": false,
+          "x": 3045,
+          "z": 2100
+        },
+        "mode": "foot",
+        "destination": null,
+        "parkedAt": [],
+        "tutorial": "complete",
+        "thoughtsSeen": [],
+        "homeReviewed": true
+      }
+    },
+    {
+      "version": 1,
+      "seed": 2793708551,
+      "tier": 0,
+      "week": 1,
+      "cash": 42000,
+      "reputation": 0,
+      "actions": 6,
+      "candidates": [
+        {
+          "id": "t0-0",
+          "name": "Maya Chen",
+          "role": "Engineering",
+          "origin": "Open-source maintainer",
+          "bio": "Maintains a payment library after her day job. No degree; thousands of people rely on her code.",
+          "hook": "Fixed a race condition that three senior engineers missed.",
+          "skills": {
+            "craft": 84,
+            "insight": 88,
+            "nerve": 70,
+            "teamwork": 78
+          },
+          "ranges": {},
+          "growth": 3,
+          "reliability": 95,
+          "motive": "autonomy",
+          "salary": 1400,
+          "deadline": 6,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-1",
+          "name": "Theo Mercer",
+          "role": "Design",
+          "origin": "Independent designer",
+          "bio": "Left a large agency to build tools for people with limited vision.",
+          "hook": "The prototype works with a keyboard alone.",
+          "skills": {
+            "craft": 80,
+            "insight": 86,
+            "nerve": 77,
+            "teamwork": 84
+          },
+          "ranges": {},
+          "growth": 3,
+          "reliability": 89,
+          "motive": "purpose",
+          "salary": 1750,
+          "deadline": 5,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-2",
+          "name": "Nia Okafor",
+          "role": "Operations",
+          "origin": "Community organizer",
+          "bio": "Runs a volunteer repair network with almost no money and very little fuss.",
+          "hook": "Coordinated 60 volunteers through a citywide outage.",
+          "skills": {
+            "craft": 78,
+            "insight": 79,
+            "nerve": 89,
+            "teamwork": 93
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 96,
+          "motive": "purpose",
+          "salary": 1150,
+          "deadline": 9,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-3",
+          "name": "Elliot Vance",
+          "role": "Engineering",
+          "origin": "Prestigious résumé",
+          "bio": "An impressive list of employers and titles. His portfolio credits large teams.",
+          "hook": "Claims to have led a complete platform migration.",
+          "skills": {
+            "craft": 62,
+            "insight": 52,
+            "nerve": 75,
+            "teamwork": 48
+          },
+          "ranges": {},
+          "growth": 1,
+          "reliability": 69,
+          "motive": "security",
+          "salary": 1250,
+          "deadline": 7,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-4",
+          "name": "Sana Patel",
+          "role": "Design",
+          "origin": "Student portfolio",
+          "bio": "A quiet final-year student with an unusual eye for interaction design.",
+          "hook": "Her unfinished project has a remarkably clear onboarding flow.",
+          "skills": {
+            "craft": 67,
+            "insight": 90,
+            "nerve": 49,
+            "teamwork": 73
+          },
+          "ranges": {},
+          "growth": 5,
+          "reliability": 79,
+          "motive": "mentorship",
+          "salary": 1350,
+          "deadline": 7,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-5",
+          "name": "Rafael Cruz",
+          "role": "Operations",
+          "origin": "Startup operator",
+          "bio": "Knows everyone in the local startup scene. Enjoys solving urgent problems.",
+          "hook": "His former team grew fast, then missed two launches.",
+          "skills": {
+            "craft": 72,
+            "insight": 65,
+            "nerve": 84,
+            "teamwork": 65
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 67,
+          "motive": "autonomy",
+          "salary": 1150,
+          "deadline": 8,
+          "discovered": true,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-6",
+          "name": "Jun Park",
+          "role": "Engineering",
+          "origin": "Repair shop programmer",
+          "bio": "Automated the family repair shop between customer appointments.",
+          "hook": "The inventory tool is faster than the commercial one it replaced.",
+          "skills": {
+            "craft": 79,
+            "insight": 91,
+            "nerve": 66,
+            "teamwork": 71
+          },
+          "ranges": {},
+          "growth": 4,
+          "reliability": 90,
+          "motive": "mentorship",
+          "salary": 1450,
+          "deadline": 9,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-7",
+          "name": "Amara Bell",
+          "role": "Design",
+          "origin": "Museum technician",
+          "bio": "Builds exhibits that make complex ideas accessible to children.",
+          "hook": "A visitor figured out the exhibit without reading a word.",
+          "skills": {
+            "craft": 88,
+            "insight": 84,
+            "nerve": 86,
+            "teamwork": 82
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 96,
+          "motive": "purpose",
+          "salary": 1650,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-8",
+          "name": "Levi Brooks",
+          "role": "Operations",
+          "origin": "Logistics specialist",
+          "bio": "A warehouse coordinator who quietly eliminated a major delivery bottleneck.",
+          "hook": "The improvement survived after he moved to another shift.",
+          "skills": {
+            "craft": 90,
+            "insight": 75,
+            "nerve": 88,
+            "teamwork": 87
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 99,
+          "motive": "security",
+          "salary": 1350,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-9",
+          "name": "Iris Vale",
+          "role": "Engineering",
+          "origin": "Competition finalist",
+          "bio": "Solved every programming challenge, but prefers to work alone.",
+          "hook": "Her code is elegant; nobody else could maintain it.",
+          "skills": {
+            "craft": 94,
+            "insight": 89,
+            "nerve": 83,
+            "teamwork": 35
+          },
+          "ranges": {},
+          "growth": 2,
+          "reliability": 84,
+          "motive": "autonomy",
+          "salary": 1450,
+          "deadline": 7,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-10",
+          "name": "Felix Reed",
+          "role": "Design",
+          "origin": "Award-winning creative",
+          "bio": "A persuasive presenter with a beautifully polished portfolio.",
+          "hook": "Every case study looks excellent; user outcomes are missing.",
+          "skills": {
+            "craft": 60,
+            "insight": 67,
+            "nerve": 91,
+            "teamwork": 71
+          },
+          "ranges": {},
+          "growth": 1,
+          "reliability": 76,
+          "motive": "security",
+          "salary": 1500,
+          "deadline": 8,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        },
+        {
+          "id": "t0-11",
+          "name": "Aisha Noor",
+          "role": "Operations",
+          "origin": "Front-desk problem solver",
+          "bio": "Works reception at a busy clinic. Patients ask for her by name.",
+          "hook": "Built a scheduling system that reduced missed visits.",
+          "skills": {
+            "craft": 73,
+            "insight": 85,
+            "nerve": 91,
+            "teamwork": 94
+          },
+          "ranges": {},
+          "growth": 4,
+          "reliability": 95,
+          "motive": "mentorship",
+          "salary": 1350,
+          "deadline": 8,
+          "discovered": false,
+          "starred": false,
+          "status": "available",
+          "evidence": [],
+          "tested": [],
+          "lastOffer": 0,
+          "trust": 0
+        }
+      ],
+      "completed": 0,
+      "attempts": 0,
+      "exposure": 0,
+      "missionThisWeek": false,
+      "log": [
+        {
+          "id": 0,
+          "week": 1,
+          "text": "Welcome to Cirrus Works. Three great hires could change this company.",
+          "tone": "neutral"
+        }
+      ],
+      "prestige": 0,
+      "history": [],
+      "report": null,
+      "briefing": false,
+      "event": 1,
+      "mentoring": 0,
+      "rescueUsed": false,
+      "won": false,
+      "field": {
+        "scene": "district",
+        "player": {
+          "x": 503,
+          "y": 870
+        },
+        "car": {
+          "x": 500,
+          "y": 870
+        },
+        "heading": 0,
+        "driving": false,
+        "fuel": 2.25,
+        "visited": [
+          0
+        ],
+        "met": [],
+        "destination": null
+      },
+      "style": {
+        "name": "Linux QA 3",
+        "avatar": 0,
+        "car": "compact",
+        "paint": "slate",
+        "plate": "SCOUT",
+        "camera": "cockpit",
+        "radio": false,
+        "station": 0,
+        "music": true,
+        "sound": true,
+        "engine": true
+      },
+      "story": {
+        "phase": "complete",
+        "choice": null
+      },
+      "law": {
+        "schema": 1,
+        "sequence": 0,
+        "handled": [],
+        "response": null,
+        "last": null
+      },
+      "immersion": {
+        "schema": 2,
+        "tier": 0,
+        "interior": null,
+        "player": {
+          "yaw": 0,
+          "pitch": 0,
+          "x": 503,
+          "z": 870
+        },
+        "vehicle": {
+          "heading": 0,
+          "speed": 0,
+          "steering": 0,
+          "distance": 3142.7,
+          "fuel": 2.25,
+          "gear": "R",
+          "damage": 0.93,
+          "disabled": true,
+          "x": 500,
+          "z": 870
+        },
+        "mode": "foot",
+        "destination": null,
+        "parkedAt": [],
+        "tutorial": "complete",
+        "thoughtsSeen": [],
+        "homeReviewed": true
+      }
+    }
+  ],
+  "artSeeds": [
+    {
+      "name": "eastmere-interstate-sign",
+      "sign": "eastmere-exit-1",
+      "career": {
+        "version": 1,
+        "seed": 2485718950,
+        "tier": 0,
+        "week": 1,
+        "cash": 42000,
+        "reputation": 0,
+        "actions": 6,
+        "candidates": [
+          {
+            "id": "t0-0",
+            "name": "Maya Chen",
+            "role": "Engineering",
+            "origin": "Open-source maintainer",
+            "bio": "Maintains a payment library after her day job. No degree; thousands of people rely on her code.",
+            "hook": "Fixed a race condition that three senior engineers missed.",
+            "skills": {
+              "craft": 84,
+              "insight": 88,
+              "nerve": 70,
+              "teamwork": 78
+            },
+            "ranges": {},
+            "growth": 3,
+            "reliability": 95,
+            "motive": "autonomy",
+            "salary": 1400,
+            "deadline": 6,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-1",
+            "name": "Theo Mercer",
+            "role": "Design",
+            "origin": "Independent designer",
+            "bio": "Left a large agency to build tools for people with limited vision.",
+            "hook": "The prototype works with a keyboard alone.",
+            "skills": {
+              "craft": 80,
+              "insight": 86,
+              "nerve": 77,
+              "teamwork": 84
+            },
+            "ranges": {},
+            "growth": 3,
+            "reliability": 89,
+            "motive": "purpose",
+            "salary": 1300,
+            "deadline": 9,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-2",
+            "name": "Nia Okafor",
+            "role": "Operations",
+            "origin": "Community organizer",
+            "bio": "Runs a volunteer repair network with almost no money and very little fuss.",
+            "hook": "Coordinated 60 volunteers through a citywide outage.",
+            "skills": {
+              "craft": 78,
+              "insight": 79,
+              "nerve": 89,
+              "teamwork": 93
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 96,
+            "motive": "purpose",
+            "salary": 1350,
+            "deadline": 5,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-3",
+            "name": "Elliot Vance",
+            "role": "Engineering",
+            "origin": "Prestigious résumé",
+            "bio": "An impressive list of employers and titles. His portfolio credits large teams.",
+            "hook": "Claims to have led a complete platform migration.",
+            "skills": {
+              "craft": 62,
+              "insight": 52,
+              "nerve": 75,
+              "teamwork": 48
+            },
+            "ranges": {},
+            "growth": 1,
+            "reliability": 69,
+            "motive": "security",
+            "salary": 1650,
+            "deadline": 7,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-4",
+            "name": "Sana Patel",
+            "role": "Design",
+            "origin": "Student portfolio",
+            "bio": "A quiet final-year student with an unusual eye for interaction design.",
+            "hook": "Her unfinished project has a remarkably clear onboarding flow.",
+            "skills": {
+              "craft": 67,
+              "insight": 90,
+              "nerve": 49,
+              "teamwork": 73
+            },
+            "ranges": {},
+            "growth": 5,
+            "reliability": 79,
+            "motive": "mentorship",
+            "salary": 1650,
+            "deadline": 7,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-5",
+            "name": "Rafael Cruz",
+            "role": "Operations",
+            "origin": "Startup operator",
+            "bio": "Knows everyone in the local startup scene. Enjoys solving urgent problems.",
+            "hook": "His former team grew fast, then missed two launches.",
+            "skills": {
+              "craft": 72,
+              "insight": 65,
+              "nerve": 84,
+              "teamwork": 65
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 67,
+            "motive": "autonomy",
+            "salary": 1500,
+            "deadline": 5,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-6",
+            "name": "Jun Park",
+            "role": "Engineering",
+            "origin": "Repair shop programmer",
+            "bio": "Automated the family repair shop between customer appointments.",
+            "hook": "The inventory tool is faster than the commercial one it replaced.",
+            "skills": {
+              "craft": 79,
+              "insight": 91,
+              "nerve": 66,
+              "teamwork": 71
+            },
+            "ranges": {},
+            "growth": 4,
+            "reliability": 90,
+            "motive": "mentorship",
+            "salary": 1450,
+            "deadline": 9,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-7",
+            "name": "Amara Bell",
+            "role": "Design",
+            "origin": "Museum technician",
+            "bio": "Builds exhibits that make complex ideas accessible to children.",
+            "hook": "A visitor figured out the exhibit without reading a word.",
+            "skills": {
+              "craft": 88,
+              "insight": 84,
+              "nerve": 86,
+              "teamwork": 82
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 96,
+            "motive": "purpose",
+            "salary": 1500,
+            "deadline": 5,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-8",
+            "name": "Levi Brooks",
+            "role": "Operations",
+            "origin": "Logistics specialist",
+            "bio": "A warehouse coordinator who quietly eliminated a major delivery bottleneck.",
+            "hook": "The improvement survived after he moved to another shift.",
+            "skills": {
+              "craft": 90,
+              "insight": 75,
+              "nerve": 88,
+              "teamwork": 87
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 99,
+            "motive": "security",
+            "salary": 1250,
+            "deadline": 7,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-9",
+            "name": "Iris Vale",
+            "role": "Engineering",
+            "origin": "Competition finalist",
+            "bio": "Solved every programming challenge, but prefers to work alone.",
+            "hook": "Her code is elegant; nobody else could maintain it.",
+            "skills": {
+              "craft": 94,
+              "insight": 89,
+              "nerve": 83,
+              "teamwork": 35
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 84,
+            "motive": "autonomy",
+            "salary": 1250,
+            "deadline": 8,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-10",
+            "name": "Felix Reed",
+            "role": "Design",
+            "origin": "Award-winning creative",
+            "bio": "A persuasive presenter with a beautifully polished portfolio.",
+            "hook": "Every case study looks excellent; user outcomes are missing.",
+            "skills": {
+              "craft": 60,
+              "insight": 67,
+              "nerve": 91,
+              "teamwork": 71
+            },
+            "ranges": {},
+            "growth": 1,
+            "reliability": 76,
+            "motive": "security",
+            "salary": 1700,
+            "deadline": 5,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-11",
+            "name": "Aisha Noor",
+            "role": "Operations",
+            "origin": "Front-desk problem solver",
+            "bio": "Works reception at a busy clinic. Patients ask for her by name.",
+            "hook": "Built a scheduling system that reduced missed visits.",
+            "skills": {
+              "craft": 73,
+              "insight": 85,
+              "nerve": 91,
+              "teamwork": 94
+            },
+            "ranges": {},
+            "growth": 4,
+            "reliability": 95,
+            "motive": "mentorship",
+            "salary": 1550,
+            "deadline": 7,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          }
+        ],
+        "completed": 0,
+        "attempts": 0,
+        "exposure": 0,
+        "missionThisWeek": false,
+        "log": [
+          {
+            "id": 0,
+            "week": 1,
+            "text": "Welcome to Cirrus Works. Three great hires could change this company.",
+            "tone": "neutral"
+          }
+        ],
+        "prestige": 0,
+        "history": [],
+        "report": null,
+        "briefing": false,
+        "event": 1,
+        "mentoring": 0,
+        "rescueUsed": false,
+        "won": false,
+        "field": {
+          "scene": "district",
+          "player": {
+            "x": 1536,
+            "y": 1024
+          },
+          "car": {
+            "x": 1536,
+            "y": 1024
+          },
+          "heading": 4.71238898038469,
+          "driving": true,
+          "fuel": 12,
+          "visited": [
+            0
+          ],
+          "met": [],
+          "destination": null
+        },
+        "style": {
+          "name": "Linux QA 2",
+          "avatar": 0,
+          "car": "compact",
+          "paint": "slate",
+          "plate": "SCOUT",
+          "camera": "cockpit",
+          "radio": false,
+          "station": 0,
+          "music": true,
+          "sound": true,
+          "engine": true
+        },
+        "story": {
+          "phase": "complete",
+          "choice": null
+        },
+        "law": {
+          "schema": 1,
+          "sequence": 0,
+          "handled": [],
+          "response": null,
+          "last": null
+        },
+        "immersion": {
+          "schema": 2,
+          "tier": 0,
+          "interior": null,
+          "player": {
+            "yaw": 0,
+            "pitch": 0,
+            "x": 2935,
+            "z": 1105
+          },
+          "vehicle": {
+            "heading": -1.5707963267948966,
+            "speed": 0,
+            "steering": 0,
+            "distance": 0,
+            "fuel": 12,
+            "gear": "D",
+            "damage": 0,
+            "disabled": false,
+            "x": 2935,
+            "z": 1105
+          },
+          "mode": "driving",
+          "destination": null,
+          "parkedAt": [],
+          "tutorial": "complete",
+          "thoughtsSeen": [],
+          "homeReviewed": true
+        }
+      }
+    },
+    {
+      "name": "eastmere-welcome-sign",
+      "sign": "eastmere-welcome-eastmere-avenue-1",
+      "career": {
+        "version": 1,
+        "seed": 2485718950,
+        "tier": 0,
+        "week": 1,
+        "cash": 42000,
+        "reputation": 0,
+        "actions": 6,
+        "candidates": [
+          {
+            "id": "t0-0",
+            "name": "Maya Chen",
+            "role": "Engineering",
+            "origin": "Open-source maintainer",
+            "bio": "Maintains a payment library after her day job. No degree; thousands of people rely on her code.",
+            "hook": "Fixed a race condition that three senior engineers missed.",
+            "skills": {
+              "craft": 84,
+              "insight": 88,
+              "nerve": 70,
+              "teamwork": 78
+            },
+            "ranges": {},
+            "growth": 3,
+            "reliability": 95,
+            "motive": "autonomy",
+            "salary": 1400,
+            "deadline": 6,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-1",
+            "name": "Theo Mercer",
+            "role": "Design",
+            "origin": "Independent designer",
+            "bio": "Left a large agency to build tools for people with limited vision.",
+            "hook": "The prototype works with a keyboard alone.",
+            "skills": {
+              "craft": 80,
+              "insight": 86,
+              "nerve": 77,
+              "teamwork": 84
+            },
+            "ranges": {},
+            "growth": 3,
+            "reliability": 89,
+            "motive": "purpose",
+            "salary": 1300,
+            "deadline": 9,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-2",
+            "name": "Nia Okafor",
+            "role": "Operations",
+            "origin": "Community organizer",
+            "bio": "Runs a volunteer repair network with almost no money and very little fuss.",
+            "hook": "Coordinated 60 volunteers through a citywide outage.",
+            "skills": {
+              "craft": 78,
+              "insight": 79,
+              "nerve": 89,
+              "teamwork": 93
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 96,
+            "motive": "purpose",
+            "salary": 1350,
+            "deadline": 5,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-3",
+            "name": "Elliot Vance",
+            "role": "Engineering",
+            "origin": "Prestigious résumé",
+            "bio": "An impressive list of employers and titles. His portfolio credits large teams.",
+            "hook": "Claims to have led a complete platform migration.",
+            "skills": {
+              "craft": 62,
+              "insight": 52,
+              "nerve": 75,
+              "teamwork": 48
+            },
+            "ranges": {},
+            "growth": 1,
+            "reliability": 69,
+            "motive": "security",
+            "salary": 1650,
+            "deadline": 7,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-4",
+            "name": "Sana Patel",
+            "role": "Design",
+            "origin": "Student portfolio",
+            "bio": "A quiet final-year student with an unusual eye for interaction design.",
+            "hook": "Her unfinished project has a remarkably clear onboarding flow.",
+            "skills": {
+              "craft": 67,
+              "insight": 90,
+              "nerve": 49,
+              "teamwork": 73
+            },
+            "ranges": {},
+            "growth": 5,
+            "reliability": 79,
+            "motive": "mentorship",
+            "salary": 1650,
+            "deadline": 7,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-5",
+            "name": "Rafael Cruz",
+            "role": "Operations",
+            "origin": "Startup operator",
+            "bio": "Knows everyone in the local startup scene. Enjoys solving urgent problems.",
+            "hook": "His former team grew fast, then missed two launches.",
+            "skills": {
+              "craft": 72,
+              "insight": 65,
+              "nerve": 84,
+              "teamwork": 65
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 67,
+            "motive": "autonomy",
+            "salary": 1500,
+            "deadline": 5,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-6",
+            "name": "Jun Park",
+            "role": "Engineering",
+            "origin": "Repair shop programmer",
+            "bio": "Automated the family repair shop between customer appointments.",
+            "hook": "The inventory tool is faster than the commercial one it replaced.",
+            "skills": {
+              "craft": 79,
+              "insight": 91,
+              "nerve": 66,
+              "teamwork": 71
+            },
+            "ranges": {},
+            "growth": 4,
+            "reliability": 90,
+            "motive": "mentorship",
+            "salary": 1450,
+            "deadline": 9,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-7",
+            "name": "Amara Bell",
+            "role": "Design",
+            "origin": "Museum technician",
+            "bio": "Builds exhibits that make complex ideas accessible to children.",
+            "hook": "A visitor figured out the exhibit without reading a word.",
+            "skills": {
+              "craft": 88,
+              "insight": 84,
+              "nerve": 86,
+              "teamwork": 82
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 96,
+            "motive": "purpose",
+            "salary": 1500,
+            "deadline": 5,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-8",
+            "name": "Levi Brooks",
+            "role": "Operations",
+            "origin": "Logistics specialist",
+            "bio": "A warehouse coordinator who quietly eliminated a major delivery bottleneck.",
+            "hook": "The improvement survived after he moved to another shift.",
+            "skills": {
+              "craft": 90,
+              "insight": 75,
+              "nerve": 88,
+              "teamwork": 87
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 99,
+            "motive": "security",
+            "salary": 1250,
+            "deadline": 7,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-9",
+            "name": "Iris Vale",
+            "role": "Engineering",
+            "origin": "Competition finalist",
+            "bio": "Solved every programming challenge, but prefers to work alone.",
+            "hook": "Her code is elegant; nobody else could maintain it.",
+            "skills": {
+              "craft": 94,
+              "insight": 89,
+              "nerve": 83,
+              "teamwork": 35
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 84,
+            "motive": "autonomy",
+            "salary": 1250,
+            "deadline": 8,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-10",
+            "name": "Felix Reed",
+            "role": "Design",
+            "origin": "Award-winning creative",
+            "bio": "A persuasive presenter with a beautifully polished portfolio.",
+            "hook": "Every case study looks excellent; user outcomes are missing.",
+            "skills": {
+              "craft": 60,
+              "insight": 67,
+              "nerve": 91,
+              "teamwork": 71
+            },
+            "ranges": {},
+            "growth": 1,
+            "reliability": 76,
+            "motive": "security",
+            "salary": 1700,
+            "deadline": 5,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-11",
+            "name": "Aisha Noor",
+            "role": "Operations",
+            "origin": "Front-desk problem solver",
+            "bio": "Works reception at a busy clinic. Patients ask for her by name.",
+            "hook": "Built a scheduling system that reduced missed visits.",
+            "skills": {
+              "craft": 73,
+              "insight": 85,
+              "nerve": 91,
+              "teamwork": 94
+            },
+            "ranges": {},
+            "growth": 4,
+            "reliability": 95,
+            "motive": "mentorship",
+            "salary": 1550,
+            "deadline": 7,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          }
+        ],
+        "completed": 0,
+        "attempts": 0,
+        "exposure": 0,
+        "missionThisWeek": false,
+        "log": [
+          {
+            "id": 0,
+            "week": 1,
+            "text": "Welcome to Cirrus Works. Three great hires could change this company.",
+            "tone": "neutral"
+          }
+        ],
+        "prestige": 0,
+        "history": [],
+        "report": null,
+        "briefing": false,
+        "event": 1,
+        "mentoring": 0,
+        "rescueUsed": false,
+        "won": false,
+        "field": {
+          "scene": "district",
+          "player": {
+            "x": 1536,
+            "y": 1024
+          },
+          "car": {
+            "x": 1536,
+            "y": 1024
+          },
+          "heading": 3.141592653589793,
+          "driving": true,
+          "fuel": 12,
+          "visited": [
+            0
+          ],
+          "met": [],
+          "destination": null
+        },
+        "style": {
+          "name": "Linux QA 2",
+          "avatar": 0,
+          "car": "compact",
+          "paint": "slate",
+          "plate": "SCOUT",
+          "camera": "cockpit",
+          "radio": false,
+          "station": 0,
+          "music": true,
+          "sound": true,
+          "engine": true
+        },
+        "story": {
+          "phase": "complete",
+          "choice": null
+        },
+        "law": {
+          "schema": 1,
+          "sequence": 0,
+          "handled": [],
+          "response": null,
+          "last": null
+        },
+        "immersion": {
+          "schema": 2,
+          "tier": 0,
+          "interior": null,
+          "player": {
+            "yaw": 0,
+            "pitch": 0,
+            "x": 3146,
+            "z": 1186
+          },
+          "vehicle": {
+            "heading": 3.141592653589793,
+            "speed": 0,
+            "steering": 0,
+            "distance": 0,
+            "fuel": 12,
+            "gear": "D",
+            "damage": 0,
+            "disabled": false,
+            "x": 3146,
+            "z": 1186
+          },
+          "mode": "driving",
+          "destination": null,
+          "parkedAt": [],
+          "tutorial": "complete",
+          "thoughtsSeen": [],
+          "homeReviewed": true
+        }
+      }
+    },
+    {
+      "name": "tideglass-coast-overlook",
+      "sign": null,
+      "career": {
+        "version": 1,
+        "seed": 2485718950,
+        "tier": 0,
+        "week": 1,
+        "cash": 42000,
+        "reputation": 0,
+        "actions": 6,
+        "candidates": [
+          {
+            "id": "t0-0",
+            "name": "Maya Chen",
+            "role": "Engineering",
+            "origin": "Open-source maintainer",
+            "bio": "Maintains a payment library after her day job. No degree; thousands of people rely on her code.",
+            "hook": "Fixed a race condition that three senior engineers missed.",
+            "skills": {
+              "craft": 84,
+              "insight": 88,
+              "nerve": 70,
+              "teamwork": 78
+            },
+            "ranges": {},
+            "growth": 3,
+            "reliability": 95,
+            "motive": "autonomy",
+            "salary": 1400,
+            "deadline": 6,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-1",
+            "name": "Theo Mercer",
+            "role": "Design",
+            "origin": "Independent designer",
+            "bio": "Left a large agency to build tools for people with limited vision.",
+            "hook": "The prototype works with a keyboard alone.",
+            "skills": {
+              "craft": 80,
+              "insight": 86,
+              "nerve": 77,
+              "teamwork": 84
+            },
+            "ranges": {},
+            "growth": 3,
+            "reliability": 89,
+            "motive": "purpose",
+            "salary": 1300,
+            "deadline": 9,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-2",
+            "name": "Nia Okafor",
+            "role": "Operations",
+            "origin": "Community organizer",
+            "bio": "Runs a volunteer repair network with almost no money and very little fuss.",
+            "hook": "Coordinated 60 volunteers through a citywide outage.",
+            "skills": {
+              "craft": 78,
+              "insight": 79,
+              "nerve": 89,
+              "teamwork": 93
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 96,
+            "motive": "purpose",
+            "salary": 1350,
+            "deadline": 5,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-3",
+            "name": "Elliot Vance",
+            "role": "Engineering",
+            "origin": "Prestigious résumé",
+            "bio": "An impressive list of employers and titles. His portfolio credits large teams.",
+            "hook": "Claims to have led a complete platform migration.",
+            "skills": {
+              "craft": 62,
+              "insight": 52,
+              "nerve": 75,
+              "teamwork": 48
+            },
+            "ranges": {},
+            "growth": 1,
+            "reliability": 69,
+            "motive": "security",
+            "salary": 1650,
+            "deadline": 7,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-4",
+            "name": "Sana Patel",
+            "role": "Design",
+            "origin": "Student portfolio",
+            "bio": "A quiet final-year student with an unusual eye for interaction design.",
+            "hook": "Her unfinished project has a remarkably clear onboarding flow.",
+            "skills": {
+              "craft": 67,
+              "insight": 90,
+              "nerve": 49,
+              "teamwork": 73
+            },
+            "ranges": {},
+            "growth": 5,
+            "reliability": 79,
+            "motive": "mentorship",
+            "salary": 1650,
+            "deadline": 7,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-5",
+            "name": "Rafael Cruz",
+            "role": "Operations",
+            "origin": "Startup operator",
+            "bio": "Knows everyone in the local startup scene. Enjoys solving urgent problems.",
+            "hook": "His former team grew fast, then missed two launches.",
+            "skills": {
+              "craft": 72,
+              "insight": 65,
+              "nerve": 84,
+              "teamwork": 65
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 67,
+            "motive": "autonomy",
+            "salary": 1500,
+            "deadline": 5,
+            "discovered": true,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-6",
+            "name": "Jun Park",
+            "role": "Engineering",
+            "origin": "Repair shop programmer",
+            "bio": "Automated the family repair shop between customer appointments.",
+            "hook": "The inventory tool is faster than the commercial one it replaced.",
+            "skills": {
+              "craft": 79,
+              "insight": 91,
+              "nerve": 66,
+              "teamwork": 71
+            },
+            "ranges": {},
+            "growth": 4,
+            "reliability": 90,
+            "motive": "mentorship",
+            "salary": 1450,
+            "deadline": 9,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-7",
+            "name": "Amara Bell",
+            "role": "Design",
+            "origin": "Museum technician",
+            "bio": "Builds exhibits that make complex ideas accessible to children.",
+            "hook": "A visitor figured out the exhibit without reading a word.",
+            "skills": {
+              "craft": 88,
+              "insight": 84,
+              "nerve": 86,
+              "teamwork": 82
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 96,
+            "motive": "purpose",
+            "salary": 1500,
+            "deadline": 5,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-8",
+            "name": "Levi Brooks",
+            "role": "Operations",
+            "origin": "Logistics specialist",
+            "bio": "A warehouse coordinator who quietly eliminated a major delivery bottleneck.",
+            "hook": "The improvement survived after he moved to another shift.",
+            "skills": {
+              "craft": 90,
+              "insight": 75,
+              "nerve": 88,
+              "teamwork": 87
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 99,
+            "motive": "security",
+            "salary": 1250,
+            "deadline": 7,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-9",
+            "name": "Iris Vale",
+            "role": "Engineering",
+            "origin": "Competition finalist",
+            "bio": "Solved every programming challenge, but prefers to work alone.",
+            "hook": "Her code is elegant; nobody else could maintain it.",
+            "skills": {
+              "craft": 94,
+              "insight": 89,
+              "nerve": 83,
+              "teamwork": 35
+            },
+            "ranges": {},
+            "growth": 2,
+            "reliability": 84,
+            "motive": "autonomy",
+            "salary": 1250,
+            "deadline": 8,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-10",
+            "name": "Felix Reed",
+            "role": "Design",
+            "origin": "Award-winning creative",
+            "bio": "A persuasive presenter with a beautifully polished portfolio.",
+            "hook": "Every case study looks excellent; user outcomes are missing.",
+            "skills": {
+              "craft": 60,
+              "insight": 67,
+              "nerve": 91,
+              "teamwork": 71
+            },
+            "ranges": {},
+            "growth": 1,
+            "reliability": 76,
+            "motive": "security",
+            "salary": 1700,
+            "deadline": 5,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          },
+          {
+            "id": "t0-11",
+            "name": "Aisha Noor",
+            "role": "Operations",
+            "origin": "Front-desk problem solver",
+            "bio": "Works reception at a busy clinic. Patients ask for her by name.",
+            "hook": "Built a scheduling system that reduced missed visits.",
+            "skills": {
+              "craft": 73,
+              "insight": 85,
+              "nerve": 91,
+              "teamwork": 94
+            },
+            "ranges": {},
+            "growth": 4,
+            "reliability": 95,
+            "motive": "mentorship",
+            "salary": 1550,
+            "deadline": 7,
+            "discovered": false,
+            "starred": false,
+            "status": "available",
+            "evidence": [],
+            "tested": [],
+            "lastOffer": 0,
+            "trust": 0
+          }
+        ],
+        "completed": 0,
+        "attempts": 0,
+        "exposure": 0,
+        "missionThisWeek": false,
+        "log": [
+          {
+            "id": 0,
+            "week": 1,
+            "text": "Welcome to Cirrus Works. Three great hires could change this company.",
+            "tone": "neutral"
+          }
+        ],
+        "prestige": 0,
+        "history": [],
+        "report": null,
+        "briefing": false,
+        "event": 1,
+        "mentoring": 0,
+        "rescueUsed": false,
+        "won": false,
+        "field": {
+          "scene": "district",
+          "player": {
+            "x": 1536,
+            "y": 1024
+          },
+          "car": {
+            "x": 1536,
+            "y": 1024
+          },
+          "heading": 0,
+          "driving": false,
+          "fuel": 12,
+          "visited": [
+            0
+          ],
+          "met": [],
+          "destination": null
+        },
+        "style": {
+          "name": "Linux QA 2",
+          "avatar": 0,
+          "car": "compact",
+          "paint": "slate",
+          "plate": "SCOUT",
+          "camera": "cockpit",
+          "radio": false,
+          "station": 0,
+          "music": true,
+          "sound": true,
+          "engine": true
+        },
+        "story": {
+          "phase": "complete",
+          "choice": null
+        },
+        "law": {
+          "schema": 1,
+          "sequence": 0,
+          "handled": [],
+          "response": null,
+          "last": null
+        },
+        "immersion": {
+          "schema": 2,
+          "tier": 0,
+          "interior": null,
+          "player": {
+            "yaw": -1.5707963267948966,
+            "pitch": 0,
+            "x": 11088,
+            "z": 4844
+          },
+          "vehicle": {
+            "heading": 0,
+            "speed": 0,
+            "steering": 0,
+            "distance": 0,
+            "fuel": 12,
+            "gear": "D",
+            "damage": 0,
+            "disabled": false,
+            "x": 11090,
+            "z": 4800
+          },
+          "mode": "foot",
+          "destination": null,
+          "parkedAt": [],
+          "tutorial": "complete",
+          "thoughtsSeen": [],
+          "homeReviewed": true
+        }
+      }
+    }
+  ],
+  "impactSetup": {
+    "vehicle": {
+      "x": 3218,
+      "z": 1692.4857142857143,
+      "heading": -3.141592653589793
+    },
+    "npcId": "pedestrian:eastmere-plaza-column-8-1",
+    "victim": {
+      "x": 3218,
+      "z": 1699.4857142857143,
+      "heading": -3.141592653589793
+    },
+    "minimumSpeed": 2.5
+  },
+  "impactSeed": {
+    "version": 1,
+    "seed": 2177729349,
+    "tier": 0,
+    "week": 1,
+    "cash": 42000,
+    "reputation": 73,
+    "actions": 6,
+    "candidates": [
+      {
+        "id": "t0-0",
+        "name": "Maya Chen",
+        "role": "Engineering",
+        "origin": "Open-source maintainer",
+        "bio": "Maintains a payment library after her day job. No degree; thousands of people rely on her code.",
+        "hook": "Fixed a race condition that three senior engineers missed.",
+        "skills": {
+          "craft": 84,
+          "insight": 88,
+          "nerve": 70,
+          "teamwork": 78
+        },
+        "ranges": {},
+        "growth": 3,
+        "reliability": 95,
+        "motive": "autonomy",
+        "salary": 1400,
+        "deadline": 6,
+        "discovered": true,
+        "starred": false,
+        "status": "hired",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82,
+        "hiredWeek": 1,
+        "wage": 1500,
+        "morale": 92,
+        "verified": true,
+        "completed": 3
+      },
+      {
+        "id": "t0-1",
+        "name": "Theo Mercer",
+        "role": "Design",
+        "origin": "Independent designer",
+        "bio": "Left a large agency to build tools for people with limited vision.",
+        "hook": "The prototype works with a keyboard alone.",
+        "skills": {
+          "craft": 80,
+          "insight": 86,
+          "nerve": 77,
+          "teamwork": 84
+        },
+        "ranges": {},
+        "growth": 3,
+        "reliability": 89,
+        "motive": "purpose",
+        "salary": 1500,
+        "deadline": 9,
+        "discovered": true,
+        "starred": false,
+        "status": "hired",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82,
+        "hiredWeek": 1,
+        "wage": 1500,
+        "morale": 92,
+        "verified": true,
+        "completed": 3
+      },
+      {
+        "id": "t0-2",
+        "name": "Nia Okafor",
+        "role": "Operations",
+        "origin": "Community organizer",
+        "bio": "Runs a volunteer repair network with almost no money and very little fuss.",
+        "hook": "Coordinated 60 volunteers through a citywide outage.",
+        "skills": {
+          "craft": 78,
+          "insight": 79,
+          "nerve": 89,
+          "teamwork": 93
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 96,
+        "motive": "purpose",
+        "salary": 1600,
+        "deadline": 6,
+        "discovered": true,
+        "starred": false,
+        "status": "hired",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82,
+        "hiredWeek": 1,
+        "wage": 1500,
+        "morale": 92,
+        "verified": true,
+        "completed": 3
+      },
+      {
+        "id": "t0-3",
+        "name": "Elliot Vance",
+        "role": "Engineering",
+        "origin": "Prestigious résumé",
+        "bio": "An impressive list of employers and titles. His portfolio credits large teams.",
+        "hook": "Claims to have led a complete platform migration.",
+        "skills": {
+          "craft": 62,
+          "insight": 52,
+          "nerve": 75,
+          "teamwork": 48
+        },
+        "ranges": {},
+        "growth": 1,
+        "reliability": 69,
+        "motive": "security",
+        "salary": 1350,
+        "deadline": 8,
+        "discovered": true,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-4",
+        "name": "Sana Patel",
+        "role": "Design",
+        "origin": "Student portfolio",
+        "bio": "A quiet final-year student with an unusual eye for interaction design.",
+        "hook": "Her unfinished project has a remarkably clear onboarding flow.",
+        "skills": {
+          "craft": 67,
+          "insight": 90,
+          "nerve": 49,
+          "teamwork": 73
+        },
+        "ranges": {},
+        "growth": 5,
+        "reliability": 79,
+        "motive": "mentorship",
+        "salary": 1350,
+        "deadline": 7,
+        "discovered": true,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-5",
+        "name": "Rafael Cruz",
+        "role": "Operations",
+        "origin": "Startup operator",
+        "bio": "Knows everyone in the local startup scene. Enjoys solving urgent problems.",
+        "hook": "His former team grew fast, then missed two launches.",
+        "skills": {
+          "craft": 72,
+          "insight": 65,
+          "nerve": 84,
+          "teamwork": 65
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 67,
+        "motive": "autonomy",
+        "salary": 1200,
+        "deadline": 6,
+        "discovered": true,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-6",
+        "name": "Jun Park",
+        "role": "Engineering",
+        "origin": "Repair shop programmer",
+        "bio": "Automated the family repair shop between customer appointments.",
+        "hook": "The inventory tool is faster than the commercial one it replaced.",
+        "skills": {
+          "craft": 79,
+          "insight": 91,
+          "nerve": 66,
+          "teamwork": 71
+        },
+        "ranges": {},
+        "growth": 4,
+        "reliability": 90,
+        "motive": "mentorship",
+        "salary": 1450,
+        "deadline": 9,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-7",
+        "name": "Amara Bell",
+        "role": "Design",
+        "origin": "Museum technician",
+        "bio": "Builds exhibits that make complex ideas accessible to children.",
+        "hook": "A visitor figured out the exhibit without reading a word.",
+        "skills": {
+          "craft": 88,
+          "insight": 84,
+          "nerve": 86,
+          "teamwork": 82
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 96,
+        "motive": "purpose",
+        "salary": 1350,
+        "deadline": 7,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-8",
+        "name": "Levi Brooks",
+        "role": "Operations",
+        "origin": "Logistics specialist",
+        "bio": "A warehouse coordinator who quietly eliminated a major delivery bottleneck.",
+        "hook": "The improvement survived after he moved to another shift.",
+        "skills": {
+          "craft": 90,
+          "insight": 75,
+          "nerve": 88,
+          "teamwork": 87
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 99,
+        "motive": "security",
+        "salary": 1150,
+        "deadline": 7,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-9",
+        "name": "Iris Vale",
+        "role": "Engineering",
+        "origin": "Competition finalist",
+        "bio": "Solved every programming challenge, but prefers to work alone.",
+        "hook": "Her code is elegant; nobody else could maintain it.",
+        "skills": {
+          "craft": 94,
+          "insight": 89,
+          "nerve": 83,
+          "teamwork": 35
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 84,
+        "motive": "autonomy",
+        "salary": 1700,
+        "deadline": 9,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-10",
+        "name": "Felix Reed",
+        "role": "Design",
+        "origin": "Award-winning creative",
+        "bio": "A persuasive presenter with a beautifully polished portfolio.",
+        "hook": "Every case study looks excellent; user outcomes are missing.",
+        "skills": {
+          "craft": 60,
+          "insight": 67,
+          "nerve": 91,
+          "teamwork": 71
+        },
+        "ranges": {},
+        "growth": 1,
+        "reliability": 76,
+        "motive": "security",
+        "salary": 1250,
+        "deadline": 7,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-11",
+        "name": "Aisha Noor",
+        "role": "Operations",
+        "origin": "Front-desk problem solver",
+        "bio": "Works reception at a busy clinic. Patients ask for her by name.",
+        "hook": "Built a scheduling system that reduced missed visits.",
+        "skills": {
+          "craft": 73,
+          "insight": 85,
+          "nerve": 91,
+          "teamwork": 94
+        },
+        "ranges": {},
+        "growth": 4,
+        "reliability": 95,
+        "motive": "mentorship",
+        "salary": 1100,
+        "deadline": 7,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      }
+    ],
+    "completed": 6,
+    "attempts": 8,
+    "exposure": 0,
+    "missionThisWeek": false,
+    "log": [
+      {
+        "id": 0,
+        "week": 1,
+        "text": "Welcome to Cirrus Works. Three great hires could change this company.",
+        "tone": "neutral"
+      }
+    ],
+    "prestige": 0,
+    "history": [],
+    "report": null,
+    "briefing": false,
+    "event": 1,
+    "mentoring": 0,
+    "rescueUsed": false,
+    "won": false,
+    "field": {
+      "scene": "district",
+      "player": {
+        "x": 1536,
+        "y": 1024
+      },
+      "car": {
+        "x": 1536,
+        "y": 1024
+      },
+      "heading": 3.141592653589793,
+      "driving": true,
+      "fuel": 8.5,
+      "visited": [
+        0
+      ],
+      "met": [],
+      "destination": 1
+    },
+    "style": {
+      "name": "Linux QA 1",
+      "avatar": 0,
+      "car": "compact",
+      "paint": "slate",
+      "plate": "SCOUT",
+      "camera": "cockpit",
+      "radio": false,
+      "station": 0,
+      "music": true,
+      "sound": true,
+      "engine": true
+    },
+    "story": {
+      "phase": "complete",
+      "choice": null
+    },
+    "law": {
+      "schema": 1,
+      "sequence": 0,
+      "handled": [],
+      "response": null,
+      "last": null
+    },
+    "immersion": {
+      "schema": 2,
+      "tier": 0,
+      "interior": null,
+      "player": {
+        "yaw": -3.141592653589793,
+        "pitch": 0,
+        "x": 3218,
+        "z": 1692.4857142857143
+      },
+      "vehicle": {
+        "heading": -3.141592653589793,
+        "speed": 0,
+        "steering": 0,
+        "distance": 921.75,
+        "fuel": 8.5,
+        "gear": "D",
+        "damage": 0,
+        "disabled": false,
+        "x": 3218,
+        "z": 1692.4857142857143
+      },
+      "mode": "driving",
+      "destination": 1,
+      "parkedAt": [],
+      "tutorial": "complete",
+      "thoughtsSeen": [],
+      "homeReviewed": true
+    }
+  },
+  "restartSeed": {
+    "version": 1,
+    "seed": 2177729349,
+    "tier": 0,
+    "week": 1,
+    "cash": 42000,
+    "reputation": 73,
+    "actions": 6,
+    "candidates": [
+      {
+        "id": "t0-0",
+        "name": "Maya Chen",
+        "role": "Engineering",
+        "origin": "Open-source maintainer",
+        "bio": "Maintains a payment library after her day job. No degree; thousands of people rely on her code.",
+        "hook": "Fixed a race condition that three senior engineers missed.",
+        "skills": {
+          "craft": 84,
+          "insight": 88,
+          "nerve": 70,
+          "teamwork": 78
+        },
+        "ranges": {},
+        "growth": 3,
+        "reliability": 95,
+        "motive": "autonomy",
+        "salary": 1400,
+        "deadline": 6,
+        "discovered": true,
+        "starred": false,
+        "status": "hired",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82,
+        "hiredWeek": 1,
+        "wage": 1500,
+        "morale": 92,
+        "verified": true,
+        "completed": 3
+      },
+      {
+        "id": "t0-1",
+        "name": "Theo Mercer",
+        "role": "Design",
+        "origin": "Independent designer",
+        "bio": "Left a large agency to build tools for people with limited vision.",
+        "hook": "The prototype works with a keyboard alone.",
+        "skills": {
+          "craft": 80,
+          "insight": 86,
+          "nerve": 77,
+          "teamwork": 84
+        },
+        "ranges": {},
+        "growth": 3,
+        "reliability": 89,
+        "motive": "purpose",
+        "salary": 1500,
+        "deadline": 9,
+        "discovered": true,
+        "starred": false,
+        "status": "hired",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82,
+        "hiredWeek": 1,
+        "wage": 1500,
+        "morale": 92,
+        "verified": true,
+        "completed": 3
+      },
+      {
+        "id": "t0-2",
+        "name": "Nia Okafor",
+        "role": "Operations",
+        "origin": "Community organizer",
+        "bio": "Runs a volunteer repair network with almost no money and very little fuss.",
+        "hook": "Coordinated 60 volunteers through a citywide outage.",
+        "skills": {
+          "craft": 78,
+          "insight": 79,
+          "nerve": 89,
+          "teamwork": 93
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 96,
+        "motive": "purpose",
+        "salary": 1600,
+        "deadline": 6,
+        "discovered": true,
+        "starred": false,
+        "status": "hired",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82,
+        "hiredWeek": 1,
+        "wage": 1500,
+        "morale": 92,
+        "verified": true,
+        "completed": 3
+      },
+      {
+        "id": "t0-3",
+        "name": "Elliot Vance",
+        "role": "Engineering",
+        "origin": "Prestigious résumé",
+        "bio": "An impressive list of employers and titles. His portfolio credits large teams.",
+        "hook": "Claims to have led a complete platform migration.",
+        "skills": {
+          "craft": 62,
+          "insight": 52,
+          "nerve": 75,
+          "teamwork": 48
+        },
+        "ranges": {},
+        "growth": 1,
+        "reliability": 69,
+        "motive": "security",
+        "salary": 1350,
+        "deadline": 8,
+        "discovered": true,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-4",
+        "name": "Sana Patel",
+        "role": "Design",
+        "origin": "Student portfolio",
+        "bio": "A quiet final-year student with an unusual eye for interaction design.",
+        "hook": "Her unfinished project has a remarkably clear onboarding flow.",
+        "skills": {
+          "craft": 67,
+          "insight": 90,
+          "nerve": 49,
+          "teamwork": 73
+        },
+        "ranges": {},
+        "growth": 5,
+        "reliability": 79,
+        "motive": "mentorship",
+        "salary": 1350,
+        "deadline": 7,
+        "discovered": true,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-5",
+        "name": "Rafael Cruz",
+        "role": "Operations",
+        "origin": "Startup operator",
+        "bio": "Knows everyone in the local startup scene. Enjoys solving urgent problems.",
+        "hook": "His former team grew fast, then missed two launches.",
+        "skills": {
+          "craft": 72,
+          "insight": 65,
+          "nerve": 84,
+          "teamwork": 65
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 67,
+        "motive": "autonomy",
+        "salary": 1200,
+        "deadline": 6,
+        "discovered": true,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-6",
+        "name": "Jun Park",
+        "role": "Engineering",
+        "origin": "Repair shop programmer",
+        "bio": "Automated the family repair shop between customer appointments.",
+        "hook": "The inventory tool is faster than the commercial one it replaced.",
+        "skills": {
+          "craft": 79,
+          "insight": 91,
+          "nerve": 66,
+          "teamwork": 71
+        },
+        "ranges": {},
+        "growth": 4,
+        "reliability": 90,
+        "motive": "mentorship",
+        "salary": 1450,
+        "deadline": 9,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-7",
+        "name": "Amara Bell",
+        "role": "Design",
+        "origin": "Museum technician",
+        "bio": "Builds exhibits that make complex ideas accessible to children.",
+        "hook": "A visitor figured out the exhibit without reading a word.",
+        "skills": {
+          "craft": 88,
+          "insight": 84,
+          "nerve": 86,
+          "teamwork": 82
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 96,
+        "motive": "purpose",
+        "salary": 1350,
+        "deadline": 7,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-8",
+        "name": "Levi Brooks",
+        "role": "Operations",
+        "origin": "Logistics specialist",
+        "bio": "A warehouse coordinator who quietly eliminated a major delivery bottleneck.",
+        "hook": "The improvement survived after he moved to another shift.",
+        "skills": {
+          "craft": 90,
+          "insight": 75,
+          "nerve": 88,
+          "teamwork": 87
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 99,
+        "motive": "security",
+        "salary": 1150,
+        "deadline": 7,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-9",
+        "name": "Iris Vale",
+        "role": "Engineering",
+        "origin": "Competition finalist",
+        "bio": "Solved every programming challenge, but prefers to work alone.",
+        "hook": "Her code is elegant; nobody else could maintain it.",
+        "skills": {
+          "craft": 94,
+          "insight": 89,
+          "nerve": 83,
+          "teamwork": 35
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 84,
+        "motive": "autonomy",
+        "salary": 1700,
+        "deadline": 9,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-10",
+        "name": "Felix Reed",
+        "role": "Design",
+        "origin": "Award-winning creative",
+        "bio": "A persuasive presenter with a beautifully polished portfolio.",
+        "hook": "Every case study looks excellent; user outcomes are missing.",
+        "skills": {
+          "craft": 60,
+          "insight": 67,
+          "nerve": 91,
+          "teamwork": 71
+        },
+        "ranges": {},
+        "growth": 1,
+        "reliability": 76,
+        "motive": "security",
+        "salary": 1250,
+        "deadline": 7,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      },
+      {
+        "id": "t0-11",
+        "name": "Aisha Noor",
+        "role": "Operations",
+        "origin": "Front-desk problem solver",
+        "bio": "Works reception at a busy clinic. Patients ask for her by name.",
+        "hook": "Built a scheduling system that reduced missed visits.",
+        "skills": {
+          "craft": 73,
+          "insight": 85,
+          "nerve": 91,
+          "teamwork": 94
+        },
+        "ranges": {},
+        "growth": 4,
+        "reliability": 95,
+        "motive": "mentorship",
+        "salary": 1100,
+        "deadline": 7,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 82
+      }
+    ],
+    "completed": 6,
+    "attempts": 8,
+    "exposure": 0,
+    "missionThisWeek": false,
+    "log": [
+      {
+        "id": 0,
+        "week": 1,
+        "text": "Welcome to Cirrus Works. Three great hires could change this company.",
+        "tone": "neutral"
+      }
+    ],
+    "prestige": 0,
+    "history": [],
+    "report": null,
+    "briefing": false,
+    "event": 1,
+    "mentoring": 0,
+    "rescueUsed": false,
+    "won": false,
+    "field": {
+      "scene": "district",
+      "player": {
+        "x": 1536,
+        "y": 1024
+      },
+      "car": {
+        "x": 1536,
+        "y": 1024
+      },
+      "heading": 3.141592653589793,
+      "driving": true,
+      "fuel": 4.25,
+      "visited": [
+        0
+      ],
+      "met": [],
+      "destination": 1
+    },
+    "style": {
+      "name": "Linux QA 2",
+      "avatar": 0,
+      "car": "compact",
+      "paint": "slate",
+      "plate": "SCOUT",
+      "camera": "cockpit",
+      "radio": false,
+      "station": 0,
+      "music": true,
+      "sound": true,
+      "engine": true
+    },
+    "story": {
+      "phase": "complete",
+      "choice": null
+    },
+    "law": {
+      "schema": 1,
+      "sequence": 0,
+      "handled": [],
+      "response": null,
+      "last": null
+    },
+    "immersion": {
+      "schema": 2,
+      "tier": 0,
+      "interior": null,
+      "player": {
+        "yaw": 0,
+        "pitch": 0,
+        "x": 3046.3,
+        "z": 2106.3
+      },
+      "vehicle": {
+        "heading": 0,
+        "speed": 0,
+        "steering": 0,
+        "distance": 1523.4,
+        "fuel": 4.25,
+        "gear": "D",
+        "damage": 0.42,
+        "disabled": false,
+        "x": 3045,
+        "z": 2100
+      },
+      "mode": "foot",
+      "destination": null,
+      "parkedAt": [],
+      "tutorial": "complete",
+      "thoughtsSeen": [],
+      "homeReviewed": true
+    }
+  },
+  "restartExpected": {
+    "version": 1,
+    "seed": 1433802525,
+    "tier": 0,
+    "week": 1,
+    "cash": 42000,
+    "reputation": 0,
+    "actions": 6,
+    "candidates": [
+      {
+        "id": "t0-0",
+        "name": "Maya Chen",
+        "role": "Engineering",
+        "origin": "Open-source maintainer",
+        "bio": "Maintains a payment library after her day job. No degree; thousands of people rely on her code.",
+        "hook": "Fixed a race condition that three senior engineers missed.",
+        "skills": {
+          "craft": 84,
+          "insight": 88,
+          "nerve": 70,
+          "teamwork": 78
+        },
+        "ranges": {},
+        "growth": 3,
+        "reliability": 95,
+        "motive": "autonomy",
+        "salary": 1450,
+        "deadline": 8,
+        "discovered": true,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 0
+      },
+      {
+        "id": "t0-1",
+        "name": "Theo Mercer",
+        "role": "Design",
+        "origin": "Independent designer",
+        "bio": "Left a large agency to build tools for people with limited vision.",
+        "hook": "The prototype works with a keyboard alone.",
+        "skills": {
+          "craft": 80,
+          "insight": 86,
+          "nerve": 77,
+          "teamwork": 84
+        },
+        "ranges": {},
+        "growth": 3,
+        "reliability": 89,
+        "motive": "purpose",
+        "salary": 1750,
+        "deadline": 5,
+        "discovered": true,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 0
+      },
+      {
+        "id": "t0-2",
+        "name": "Nia Okafor",
+        "role": "Operations",
+        "origin": "Community organizer",
+        "bio": "Runs a volunteer repair network with almost no money and very little fuss.",
+        "hook": "Coordinated 60 volunteers through a citywide outage.",
+        "skills": {
+          "craft": 78,
+          "insight": 79,
+          "nerve": 89,
+          "teamwork": 93
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 96,
+        "motive": "purpose",
+        "salary": 1150,
+        "deadline": 7,
+        "discovered": true,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 0
+      },
+      {
+        "id": "t0-3",
+        "name": "Elliot Vance",
+        "role": "Engineering",
+        "origin": "Prestigious résumé",
+        "bio": "An impressive list of employers and titles. His portfolio credits large teams.",
+        "hook": "Claims to have led a complete platform migration.",
+        "skills": {
+          "craft": 62,
+          "insight": 52,
+          "nerve": 75,
+          "teamwork": 48
+        },
+        "ranges": {},
+        "growth": 1,
+        "reliability": 69,
+        "motive": "security",
+        "salary": 1150,
+        "deadline": 8,
+        "discovered": true,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 0
+      },
+      {
+        "id": "t0-4",
+        "name": "Sana Patel",
+        "role": "Design",
+        "origin": "Student portfolio",
+        "bio": "A quiet final-year student with an unusual eye for interaction design.",
+        "hook": "Her unfinished project has a remarkably clear onboarding flow.",
+        "skills": {
+          "craft": 67,
+          "insight": 90,
+          "nerve": 49,
+          "teamwork": 73
+        },
+        "ranges": {},
+        "growth": 5,
+        "reliability": 79,
+        "motive": "mentorship",
+        "salary": 1650,
+        "deadline": 5,
+        "discovered": true,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 0
+      },
+      {
+        "id": "t0-5",
+        "name": "Rafael Cruz",
+        "role": "Operations",
+        "origin": "Startup operator",
+        "bio": "Knows everyone in the local startup scene. Enjoys solving urgent problems.",
+        "hook": "His former team grew fast, then missed two launches.",
+        "skills": {
+          "craft": 72,
+          "insight": 65,
+          "nerve": 84,
+          "teamwork": 65
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 67,
+        "motive": "autonomy",
+        "salary": 1500,
+        "deadline": 6,
+        "discovered": true,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 0
+      },
+      {
+        "id": "t0-6",
+        "name": "Jun Park",
+        "role": "Engineering",
+        "origin": "Repair shop programmer",
+        "bio": "Automated the family repair shop between customer appointments.",
+        "hook": "The inventory tool is faster than the commercial one it replaced.",
+        "skills": {
+          "craft": 79,
+          "insight": 91,
+          "nerve": 66,
+          "teamwork": 71
+        },
+        "ranges": {},
+        "growth": 4,
+        "reliability": 90,
+        "motive": "mentorship",
+        "salary": 1100,
+        "deadline": 8,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 0
+      },
+      {
+        "id": "t0-7",
+        "name": "Amara Bell",
+        "role": "Design",
+        "origin": "Museum technician",
+        "bio": "Builds exhibits that make complex ideas accessible to children.",
+        "hook": "A visitor figured out the exhibit without reading a word.",
+        "skills": {
+          "craft": 88,
+          "insight": 84,
+          "nerve": 86,
+          "teamwork": 82
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 96,
+        "motive": "purpose",
+        "salary": 1750,
+        "deadline": 9,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 0
+      },
+      {
+        "id": "t0-8",
+        "name": "Levi Brooks",
+        "role": "Operations",
+        "origin": "Logistics specialist",
+        "bio": "A warehouse coordinator who quietly eliminated a major delivery bottleneck.",
+        "hook": "The improvement survived after he moved to another shift.",
+        "skills": {
+          "craft": 90,
+          "insight": 75,
+          "nerve": 88,
+          "teamwork": 87
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 99,
+        "motive": "security",
+        "salary": 1550,
+        "deadline": 9,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 0
+      },
+      {
+        "id": "t0-9",
+        "name": "Iris Vale",
+        "role": "Engineering",
+        "origin": "Competition finalist",
+        "bio": "Solved every programming challenge, but prefers to work alone.",
+        "hook": "Her code is elegant; nobody else could maintain it.",
+        "skills": {
+          "craft": 94,
+          "insight": 89,
+          "nerve": 83,
+          "teamwork": 35
+        },
+        "ranges": {},
+        "growth": 2,
+        "reliability": 84,
+        "motive": "autonomy",
+        "salary": 1550,
+        "deadline": 9,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 0
+      },
+      {
+        "id": "t0-10",
+        "name": "Felix Reed",
+        "role": "Design",
+        "origin": "Award-winning creative",
+        "bio": "A persuasive presenter with a beautifully polished portfolio.",
+        "hook": "Every case study looks excellent; user outcomes are missing.",
+        "skills": {
+          "craft": 60,
+          "insight": 67,
+          "nerve": 91,
+          "teamwork": 71
+        },
+        "ranges": {},
+        "growth": 1,
+        "reliability": 76,
+        "motive": "security",
+        "salary": 1300,
+        "deadline": 8,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 0
+      },
+      {
+        "id": "t0-11",
+        "name": "Aisha Noor",
+        "role": "Operations",
+        "origin": "Front-desk problem solver",
+        "bio": "Works reception at a busy clinic. Patients ask for her by name.",
+        "hook": "Built a scheduling system that reduced missed visits.",
+        "skills": {
+          "craft": 73,
+          "insight": 85,
+          "nerve": 91,
+          "teamwork": 94
+        },
+        "ranges": {},
+        "growth": 4,
+        "reliability": 95,
+        "motive": "mentorship",
+        "salary": 1450,
+        "deadline": 6,
+        "discovered": false,
+        "starred": false,
+        "status": "available",
+        "evidence": [],
+        "tested": [],
+        "lastOffer": 0,
+        "trust": 0
+      }
+    ],
+    "completed": 0,
+    "attempts": 0,
+    "exposure": 0,
+    "missionThisWeek": false,
+    "log": [
+      {
+        "id": 1,
+        "week": 1,
+        "text": "A fresh recruiting season begins at Cirrus Works.",
+        "tone": "good"
+      }
+    ],
+    "prestige": 0,
+    "history": [],
+    "report": null,
+    "briefing": true,
+    "event": 2,
+    "mentoring": 0,
+    "rescueUsed": false,
+    "won": false,
+    "field": {
+      "scene": "office",
+      "player": {
+        "x": 387,
+        "y": 306
+      },
+      "car": {
+        "x": 387,
+        "y": 266
+      },
+      "heading": 0,
+      "driving": false,
+      "fuel": 12,
+      "visited": [
+        0
+      ],
+      "met": [],
+      "destination": null
+    },
+    "style": {
+      "name": "Linux QA 2",
+      "avatar": 0,
+      "car": "compact",
+      "paint": "slate",
+      "plate": "SCOUT",
+      "camera": "cockpit",
+      "radio": false,
+      "station": 0,
+      "music": true,
+      "sound": true,
+      "engine": true
+    },
+    "story": {
+      "phase": "complete",
+      "choice": null
+    },
+    "law": {
+      "schema": 1,
+      "sequence": 0,
+      "handled": [],
+      "response": null,
+      "last": null
+    },
+    "immersion": {
+      "schema": 2,
+      "tier": 0,
+      "interior": 0,
+      "player": {
+        "x": 387,
+        "z": 221,
+        "yaw": 0,
+        "pitch": 0
+      },
+      "vehicle": {
+        "x": 387,
+        "z": 266,
+        "heading": 3.141592653589793,
+        "speed": 0,
+        "steering": 0,
+        "distance": 0,
+        "fuel": 12,
+        "gear": "D",
+        "damage": 0,
+        "disabled": false
+      },
+      "mode": "foot",
+      "destination": null,
+      "parkedAt": [
+        0
+      ],
+      "tutorial": "complete",
+      "thoughtsSeen": [],
+      "homeReviewed": true
+    }
+  }
+}

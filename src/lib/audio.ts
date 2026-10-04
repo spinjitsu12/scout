@@ -1,5 +1,6 @@
 import { type Instrument, type MusicTrack, type ScoreEvent } from "./music-score";
 import { AUDIO_CREDITS } from "./audio-credits";
+import { AUDIO_REGIONS, FOOTSTEP_SURFACES, ambienceMotion, footstepSurface, sceneMusicPlaylist, sceneTrackAt, scoreBreathingSeconds, soundscapeMix, type SceneAudioEnvironment } from "./audio-scene.ts";
 import type { Tier } from "./game";
 export type AudioVolumes = {
     master: number;
@@ -9,13 +10,7 @@ export type AudioVolumes = {
     engine: number;
 };
 export const DEFAULT_AUDIO_VOLUMES: AudioVolumes = { master: .8, music: .38, ambient: .6, effects: .7, engine: .35 };
-export type AudioEnvironment = {
-    scene?: "apartment" | "outdoors" | "interior" | "vehicle" | "menu";
-    timeOfDay?: number;
-    weather?: "clear" | "rain";
-    interior?: boolean;
-    conversation?: boolean;
-};
+export type AudioEnvironment = SceneAudioEnvironment;
 export type VehicleAudioTelemetry = { normalizedSpeed: number; normalizedEngine?: number; engineLoad?: number; gearNumber?: number; engineRpm?: number; engineRunning?: boolean };
 export function engineMix(telemetry: VehicleAudioTelemetry, kind: EngineKind = "standard") {
     const unit = (value: number | undefined, fallback: number) => typeof value === "number" && Number.isFinite(value) ? Math.max(0, Math.min(1, Math.abs(value))) : fallback;
@@ -98,7 +93,7 @@ export function selectMusic(preferences: Pick<AudioStatus, "musicEnabled" | "rad
 const INSTRUMENTS: readonly Instrument[] = ["pluck", "bell", "pad", "bass", "kick", "snare", "hat"];
 const MUSIC_LEVEL = 0.38;
 const EFFECT_LEVEL = 0.4;
-export const AUDIO_LIMITS = { musicVoices: 2, effectVoices: 12, drivingSources: 4, drivingVoices: 1, musicLevel: MUSIC_LEVEL, effectLevel: EFFECT_LEVEL } as const;
+export const AUDIO_LIMITS = { musicVoices: 2, effectVoices: 12, drivingSources: 4, drivingVoices: 1, ambientSources: 3, policeSources: 2, policeVoices: 1, musicLevel: MUSIC_LEVEL, effectLevel: EFFECT_LEVEL } as const;
 /** A soft original motor texture, kept below the foreground music and cues. */
 export function drivingMix(value: number, kind: EngineKind = "standard"): DrivingMix {
     const speed = Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : 0;
@@ -273,13 +268,12 @@ export function ambientMix(environment: AudioEnvironment, inVehicle = false): {
     cutoff: number;
     room: number;
 } {
-    const indoors = environment.interior || environment.scene === "apartment" || environment.scene === "interior", rain = environment.weather === "rain";
-    if (environment.scene === "menu")
-        return { wind: 0, cutoff: 400, room: 0 };
-    return { wind: indoors ? (rain ? .006 : 0) : inVehicle ? .008 : rain ? .046 : .024, cutoff: indoors ? 550 : inVehicle ? 750 : rain ? 4400 : 1800, room: indoors ? .008 : 0 };
+    const { wind, cutoff, room } = soundscapeMix(environment, inVehicle);
+    return { wind, cutoff, room };
 }
 type RecordingSession = {
     key: string;
+    playlistKey: string;
     kind: "score" | "radio";
     track: RecordedTrack;
     element: HTMLAudioElement;
@@ -304,9 +298,15 @@ type TextureVoice = {
     low?: OscillatorNode;
     high?: OscillatorNode;
     birdGain?: GainNode;
+    birdSource?: AudioBufferSourceNode;
+    birdEndsAt?: number;
+    trafficGain?: GainNode;
+    trafficFilter?: BiquadFilterNode;
+    trafficPan?: StereoPannerNode;
     combustion?: AudioBufferSourceNode;
     disposed: boolean;
 };
+type PoliceVoice = TextureVoice & { retireAt: number | null };
 function ramp(param: AudioParam, value: number, now: number, seconds: number) {
     if (typeof param.cancelAndHoldAtTime === "function")
         param.cancelAndHoldAtTime(now);
@@ -318,7 +318,7 @@ function ramp(param: AudioParam, value: number, now: number, seconds: number) {
     param.linearRampToValueAtTime(value, now + Math.max(.01, seconds));
 }
 function toTier(value: number): Tier { return (Number.isFinite(value) ? Math.max(0, Math.min(2, Math.round(value))) : 0) as Tier; }
-class ScoutAudio {
+export class ScoutAudio {
     private status: AudioStatus = {
         started: false, muted: false, tier: 0, playing: false, supported: true, title: RECORDED_TRACKS[0].title, artist: "Scott Buckley", error: null, loading: false,
         musicEnabled: true, soundEnabled: true, engineEnabled: true, suspended: false, radioEnabled: false, radioActive: false, radioStation: 0, radioTitle: RADIO_STATION_NAMES[0], inVehicle: false,
@@ -337,10 +337,18 @@ class ScoutAudio {
     private effectsPlaying = new Set<SampleVoice>();
     private engine: TextureVoice | null = null;
     private weather: TextureVoice | null = null;
+    private police: PoliceVoice | null = null;
+    private policeRequested = false;
+    private policeProximity = 1;
+    private policeDirty = true;
     private sampleBuffers = new Map<string, AudioBuffer>();
     private pendingSamples = new Map<string, Promise<AudioBuffer | null>>();
     private samplesPreloaded = false;
     private playlistPositions = new Map<string, number>();
+    private lastScoreTrack: string | null = null;
+    private nextScoreAt = 0;
+    private nextBirdAt = 0;
+    private ambientTime = 0;
     private timer: ReturnType<typeof setInterval> | null = null;
     private pauseTimer: ReturnType<typeof setTimeout> | null = null;
     private revision = 0;
@@ -383,26 +391,33 @@ class ScoutAudio {
             catch { /* UI isolation. */ }
     }
     private shouldPlay() {
-        return this.status.started && !this.status.muted && this.status.volumes.master > 0 && this.focused &&
+        return this.status.started && !this.status.muted && !this.status.suspended && this.status.volumes.master > 0 && this.focused &&
             (typeof document === "undefined" || document.visibilityState !== "hidden") &&
-            (this.desiredTrack() !== null || this.status.volumes.ambient > 0 || this.status.soundEnabled || this.status.engineEnabled);
+            (this.desiredTrack() !== null && this.status.volumes.music > 0 || this.status.volumes.ambient > 0 ||
+                this.status.soundEnabled && this.status.volumes.effects > 0 || this.status.engineEnabled && this.status.volumes.engine > 0);
     }
     private desiredTrack(): {
         track: RecordedTrack;
         kind: "score" | "radio";
         key: string;
+        playlistKey: string;
     } | null {
         const selection = selectMusic(this.status, true);
-        if (!selection || this.status.volumes.music === 0)
+        if (!selection)
             return null;
-        const key = selection.kind + ":" + selection.index, playlist = (selection.kind === "radio" ? RADIO_PLAYLISTS : SCORE_PLAYLISTS)[selection.index];
-        const id = playlist[(this.playlistPositions.get(key) ?? 0) % playlist.length];
-        return { track: RECORDED_TRACKS.find(t => t.id === id)!, kind: selection.kind, key: key + ":" + id };
+        const scene = sceneMusicPlaylist(this.status.environment, selection.index);
+        const key = selection.kind === "radio" ? "radio:" + selection.index : "score:" + scene.key;
+        const playlist = selection.kind === "radio" ? RADIO_PLAYLISTS[selection.index] : scene.tracks;
+        const id = sceneTrackAt(playlist, this.playlistPositions.get(key) ?? 0, selection.kind === "score" ? this.lastScoreTrack : null);
+        return { track: RECORDED_TRACKS.find(t => t.id === id)!, kind: selection.kind, playlistKey: key, key: key + ":" + id };
     }
     private synchronize() {
         this.updateBuses();
+        if (this.status.volumes.music === 0)
+            for (const session of this.recordings) session.element.pause();
         this.ambientDirty = true;
         this.engineDirty = true;
+        this.policeDirty = true;
         if (this.context && this.context.state !== "closed") {
             if (this.shouldPlay()) {
                 if (this.context.state === "running") {
@@ -457,11 +472,17 @@ class ScoutAudio {
             next.scene = values.scene;
             if (typeof values.interior !== "boolean")
                 next.interior = values.scene === "apartment" || values.scene === "interior";
+            if (!values.surface && values.scene !== this.status.environment.scene)
+                delete next.surface;
         }
         if (typeof values.timeOfDay === "number" && Number.isFinite(values.timeOfDay))
             next.timeOfDay = Math.floor((((values.timeOfDay % 24) + 24) % 24) * 10) / 10;
         if (values.weather === "clear" || values.weather === "rain")
             next.weather = values.weather;
+        if (values.region && AUDIO_REGIONS.includes(values.region))
+            next.region = values.region;
+        if (values.surface && FOOTSTEP_SURFACES.includes(values.surface))
+            next.surface = values.surface;
         if (typeof values.interior === "boolean")
             next.interior = values.interior;
         if (typeof values.conversation === "boolean")
@@ -481,6 +502,13 @@ class ScoutAudio {
         const mix = engineMix(telemetry, this.engineKind);
         if (Math.abs(mix.speed - this.drivingSpeed) < 0.005 && Math.abs(mix.engine - (this.engineLevel ?? -1)) < 0.005 && Math.abs(mix.load - (this.engineLoad ?? -1)) < 0.01 && mix.running === this.engineRunning) return;
         this.drivingSpeed = mix.speed; this.engineLevel = mix.engine; this.engineLoad = mix.load; this.engineRunning = mix.running; this.engineDirty = true;
+    };
+    /** Original emergency wail; updating a world event never unlocks audio. */
+    setPoliceResponse = (active: boolean, proximity = 1) => {
+        const next = Number.isFinite(proximity) ? Math.max(0, Math.min(1, proximity)) : 0;
+        if (this.policeRequested === active && Math.abs(this.policeProximity - next) < .005)
+            return;
+        this.policeRequested = active; this.policeProximity = next; this.policeDirty = true;
     };
     setEngineKind = (kind: EngineKind | string) => { const next: EngineKind = kind === "coupe" || kind === "luxury" ? kind : "standard"; if (next === this.engineKind)
         return; this.engineKind = next; this.engineDirty = true; };
@@ -585,15 +613,15 @@ class ScoutAudio {
         const c = this.context;
         if (!c || c.state === "closed")
             return;
-        const now = c.currentTime, v = this.status.volumes, quiet = this.status.environment.conversation ? .24 : this.status.suspended ? .55 : 1;
+        const now = c.currentTime, v = this.status.volumes, quiet = this.status.environment.conversation ? .24 : 1;
         if (this.music)
-            ramp(this.music.gain, MUSIC_LEVEL * v.music * quiet, now, .7);
+            ramp(this.music.gain, MUSIC_LEVEL * v.music * quiet, now, v.music === 0 ? .02 : .7);
         if (this.effects)
             ramp(this.effects.gain, this.status.soundEnabled ? EFFECT_LEVEL * v.effects : 0, now, .12);
         if (this.ambient)
             ramp(this.ambient.gain, v.ambient * (this.status.suspended ? 0 : 1), now, .25);
         if (this.engineBus)
-            ramp(this.engineBus.gain, this.status.engineEnabled ? v.engine : 0, now, .2);
+            ramp(this.engineBus.gain, this.status.engineEnabled && !this.status.suspended ? v.engine : 0, now, .2);
         if (this.master && this.shouldPlay() && c.state === "running")
             ramp(this.master.gain, v.master, now, .12);
     }
@@ -666,7 +694,7 @@ class ScoutAudio {
     private stopTimer() { if (this.timer !== null)
         clearInterval(this.timer); this.timer = null; }
     private playRecording(s: RecordingSession) {
-        if (s.disposed)
+        if (s.disposed || this.status.volumes.music === 0 || !this.shouldPlay())
             return;
         void s.element.play().then(() => { if (!s.disposed) {
             this.status.loading = false;
@@ -697,19 +725,23 @@ class ScoutAudio {
         if (!c || !music || !this.status.started)
             return;
         const desired = this.desiredTrack(), current = this.recordings.find(s => s.retireAt === null);
-        if (current?.key === desired?.key) {
-            if (this.shouldPlay() && current?.element.paused)
+        // Doors and regional boundaries choose the next arrangement; they never
+        // restart the complete recording the player is currently hearing.
+        if (current && (current.key === desired?.key || current.kind === "score" && desired?.kind === "score" && !current.element.ended)) {
+            if (this.status.volumes.music === 0) current.element.pause();
+            else if (this.shouldPlay() && current.element.paused)
                 this.playRecording(current);
             return;
         }
         const now = c.currentTime;
+        if (desired?.kind === "score" && now < this.nextScoreAt && !current) return;
         for (const s of this.recordings) {
             s.retireAt = Math.min(s.retireAt ?? Infinity, now + (desired ? 2.5 : .5));
             ramp(s.gain.gain, 0, now, desired ? 2.5 : .5);
         }
         while (this.recordings.length >= AUDIO_LIMITS.musicVoices)
             this.disposeRecording(this.recordings[0]);
-        if (!desired)
+        if (!desired || this.status.volumes.music === 0)
             return;
         const element = new Audio();
         element.preload = "auto";
@@ -723,12 +755,14 @@ class ScoutAudio {
         element.onended = () => {
             if (s.disposed || s.retireAt !== null)
                 return;
-            const selected = selectMusic(this.status, true);
-            if (selected) {
-                const key = selected.kind + ":" + selected.index;
-                this.playlistPositions.set(key, (this.playlistPositions.get(key) ?? 0) + 1);
+            const position = (this.playlistPositions.get(s.playlistKey) ?? 0) + 1;
+            this.playlistPositions.set(s.playlistKey, position);
+            if (s.kind === "score") {
+                this.lastScoreTrack = s.track.id;
+                this.nextScoreAt = c.currentTime + scoreBreathingSeconds(this.status.environment, position);
             }
-            this.changeTrack();
+            this.disposeRecording(s);
+            if (s.kind === "radio") this.changeTrack();
             this.publish();
         };
         element.onerror = () => { if (!s.disposed) {
@@ -756,7 +790,46 @@ class ScoutAudio {
         for (const node of v.nodes)
             node.disconnect();
     }
-    private disposeTextures() { this.disposeTexture(this.engine); this.disposeTexture(this.weather); this.engine = null; this.weather = null; this.engineDirty = true; this.ambientDirty = true; }
+    private disposeTextures() { this.disposeTexture(this.engine); this.disposeTexture(this.weather); this.disposeTexture(this.police); this.engine = null; this.weather = null; this.police = null; this.engineDirty = true; this.ambientDirty = true; this.policeDirty = true; this.nextBirdAt = 0; }
+    private createPolice(): PoliceVoice | null {
+        const c = this.context;
+        if (!c || !this.effects)
+            return null;
+        const carrier = c.createOscillator(), modulation = c.createOscillator(), sweep = c.createGain(), filter = c.createBiquadFilter(), gain = c.createGain();
+        // A continuous wail, not a musical cue. Slow triangular modulation
+        // sweeps a softened alarm tone without scheduling notes or new voices.
+        carrier.type = 'triangle'; carrier.frequency.value = 780;
+        modulation.type = 'triangle'; modulation.frequency.value = .46;
+        sweep.gain.value = 260;
+        filter.type = 'lowpass'; filter.frequency.value = 1650; filter.Q.value = .45;
+        gain.gain.value = 0;
+        modulation.connect(sweep); sweep.connect(carrier.frequency);
+        carrier.connect(filter); filter.connect(gain); gain.connect(this.effects);
+        carrier.start(); modulation.start();
+        return { sources: [carrier, modulation], nodes: [carrier, modulation, sweep, filter, gain], gain, filter, disposed: false, retireAt: null };
+    }
+    private updatePolice() {
+        const c = this.context;
+        if (!c || c.state !== 'running')
+            return;
+        const now = c.currentTime, audible = this.policeRequested && this.policeProximity > 0 && this.status.soundEnabled && this.status.volumes.effects > 0 && this.shouldPlay();
+        if (!audible) {
+            if (this.police && this.police.retireAt === null) {
+                ramp(this.police.gain.gain, 0, now, .14); this.police.retireAt = now + .16;
+            }
+            if (this.police && this.police.retireAt !== null && now >= this.police.retireAt) {
+                this.disposeTexture(this.police); this.police = null;
+            }
+            this.policeDirty = false;
+            return;
+        }
+        if (!this.police) { this.police = this.createPolice(); this.policeDirty = true; }
+        if (!this.police || (!this.policeDirty && this.police.retireAt === null))
+            return;
+        this.police.retireAt = null;
+        ramp(this.police.gain.gain, .18 * this.policeProximity ** 1.5, now, .24);
+        this.policeDirty = false;
+    }
     private createWeather() {
         const c = this.context;
         if (!c || !this.noise || !this.ambient)
@@ -774,36 +847,41 @@ class ScoutAudio {
         gain.connect(this.ambient);
         noise.start();
         const v: TextureVoice = { sources: [noise], nodes: [noise, filter, gain], gain, filter, disposed: false };
-        const birds = this.sampleBuffers.get("audio/foley/park-birds.ogg");
-        if (birds) {
-            const source = c.createBufferSource();
-            source.buffer = birds;
-            source.loop = true;
-            const birdGain = c.createGain();
-            birdGain.gain.value = 0;
-            source.connect(birdGain);
-            birdGain.connect(this.ambient);
-            v.sources.push(source);
-            v.nodes.push(source, birdGain);
-            v.birdGain = birdGain;
-            source.start(c.currentTime, .3);
-        }
-        else
-            void this.loadSample("audio/foley/park-birds.ogg").then(buffer => { if (buffer && this.context === c && this.weather === v) {
-                this.disposeTexture(this.weather);
-                this.weather = null;
-                this.ambientDirty = true;
-            } });
+        // The soft distant pass is original SCOUT air texture, with cabin
+        // filtering and movement below the music and foreground foley.
+        const traffic = c.createBufferSource();
+        traffic.buffer = this.noise;
+        traffic.loop = true;
+        const trafficFilter = c.createBiquadFilter();
+        trafficFilter.type = "lowpass";
+        trafficFilter.Q.value = .5;
+        const trafficGain = c.createGain();
+        trafficGain.gain.value = 0;
+        const trafficPan = typeof c.createStereoPanner === "function" ? c.createStereoPanner() : undefined;
+        traffic.connect(trafficFilter);
+        trafficFilter.connect(trafficGain);
+        if (trafficPan) { trafficGain.connect(trafficPan); trafficPan.connect(this.ambient); }
+        else trafficGain.connect(this.ambient);
+        v.sources.push(traffic);
+        v.nodes.push(traffic, trafficFilter, trafficGain, ...(trafficPan ? [trafficPan] : []));
+        v.trafficGain = trafficGain;
+        v.trafficFilter = trafficFilter;
+        v.trafficPan = trafficPan;
+        traffic.start(c.currentTime, 7.1);
+        this.nextBirdAt = c.currentTime + 6;
+        void this.loadSample("audio/foley/park-birds.ogg");
         return v;
     }
     private updateAmbience() {
-        if (!this.ambientDirty)
-            return;
-        this.ambientDirty = false;
         const c = this.context;
         if (!c || c.state !== "running")
             return;
-        const mix = ambientMix(this.status.environment, this.status.inVehicle), level = this.status.suspended || this.status.volumes.ambient === 0 ? 0 : mix.wind + mix.room;
+        const changed = this.ambientDirty;
+        if (!changed && c.currentTime - this.ambientTime < .25) return;
+        this.ambientDirty = false;
+        this.ambientTime = c.currentTime;
+        const env = this.status.environment, mix = soundscapeMix(env, this.status.inVehicle);
+        const level = this.status.suspended || this.status.volumes.ambient === 0 ? 0 : mix.wind + mix.room;
         if (level === 0) {
             this.disposeTexture(this.weather);
             this.weather = null;
@@ -813,11 +891,50 @@ class ScoutAudio {
         const v = this.weather;
         if (!v)
             return;
-        ramp(v.gain.gain, level, c.currentTime, 1.8);
-        ramp(v.filter.frequency, mix.cutoff, c.currentTime, 1.8);
-        const env = this.status.environment, hour = env.timeOfDay ?? 9, outside = !env.interior && env.scene !== "apartment" && env.scene !== "interior";
-        if (v.birdGain)
-            ramp(v.birdGain.gain, outside && hour >= 6 && hour < 20 && env.weather !== "rain" ? (this.status.inVehicle ? .009 : .038) : 0, c.currentTime, 2.2);
+        const motion = ambienceMotion(env, c.currentTime), seconds = changed ? 1.8 : .7;
+        ramp(v.gain.gain, mix.room + mix.wind * motion.wind, c.currentTime, seconds);
+        ramp(v.filter.frequency, mix.cutoff, c.currentTime, seconds);
+        if (v.trafficGain) ramp(v.trafficGain.gain, mix.traffic * motion.traffic, c.currentTime, seconds);
+        if (v.trafficFilter) ramp(v.trafficFilter.frequency, mix.trafficCutoff, c.currentTime, seconds);
+        if (v.trafficPan) ramp(v.trafficPan.pan, motion.pan, c.currentTime, .7);
+        if (v.birdGain && changed && v.birdEndsAt) {
+            const remaining = v.birdEndsAt - c.currentTime;
+            if (remaining <= 1.4) ramp(v.birdGain.gain, 0, c.currentTime, Math.max(.02, remaining));
+            else {
+                ramp(v.birdGain.gain, mix.birds, c.currentTime, Math.min(.6, remaining - 1.4));
+                v.birdGain.gain.setValueAtTime(mix.birds, v.birdEndsAt - 1.4);
+                v.birdGain.gain.linearRampToValueAtTime(0, v.birdEndsAt);
+            }
+        }
+        const birds = this.sampleBuffers.get("audio/foley/park-birds.ogg");
+        if (mix.birds > 0 && birds && !v.birdSource && c.currentTime >= this.nextBirdAt && this.ambient) {
+            // Excerpts change offset and leave long gaps; birds never chirp in
+            // a continuous loop, indoors, on the interstate or in the rain.
+            const source = c.createBufferSource(), gain = c.createGain();
+            const sequence = Math.floor(c.currentTime / mix.birdSpacing);
+            const duration = Math.min(8 + sequence % 3, birds.duration);
+            const offset = (sequence * 7.9 + 1.3) % Math.max(.1, birds.duration - duration);
+            source.buffer = birds;
+            gain.gain.value = 0;
+            source.connect(gain);
+            gain.connect(this.ambient);
+            ramp(gain.gain, mix.birds, c.currentTime, 1.4);
+            gain.gain.setValueAtTime(mix.birds, c.currentTime + duration - 1.4);
+            gain.gain.linearRampToValueAtTime(0, c.currentTime + duration);
+            v.sources.push(source);
+            v.nodes.push(source, gain);
+            v.birdSource = source;
+            v.birdGain = gain;
+            v.birdEndsAt = c.currentTime + duration;
+            source.onended = () => {
+                source.disconnect(); gain.disconnect();
+                v.sources = v.sources.filter(item => item !== source);
+                v.nodes = v.nodes.filter(item => item !== source && item !== gain);
+                if (v.birdSource === source) { v.birdSource = undefined; v.birdGain = undefined; v.birdEndsAt = undefined; }
+            };
+            source.start(c.currentTime, offset, duration);
+            this.nextBirdAt = c.currentTime + mix.birdSpacing + sequence % 4 * 3;
+        }
     }
     private createEngine() {
         const c = this.context;
@@ -898,6 +1015,7 @@ class ScoutAudio {
                 this.disposeRecording(s);
         this.updateEngine();
         this.updateAmbience();
+        this.updatePolice();
         if (this.recordings.length === 0 && this.desiredTrack())
             this.changeTrack();
         // Decode only short foley; full songs stream locally and do not retain PCM buffers.
@@ -991,7 +1109,7 @@ class ScoutAudio {
         let file: string | null = null, level = .22, pitch = 1, pan = 0;
         switch (kind) {
             case "step": {
-                const indoors = this.status.environment.interior || ["apartment", "interior"].includes(this.status.environment.scene ?? ""), surface = this.status.environment.scene === "apartment" ? "wood" : indoors ? "carpet" : "concrete", index = this.footstepIndex++ % 4;
+                const indoors = this.status.environment.interior || ["apartment", "interior"].includes(this.status.environment.scene ?? ""), surface = footstepSurface(this.status.environment), index = this.footstepIndex++ % 4;
                 file = "footstep_" + surface + "_00" + index;
                 level = indoors ? .28 : .34;
                 pitch = .94 + (index % 3) * .045;
@@ -1090,6 +1208,17 @@ class ScoutAudio {
         this.pendingSamples.clear();
         this.samplesPreloaded = false;
         this.lastEffect.clear();
+        this.lastScoreTrack = null;
+        this.nextScoreAt = 0;
+        this.nextBirdAt = 0;
+        this.ambientTime = 0;
+        this.engineLevel = undefined;
+        this.engineLoad = undefined;
+        this.engineRunning = true;
+        this.policeRequested = false;
+        this.policeProximity = 1;
+        this.policeDirty = true;
+        this.playlistPositions.clear();
         this.publish();
     };
 }

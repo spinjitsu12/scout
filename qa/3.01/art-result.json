@@ -1,0 +1,298 @@
+{
+  "overview": {
+    "glError": 0,
+    "width": 1280,
+    "height": 800,
+    "opaquePixels": 135,
+    "sampledColors": 76,
+    "drawCalls": 250,
+    "triangles": 180736,
+    "programs": [
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      }
+    ]
+  },
+  "errors": [],
+  "cockpit": {
+    "glError": 0,
+    "width": 1280,
+    "height": 800,
+    "opaquePixels": 135,
+    "sampledColors": 75,
+    "drawCalls": 144,
+    "triangles": 172384,
+    "programs": [
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      }
+    ]
+  },
+  "coast": {
+    "glError": 0,
+    "width": 1280,
+    "height": 800,
+    "opaquePixels": 135,
+    "sampledColors": 76,
+    "drawCalls": 5,
+    "triangles": 23196,
+    "programs": [
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      }
+    ]
+  },
+  "character": {
+    "glError": 0,
+    "width": 1280,
+    "height": 800,
+    "opaquePixels": 135,
+    "sampledColors": 70,
+    "drawCalls": 51,
+    "triangles": 171460,
+    "programs": [
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      }
+    ]
+  },
+  "windBefore": {
+    "glError": 0,
+    "width": 1280,
+    "height": 800,
+    "opaquePixels": 135,
+    "sampledColors": 101,
+    "drawCalls": 52,
+    "triangles": 164132,
+    "programs": [
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      }
+    ]
+  },
+  "windAfter": {
+    "glError": 0,
+    "width": 1280,
+    "height": 800,
+    "opaquePixels": 135,
+    "sampledColors": 102,
+    "drawCalls": 52,
+    "triangles": 164132,
+    "programs": [
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      },
+      {
+        "diagnostics": null
+      }
+    ]
+  },
+  "ok": true
+}

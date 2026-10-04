@@ -16,26 +16,30 @@ function makeRenderer() {
 /** One active preview, using the same articulated model as the world. */
 export default function ScoutPortrait({ avatar }: { avatar: number }) {
   const container = useRef<HTMLDivElement>(null), [unavailable, setUnavailable] = useState(false);
+  const changeAppearance = useRef<((index: number) => void) | null>(null);
   useEffect(() => {
     const target = container.current; if (!target) return;
     let renderer: THREE.WebGLRenderer; try { renderer = makeRenderer(); } catch { setUnavailable(true); return; }
     setUnavailable(false);
     const scene = new THREE.Scene(); lightPortrait(scene);
-    const person = createPerson({ avatar }); person.group.rotation.y = -.29; scene.add(person.group);
+    let selected = avatar; let person = createPerson({ avatar }); person.group.rotation.y = -.29; scene.add(person.group);
     const camera = new THREE.OrthographicCamera(-1, 1, 1.04, -1.04, .1, 12); camera.position.set(0, 1, -3.4); camera.lookAt(0, .87, 0);
     const floorGeometry = new THREE.CircleGeometry(.57, 40), floorMaterial = new THREE.MeshBasicMaterial({ color: "#102e27", transparent: true, opacity: .2, depthWrite: false });
     const floor = new THREE.Mesh(floorGeometry, floorMaterial); floor.rotation.x = -Math.PI / 2; floor.position.y = .006; scene.add(floor);
     renderer.setPixelRatio(Math.min(1.75, window.devicePixelRatio || 1)); renderer.domElement.setAttribute("aria-hidden", "true"); target.appendChild(renderer.domElement);
     function resize() { const width = Math.max(1, target!.clientWidth), height = Math.max(1, target!.clientHeight); camera.left = -1.04 * width / height; camera.right = 1.04 * width / height; camera.updateProjectionMatrix(); renderer.setSize(width, height); renderer.render(scene, camera); }
     const observer = new ResizeObserver(resize); observer.observe(target); resize();
+    // Keep the same canvas and GPU context when choosing a face.
+    changeAppearance.current = index => { if (index === selected) return; const next = createPerson({ avatar: index }); next.group.rotation.y = -.29; scene.remove(person.group); person.dispose(); person = next; selected = index; scene.add(person.group); renderer.render(scene, camera); };
     let frame = 0, lastFrame = 0;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     function animate(now: number) { if (now - lastFrame >= 1000 / 30) { lastFrame = now; person.update(0, reducedMotion ? 0 : now / 1000); renderer.render(scene, camera); } if (!reducedMotion) frame = requestAnimationFrame(animate); }
     if (!reducedMotion) frame = requestAnimationFrame(animate);
     function contextLost(event: Event) { event.preventDefault(); setUnavailable(true); cancelAnimationFrame(frame); }
     renderer.domElement.addEventListener("webglcontextlost", contextLost);
-    return () => { cancelAnimationFrame(frame); observer.disconnect(); renderer.domElement.removeEventListener("webglcontextlost", contextLost); person.dispose(); floorGeometry.dispose(); floorMaterial.dispose(); renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); };
-  }, [avatar]);
+    return () => { changeAppearance.current = null; cancelAnimationFrame(frame); observer.disconnect(); renderer.domElement.removeEventListener("webglcontextlost", contextLost); person.dispose(); floorGeometry.dispose(); floorMaterial.dispose(); renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); };
+  }, []);
+  useEffect(() => { changeAppearance.current?.(avatar); }, [avatar]);
   return <div className="career-portrait-renderer" ref={container} style={{ position: "relative", width: "100%", height: "100%" }}>{unavailable && <div className="career-portrait-fallback"><PixelCharacter index={avatar} size={180}/></div>}</div>;
 }
 let thumbnailCache: string[] | undefined, thumbnailsUnavailable = false;

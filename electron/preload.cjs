@@ -6,8 +6,12 @@ const beforeCloseCallbacks = new Map();
 // A single acknowledgement covers all listeners. A fast listener must not
 // close the window while another listener is still writing its final state.
 ipcRenderer.on("scout:before-close", async (_event, token) => {
-  await Promise.allSettled([...beforeCloseCallbacks.values()].map(callback => Promise.resolve().then(callback)));
-  ipcRenderer.send("scout:close-ready", token);
+  const results = await Promise.allSettled([...beforeCloseCallbacks.values()].map(callback => Promise.resolve().then(callback)));
+  const failure = results.find(result => result.status === "rejected");
+  if (failure) {
+    const error = typeof failure.reason?.message === "string" ? failure.reason.message : "Your latest progress could not be saved.";
+    ipcRenderer.send("scout:close-ready", token, { ok: false, error: String(error).slice(0, 500) });
+  } else ipcRenderer.send("scout:close-ready", token);
 });
 
 // The game receives named capabilities, never filesystem paths or raw IPC.
@@ -38,6 +42,12 @@ contextBridge.exposeInMainWorld("scoutDesktop", Object.freeze({
     const subscription = Symbol("close-listener");
     beforeCloseCallbacks.set(subscription, callback);
     return () => beforeCloseCallbacks.delete(subscription);
+  },
+  onCloseCancelled: (callback) => {
+    if (typeof callback !== "function") throw new TypeError("A close cancellation callback is required.");
+    const listener = () => callback();
+    ipcRenderer.on("scout:close-canceled", listener);
+    return () => ipcRenderer.removeListener("scout:close-canceled", listener);
   },
   getDisplayMode: () => ipcRenderer.invoke("scout:get-display-mode"),
   setDisplayMode: (mode) => ipcRenderer.invoke("scout:set-display-mode", mode),

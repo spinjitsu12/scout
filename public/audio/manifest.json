@@ -17,7 +17,20 @@
       "source": "https://www.scottbuckley.com.au/library/the-long-dark/",
       "download": "https://www.scottbuckley.com.au/library/wp-content/uploads/2023/01/TheLongDark.mp3",
       "license": "CC BY 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "author": "Scott Buckley",
+      "sourceUrl": "https://www.scottbuckley.com.au/library/the-long-dark/",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "'The Long Dark' by Scott Buckley — released under CC-BY 4.0. www.scottbuckley.com.au",
+      "licenseFile": "audio/licenses/cc-by-4.0.txt",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "crossfades",
+        "temporary dialogue ducking"
+      ],
+      "usagePolicy": "https://www.scottbuckley.com.au/library/using-this-music/"
     },
     {
       "file": "audio/music/effervescence.mp3",
@@ -36,7 +49,20 @@
       "source": "https://www.scottbuckley.com.au/library/effervescence/",
       "download": "https://www.scottbuckley.com.au/library/wp-content/uploads/2023/07/Effervescence.mp3",
       "license": "CC BY 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "author": "Scott Buckley",
+      "sourceUrl": "https://www.scottbuckley.com.au/library/effervescence/",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "'Effervescence' by Scott Buckley — released under CC-BY 4.0. www.scottbuckley.com.au",
+      "licenseFile": "audio/licenses/cc-by-4.0.txt",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "crossfades",
+        "temporary dialogue ducking"
+      ],
+      "usagePolicy": "https://www.scottbuckley.com.au/library/using-this-music/"
     },
     {
       "file": "audio/music/simplicity.mp3",
@@ -55,7 +81,20 @@
       "source": "https://www.scottbuckley.com.au/library/simplicity/",
       "download": "https://www.scottbuckley.com.au/library/wp-content/uploads/2024/03/Simplicity.mp3",
       "license": "CC BY 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "author": "Scott Buckley",
+      "sourceUrl": "https://www.scottbuckley.com.au/library/simplicity/",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "'Simplicity' by Scott Buckley — released under CC-BY 4.0. www.scottbuckley.com.au",
+      "licenseFile": "audio/licenses/cc-by-4.0.txt",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "crossfades",
+        "temporary dialogue ducking"
+      ],
+      "usagePolicy": "https://www.scottbuckley.com.au/library/using-this-music/"
     },
     {
       "file": "audio/music/at-the-end-of-all-things.mp3",
@@ -74,7 +113,20 @@
       "source": "https://www.scottbuckley.com.au/library/at-the-end-of-all-things/",
       "download": "https://www.scottbuckley.com.au/library/wp-content/uploads/2024/06/AtTheEndOfAllThings.mp3",
       "license": "CC BY 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "author": "Scott Buckley",
+      "sourceUrl": "https://www.scottbuckley.com.au/library/at-the-end-of-all-things/",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "'At The End Of All Things' by Scott Buckley — released under CC-BY 4.0. www.scottbuckley.com.au",
+      "licenseFile": "audio/licenses/cc-by-4.0.txt",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "crossfades",
+        "temporary dialogue ducking"
+      ],
+      "usagePolicy": "https://www.scottbuckley.com.au/library/using-this-music/"
     },
     {
       "file": "audio/music/chasing-daylight.mp3",
@@ -93,7 +145,20 @@
       "source": "https://www.scottbuckley.com.au/library/chasing-daylight/",
       "download": "https://www.scottbuckley.com.au/library/wp-content/uploads/2021/03/sb_chasingdaylight.mp3",
       "license": "CC BY 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "author": "Scott Buckley",
+      "sourceUrl": "https://www.scottbuckley.com.au/library/chasing-daylight/",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "'Chasing Daylight' by Scott Buckley — released under CC-BY 4.0. www.scottbuckley.com.au",
+      "licenseFile": "audio/licenses/cc-by-4.0.txt",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "crossfades",
+        "temporary dialogue ducking"
+      ],
+      "usagePolicy": "https://www.scottbuckley.com.au/library/using-this-music/"
     },
     {
       "file": "audio/music/golden-hour.mp3",
@@ -112,7 +177,20 @@
       "source": "https://www.scottbuckley.com.au/library/golden-hour/",
       "download": "https://www.scottbuckley.com.au/library/wp-content/uploads/2023/02/GoldenHour.mp3",
       "license": "CC BY 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "author": "Scott Buckley",
+      "sourceUrl": "https://www.scottbuckley.com.au/library/golden-hour/",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "'Golden Hour' by Scott Buckley — released under CC-BY 4.0. www.scottbuckley.com.au",
+      "licenseFile": "audio/licenses/cc-by-4.0.txt",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "crossfades",
+        "temporary dialogue ducking"
+      ],
+      "usagePolicy": "https://www.scottbuckley.com.au/library/using-this-music/"
     }
   ],
   "foley": [
@@ -127,7 +205,23 @@
         "channels": 2
       },
       "mean_volume": "-22.9",
-      "peak_dbfs": "-1.1"
+      "peak_dbfs": "-1.1",
+      "title": "Footstep carpet 003",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/beltHandle1.ogg",
@@ -140,7 +234,23 @@
         "channels": 2
       },
       "mean_volume": "-28.2",
-      "peak_dbfs": "-3.3"
+      "peak_dbfs": "-3.3",
+      "title": "beltHandle1",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "unchanged playback pitch"
+      ]
     },
     {
       "file": "audio/foley/doorClose_1.ogg",
@@ -153,7 +263,23 @@
         "channels": 2
       },
       "mean_volume": "-17.3",
-      "peak_dbfs": "0.0"
+      "peak_dbfs": "0.0",
+      "title": "doorClose 1",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "unchanged playback pitch"
+      ]
     },
     {
       "file": "audio/foley/park-birds.ogg",
@@ -166,7 +292,23 @@
         "channels": 2
       },
       "mean_volume": "-30.8",
-      "peak_dbfs": "-6.2"
+      "peak_dbfs": "-6.2",
+      "title": "Ambient Bird Sounds",
+      "artist": "isaiah658",
+      "author": "isaiah658",
+      "source": "https://opengameart.org/content/ambient-bird-sounds",
+      "sourceUrl": "https://opengameart.org/content/ambient-bird-sounds",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/licenses/cc0-1.0.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Ambient Bird Sounds recorded by isaiah658, released under CC0.",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "intermittent playback excerpts with short fades"
+      ]
     },
     {
       "file": "audio/foley/footstep_grass_003.ogg",
@@ -179,7 +321,23 @@
         "channels": 2
       },
       "mean_volume": "-29.4",
-      "peak_dbfs": "-0.9"
+      "peak_dbfs": "-0.9",
+      "title": "Footstep grass 003",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/footstep_concrete_002.ogg",
@@ -192,7 +350,23 @@
         "channels": 2
       },
       "mean_volume": "-22.7",
-      "peak_dbfs": "-1.0"
+      "peak_dbfs": "-1.0",
+      "title": "Footstep concrete 002",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/bookFlip1.ogg",
@@ -205,7 +379,23 @@
         "channels": 2
       },
       "mean_volume": "-29.8",
-      "peak_dbfs": "0.0"
+      "peak_dbfs": "0.0",
+      "title": "bookFlip1",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "unchanged playback pitch"
+      ]
     },
     {
       "file": "audio/foley/footstep_carpet_001.ogg",
@@ -218,7 +408,23 @@
         "channels": 2
       },
       "mean_volume": "-19.6",
-      "peak_dbfs": "-1.1"
+      "peak_dbfs": "-1.1",
+      "title": "Footstep carpet 001",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/footstep_grass_001.ogg",
@@ -231,7 +437,23 @@
         "channels": 2
       },
       "mean_volume": "-28.8",
-      "peak_dbfs": "-1.2"
+      "peak_dbfs": "-1.2",
+      "title": "Footstep grass 001",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/cloth2.ogg",
@@ -244,7 +466,23 @@
         "channels": 2
       },
       "mean_volume": "-28.7",
-      "peak_dbfs": "-7.9"
+      "peak_dbfs": "-7.9",
+      "title": "cloth2",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "unchanged playback pitch"
+      ]
     },
     {
       "file": "audio/foley/metalLatch.ogg",
@@ -257,7 +495,23 @@
         "channels": 2
       },
       "mean_volume": "-20.5",
-      "peak_dbfs": "0.0"
+      "peak_dbfs": "0.0",
+      "title": "metalLatch",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "unchanged playback pitch"
+      ]
     },
     {
       "file": "audio/foley/footstep_concrete_003.ogg",
@@ -270,7 +524,23 @@
         "channels": 2
       },
       "mean_volume": "-21.7",
-      "peak_dbfs": "-1.1"
+      "peak_dbfs": "-1.1",
+      "title": "Footstep concrete 003",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/bookClose.ogg",
@@ -283,7 +553,23 @@
         "channels": 2
       },
       "mean_volume": "-18.8",
-      "peak_dbfs": "0.0"
+      "peak_dbfs": "0.0",
+      "title": "bookClose",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "unchanged playback pitch"
+      ]
     },
     {
       "file": "audio/foley/footstep_grass_002.ogg",
@@ -296,7 +582,23 @@
         "channels": 2
       },
       "mean_volume": "-29.5",
-      "peak_dbfs": "-1.1"
+      "peak_dbfs": "-1.1",
+      "title": "Footstep grass 002",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/switch_001.ogg",
@@ -309,7 +611,23 @@
         "channels": 2
       },
       "mean_volume": "-27.3",
-      "peak_dbfs": "-1.0"
+      "peak_dbfs": "-1.0",
+      "title": "switch 001",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/interface-sounds",
+      "sourceUrl": "https://kenney.nl/assets/interface-sounds",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/interface-sounds-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "unchanged playback pitch"
+      ]
     },
     {
       "file": "audio/foley/footstep_wood_003.ogg",
@@ -322,7 +640,23 @@
         "channels": 2
       },
       "mean_volume": "-21.5",
-      "peak_dbfs": "-1.1"
+      "peak_dbfs": "-1.1",
+      "title": "Footstep wood 003",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/footstep_wood_000.ogg",
@@ -335,7 +669,23 @@
         "channels": 2
       },
       "mean_volume": "-21.2",
-      "peak_dbfs": "-0.9"
+      "peak_dbfs": "-0.9",
+      "title": "Footstep wood 000",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/footstep_carpet_000.ogg",
@@ -348,7 +698,23 @@
         "channels": 2
       },
       "mean_volume": "-23.7",
-      "peak_dbfs": "-1.1"
+      "peak_dbfs": "-1.1",
+      "title": "Footstep carpet 000",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/footstep_carpet_002.ogg",
@@ -361,7 +727,23 @@
         "channels": 2
       },
       "mean_volume": "-19.6",
-      "peak_dbfs": "-1.1"
+      "peak_dbfs": "-1.1",
+      "title": "Footstep carpet 002",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/cloth1.ogg",
@@ -374,7 +756,23 @@
         "channels": 2
       },
       "mean_volume": "-24.6",
-      "peak_dbfs": "-3.5"
+      "peak_dbfs": "-3.5",
+      "title": "cloth1",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "unchanged playback pitch"
+      ]
     },
     {
       "file": "audio/foley/footstep_wood_002.ogg",
@@ -387,7 +785,23 @@
         "channels": 2
       },
       "mean_volume": "-19.4",
-      "peak_dbfs": "-0.9"
+      "peak_dbfs": "-0.9",
+      "title": "Footstep wood 002",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/click_001.ogg",
@@ -400,7 +814,23 @@
         "channels": 1
       },
       "mean_volume": "-26.4",
-      "peak_dbfs": "-1.4"
+      "peak_dbfs": "-1.4",
+      "title": "click 001",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/interface-sounds",
+      "sourceUrl": "https://kenney.nl/assets/interface-sounds",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/interface-sounds-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "unchanged playback pitch"
+      ]
     },
     {
       "file": "audio/foley/doorClose_2.ogg",
@@ -413,7 +843,23 @@
         "channels": 2
       },
       "mean_volume": "-18.8",
-      "peak_dbfs": "-2.4"
+      "peak_dbfs": "-2.4",
+      "title": "doorClose 2",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "unchanged playback pitch"
+      ]
     },
     {
       "file": "audio/foley/phone-vibration.ogg",
@@ -426,7 +872,22 @@
         "channels": 1
       },
       "mean_volume": "-24.0",
-      "peak_dbfs": "-15.3"
+      "peak_dbfs": "-15.3",
+      "title": "SCOUT phone vibration",
+      "artist": "SCOUT",
+      "author": "SCOUT",
+      "source": "audio/licenses/scout-original.txt",
+      "sourceUrl": "audio/licenses/scout-original.txt",
+      "license": "LicenseRef-SCOUT-Original",
+      "licenseUrl": "audio/licenses/scout-original.txt",
+      "licenseFile": "audio/licenses/scout-original.txt",
+      "retrievedOn": null,
+      "verifiedOn": "2026-10-03",
+      "attribution": "Original procedural phone vibration created for SCOUT.",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix"
+      ]
     },
     {
       "file": "audio/foley/footstep_concrete_001.ogg",
@@ -439,7 +900,23 @@
         "channels": 2
       },
       "mean_volume": "-22.4",
-      "peak_dbfs": "-1.2"
+      "peak_dbfs": "-1.2",
+      "title": "Footstep concrete 001",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/impactSoft_medium_000.ogg",
@@ -452,7 +929,23 @@
         "channels": 2
       },
       "mean_volume": "-14.2",
-      "peak_dbfs": "-1.0"
+      "peak_dbfs": "-1.0",
+      "title": "impactSoft medium 000",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/impact-sounds",
+      "sourceUrl": "https://kenney.nl/assets/impact-sounds",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/impact-sounds-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "unchanged playback pitch"
+      ]
     },
     {
       "file": "audio/foley/footstep_wood_001.ogg",
@@ -465,7 +958,23 @@
         "channels": 2
       },
       "mean_volume": "-20.0",
-      "peak_dbfs": "-1.0"
+      "peak_dbfs": "-1.0",
+      "title": "Footstep wood 001",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/footstep_concrete_000.ogg",
@@ -478,7 +987,23 @@
         "channels": 2
       },
       "mean_volume": "-20.9",
-      "peak_dbfs": "-0.9"
+      "peak_dbfs": "-0.9",
+      "title": "Footstep concrete 000",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
     },
     {
       "file": "audio/foley/doorOpen_1.ogg",
@@ -491,7 +1016,23 @@
         "channels": 2
       },
       "mean_volume": "-20.2",
-      "peak_dbfs": "0.0"
+      "peak_dbfs": "0.0",
+      "title": "doorOpen 1",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "unchanged playback pitch"
+      ]
     },
     {
       "file": "audio/foley/footstep_grass_000.ogg",
@@ -504,7 +1045,86 @@
         "channels": 2
       },
       "mean_volume": "-29.9",
-      "peak_dbfs": "-1.1"
+      "peak_dbfs": "-1.1",
+      "title": "Footstep grass 000",
+      "artist": "Kenney",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "licenseFile": "audio/foley/rpg-audio-license.txt",
+      "retrievedOn": "2026-10-03",
+      "verifiedOn": "2026-10-03",
+      "attribution": "Recorded foley and interface sound by Kenney (CC0). kenney.nl",
+      "sourceFilesModified": false,
+      "playbackProcessing": [
+        "volume mix",
+        "small pitch variation"
+      ]
+    }
+  ],
+  "schemaVersion": 2,
+  "verifiedOn": "2026-10-03",
+  "policy": {
+    "thirdPartyLicenses": [
+      "CC BY 4.0",
+      "CC0 1.0"
+    ],
+    "commercialGameUse": true,
+    "offlineBundled": true,
+    "sourceFilesModified": false,
+    "originalRights": "LicenseRef-SCOUT-Original",
+    "licenseScope": "Audio asset licenses apply to the named recordings, not to the game source code or original art."
+  },
+  "licenseDocuments": [
+    {
+      "file": "audio/licenses/cc-by-4.0.txt",
+      "license": "CC BY 4.0",
+      "sourceUrl": "https://creativecommons.org/licenses/by/4.0/legalcode.txt",
+      "retrievedOn": "2026-10-03",
+      "bytes": 18657,
+      "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411"
+    },
+    {
+      "file": "audio/licenses/cc0-1.0.txt",
+      "license": "CC0 1.0",
+      "sourceUrl": "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt",
+      "retrievedOn": "2026-10-03",
+      "bytes": 7048,
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    },
+    {
+      "file": "audio/foley/rpg-audio-license.txt",
+      "license": "CC0 1.0",
+      "sourceUrl": "https://kenney.nl/assets/rpg-audio",
+      "retrievedOn": "2026-10-03",
+      "bytes": 478,
+      "sha256": "5735dfd72cb64cbbceda4ebc00c380c41ca680edb82ff153aa7c9ab97614c539"
+    },
+    {
+      "file": "audio/foley/impact-sounds-license.txt",
+      "license": "CC0 1.0",
+      "sourceUrl": "https://kenney.nl/assets/impact-sounds",
+      "retrievedOn": "2026-10-03",
+      "bytes": 608,
+      "sha256": "b49aa9c56b04528b95913de13e506a0f7c5e807b9925db9bfef86af1f91120db"
+    },
+    {
+      "file": "audio/foley/interface-sounds-license.txt",
+      "license": "CC0 1.0",
+      "sourceUrl": "https://kenney.nl/assets/interface-sounds",
+      "retrievedOn": "2026-10-03",
+      "bytes": 574,
+      "sha256": "f7966c773bbed0eca6a9c75081c44a178b38eae112724dbb5fdfbd4192d118a9"
+    },
+    {
+      "file": "audio/licenses/scout-original.txt",
+      "license": "LicenseRef-SCOUT-Original",
+      "sourceUrl": "audio/licenses/scout-original.txt",
+      "retrievedOn": null,
+      "bytes": 717,
+      "sha256": "a66a10753fe23a5afabdc9e8d492b23558269141c56b49c27aaebdfc7de39352"
     }
   ]
 }

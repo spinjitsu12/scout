@@ -5,3 +5,4 @@ qa-mac/
 *.tsbuildinfo
 .DS_Store
 .env*
+SCOUT-*-Development-Checkpoint.zip

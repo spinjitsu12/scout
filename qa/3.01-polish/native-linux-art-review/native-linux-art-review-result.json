@@ -1,0 +1,517 @@
+{
+  "ok": true,
+  "platform": "linux-desktop",
+  "scenario": "3.01-active-slow-frames-and-world-polish",
+  "electron": "44.5.1",
+  "appVersion": "3.0.1",
+  "checks": [
+    {
+      "name": "Compositor-synchronized cockpit paints actual world and instruments",
+      "passed": true,
+      "width": 460,
+      "height": 345,
+      "webgl": true,
+      "paintedSamples": 16,
+      "distinctColors": 12,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "glError": 0
+    },
+    {
+      "name": "Art-review regional map hides the background header and its controls",
+      "passed": true,
+      "headerVisibility": "hidden",
+      "headerPointerEvents": "none",
+      "brandVisibility": "hidden",
+      "controls": [
+        {
+          "label": "Open field journal (J)",
+          "visibility": "hidden",
+          "pointerEvents": "auto",
+          "hitExposed": false
+        },
+        {
+          "label": "Open settings (Escape)",
+          "visibility": "hidden",
+          "pointerEvents": "auto",
+          "hitExposed": false
+        }
+      ]
+    },
+    {
+      "name": "Art-review region keeps complete settlement names inside the map at the small viewport",
+      "passed": true,
+      "map": {
+        "left": 50.125,
+        "right": 574.875,
+        "top": 194.84375,
+        "bottom": 632.125,
+        "width": 524.75,
+        "height": 437.28125
+      },
+      "names": [
+        {
+          "name": "Cirrus Harbor",
+          "left": 90.2109375,
+          "right": 176.4140625,
+          "top": 242.4375,
+          "bottom": 259.234375,
+          "width": 86.203125,
+          "height": 16.796875
+        },
+        {
+          "name": "Eastmere Campus",
+          "left": 132.6796875,
+          "right": 243.9921875,
+          "top": 284.2109375,
+          "bottom": 301.0078125,
+          "width": 111.3125,
+          "height": 16.796875
+        },
+        {
+          "name": "Bellweather",
+          "left": 234.34375,
+          "right": 307.859375,
+          "top": 342.5546875,
+          "bottom": 359.3515625,
+          "width": 73.515625,
+          "height": 16.796875
+        },
+        {
+          "name": "Aster Bay",
+          "left": 309.9609375,
+          "right": 369.0234375,
+          "top": 345.59375,
+          "bottom": 362.390625,
+          "width": 59.0625,
+          "height": 16.796875
+        },
+        {
+          "name": "Juniper Vale",
+          "left": 129.0625,
+          "right": 203.171875,
+          "top": 481.40625,
+          "bottom": 498.203125,
+          "width": 74.109375,
+          "height": 16.796875
+        },
+        {
+          "name": "Larkspur Gardens",
+          "left": 279.078125,
+          "right": 389.484375,
+          "top": 563.671875,
+          "bottom": 580.46875,
+          "width": 110.40625,
+          "height": 16.796875
+        },
+        {
+          "name": "Meridian City",
+          "left": 396.9296875,
+          "right": 480.7421875,
+          "top": 508.8203125,
+          "bottom": 525.6171875,
+          "width": 83.8125,
+          "height": 16.796875
+        }
+      ]
+    },
+    {
+      "name": "Art-review nearby keeps complete settlement names inside the map at the small viewport",
+      "passed": true,
+      "map": {
+        "left": 50.125,
+        "right": 574.875,
+        "top": 194.84375,
+        "bottom": 632.125,
+        "width": 524.75,
+        "height": 437.28125
+      },
+      "names": [
+        {
+          "name": "Cirrus Harbor",
+          "left": 173.546875,
+          "right": 259.75,
+          "top": 420.0234375,
+          "bottom": 436.8203125,
+          "width": 86.203125,
+          "height": 16.796875
+        }
+      ]
+    },
+    {
+      "name": "Art-review close map restores the header and hit-tested controls",
+      "passed": true,
+      "headerVisibility": "visible",
+      "headerPointerEvents": "none",
+      "brandVisibility": "visible",
+      "controls": [
+        {
+          "label": "Open field journal (J)",
+          "visibility": "visible",
+          "pointerEvents": "auto",
+          "hitExposed": true
+        },
+        {
+          "label": "Open settings (Escape)",
+          "visibility": "visible",
+          "pointerEvents": "auto",
+          "hitExposed": true
+        }
+      ]
+    },
+    {
+      "name": "Grounded highway, campus and coast scenes paint for regional art and physical wayfinding review",
+      "passed": true,
+      "views": [
+        {
+          "name": "eastmere-interstate-sign",
+          "sign": "eastmere-exit-1",
+          "vehicle": {
+            "heading": -1.5707963267948966,
+            "speed": 0,
+            "steering": 0,
+            "distance": 0,
+            "fuel": 12,
+            "gear": "D",
+            "damage": 0,
+            "disabled": false,
+            "x": 2935,
+            "z": 1105
+          },
+          "pixels": {
+            "width": 640,
+            "height": 480,
+            "webgl": true,
+            "paintedSamples": 16,
+            "distinctColors": 11,
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+            "glError": 0
+          }
+        },
+        {
+          "name": "eastmere-welcome-sign",
+          "sign": "eastmere-welcome-eastmere-avenue-1",
+          "vehicle": {
+            "heading": 3.141592653589793,
+            "speed": 0,
+            "steering": 0,
+            "distance": 0,
+            "fuel": 12,
+            "gear": "D",
+            "damage": 0,
+            "disabled": false,
+            "x": 3146,
+            "z": 1186
+          },
+          "pixels": {
+            "width": 640,
+            "height": 480,
+            "webgl": true,
+            "paintedSamples": 16,
+            "distinctColors": 13,
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+            "glError": 0
+          }
+        },
+        {
+          "name": "tideglass-coast-overlook",
+          "sign": null,
+          "vehicle": {
+            "heading": 0,
+            "speed": 0,
+            "steering": 0,
+            "distance": 0,
+            "fuel": 12,
+            "gear": "D",
+            "damage": 0,
+            "disabled": false,
+            "x": 11090,
+            "z": 4800
+          },
+          "pixels": {
+            "width": 640,
+            "height": 480,
+            "webgl": true,
+            "paintedSamples": 16,
+            "distinctColors": 9,
+            "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+            "glError": 0
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Native Linux development build with software SwiftShader; this is not a Mac or Windows native runtime test.",
+    "Offscreen window and disabled OS sandbox are confined to the Linux container QA process. Production BrowserWindow security and GPU flags are unchanged.",
+    "Mac fullscreen/signature/update installation and Windows installer behavior are not exercised here.",
+    "HTTP and HTTPS renderer requests are blocked throughout this isolated fixture; bundled file resources remain available.",
+    "Valid synthetic careers are written only into the isolated QA profile. No player career is seeded or replaced.",
+    "The test bypasses the single-instance OS socket lock in memory because this Linux container blocks socket creation. Single-instance locking is not exercised.",
+    "The headless fixture supplies a fixed cursor position because the headless Linux Ozone surface has no physical pointer. Desktop pointer and monitor selection are not exercised.",
+    "A synthetic 1280 by 800 monitor is supplied in memory to the headless fixture. Physical display selection and fullscreen transitions are not exercised.",
+    "Native titlebar options are omitted in the offscreen Linux fixture; OS titlebar styling is not exercised.",
+    "This separate visual review uses a new isolated profile and never replaces a four-process law/save career. Its captures await native compositor paints."
+  ],
+  "metrics": {
+    "paintSynchronizedCaptures": [
+      {
+        "name": "cockpit",
+        "paintSequence": 178
+      },
+      {
+        "name": "regional-map",
+        "paintSequence": 195
+      },
+      {
+        "name": "nearby-map",
+        "paintSequence": 204
+      },
+      {
+        "name": "eastmere-interstate-sign",
+        "paintSequence": 394
+      },
+      {
+        "name": "eastmere-welcome-sign",
+        "paintSequence": 584
+      },
+      {
+        "name": "tideglass-coast-overlook",
+        "paintSequence": 774
+      }
+    ],
+    "modalChrome": [
+      {
+        "label": "Art-review regional map",
+        "hidden": true,
+        "headerVisibility": "hidden",
+        "headerPointerEvents": "none",
+        "brandVisibility": "hidden",
+        "controls": [
+          {
+            "label": "Open field journal (J)",
+            "visibility": "hidden",
+            "pointerEvents": "auto",
+            "hitExposed": false
+          },
+          {
+            "label": "Open settings (Escape)",
+            "visibility": "hidden",
+            "pointerEvents": "auto",
+            "hitExposed": false
+          }
+        ]
+      },
+      {
+        "label": "Art-review close map",
+        "hidden": false,
+        "headerVisibility": "visible",
+        "headerPointerEvents": "none",
+        "brandVisibility": "visible",
+        "controls": [
+          {
+            "label": "Open field journal (J)",
+            "visibility": "visible",
+            "pointerEvents": "auto",
+            "hitExposed": true
+          },
+          {
+            "label": "Open settings (Escape)",
+            "visibility": "visible",
+            "pointerEvents": "auto",
+            "hitExposed": true
+          }
+        ]
+      }
+    ],
+    "mapLabels": [
+      {
+        "label": "Art-review region",
+        "map": {
+          "left": 50.125,
+          "right": 574.875,
+          "top": 194.84375,
+          "bottom": 632.125,
+          "width": 524.75,
+          "height": 437.28125
+        },
+        "names": [
+          {
+            "name": "Cirrus Harbor",
+            "left": 90.2109375,
+            "right": 176.4140625,
+            "top": 242.4375,
+            "bottom": 259.234375,
+            "width": 86.203125,
+            "height": 16.796875
+          },
+          {
+            "name": "Eastmere Campus",
+            "left": 132.6796875,
+            "right": 243.9921875,
+            "top": 284.2109375,
+            "bottom": 301.0078125,
+            "width": 111.3125,
+            "height": 16.796875
+          },
+          {
+            "name": "Bellweather",
+            "left": 234.34375,
+            "right": 307.859375,
+            "top": 342.5546875,
+            "bottom": 359.3515625,
+            "width": 73.515625,
+            "height": 16.796875
+          },
+          {
+            "name": "Aster Bay",
+            "left": 309.9609375,
+            "right": 369.0234375,
+            "top": 345.59375,
+            "bottom": 362.390625,
+            "width": 59.0625,
+            "height": 16.796875
+          },
+          {
+            "name": "Juniper Vale",
+            "left": 129.0625,
+            "right": 203.171875,
+            "top": 481.40625,
+            "bottom": 498.203125,
+            "width": 74.109375,
+            "height": 16.796875
+          },
+          {
+            "name": "Larkspur Gardens",
+            "left": 279.078125,
+            "right": 389.484375,
+            "top": 563.671875,
+            "bottom": 580.46875,
+            "width": 110.40625,
+            "height": 16.796875
+          },
+          {
+            "name": "Meridian City",
+            "left": 396.9296875,
+            "right": 480.7421875,
+            "top": 508.8203125,
+            "bottom": 525.6171875,
+            "width": 83.8125,
+            "height": 16.796875
+          }
+        ]
+      },
+      {
+        "label": "Art-review nearby",
+        "map": {
+          "left": 50.125,
+          "right": 574.875,
+          "top": 194.84375,
+          "bottom": 632.125,
+          "width": 524.75,
+          "height": 437.28125
+        },
+        "names": [
+          {
+            "name": "Cirrus Harbor",
+            "left": 173.546875,
+            "right": 259.75,
+            "top": 420.0234375,
+            "bottom": 436.8203125,
+            "width": 86.203125,
+            "height": 16.796875
+          }
+        ]
+      }
+    ],
+    "signViews": [
+      {
+        "name": "eastmere-interstate-sign",
+        "sign": "eastmere-exit-1",
+        "vehicle": {
+          "heading": -1.5707963267948966,
+          "speed": 0,
+          "steering": 0,
+          "distance": 0,
+          "fuel": 12,
+          "gear": "D",
+          "damage": 0,
+          "disabled": false,
+          "x": 2935,
+          "z": 1105
+        },
+        "pixels": {
+          "width": 640,
+          "height": 480,
+          "webgl": true,
+          "paintedSamples": 16,
+          "distinctColors": 11,
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "glError": 0
+        }
+      },
+      {
+        "name": "eastmere-welcome-sign",
+        "sign": "eastmere-welcome-eastmere-avenue-1",
+        "vehicle": {
+          "heading": 3.141592653589793,
+          "speed": 0,
+          "steering": 0,
+          "distance": 0,
+          "fuel": 12,
+          "gear": "D",
+          "damage": 0,
+          "disabled": false,
+          "x": 3146,
+          "z": 1186
+        },
+        "pixels": {
+          "width": 640,
+          "height": 480,
+          "webgl": true,
+          "paintedSamples": 16,
+          "distinctColors": 13,
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "glError": 0
+        }
+      },
+      {
+        "name": "tideglass-coast-overlook",
+        "sign": null,
+        "vehicle": {
+          "heading": 0,
+          "speed": 0,
+          "steering": 0,
+          "distance": 0,
+          "fuel": 12,
+          "gear": "D",
+          "damage": 0,
+          "disabled": false,
+          "x": 11090,
+          "z": 4800
+        },
+        "pixels": {
+          "width": 640,
+          "height": 480,
+          "webgl": true,
+          "paintedSamples": 16,
+          "distinctColors": 9,
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "glError": 0
+        }
+      }
+    ]
+  },
+  "screenshots": [
+    "native-linux-cockpit.png",
+    "native-linux-regional-map.png",
+    "native-linux-nearby-map.png",
+    "native-linux-eastmere-interstate-sign.png",
+    "native-linux-eastmere-welcome-sign.png",
+    "native-linux-tideglass-coast-overlook.png"
+  ],
+  "sourceMainSHA256": "8c426138df9b0f4eb52aaac4782c77c56363fd21883c3021185eb1e6908417cf",
+  "distHTMLSHA256": "9c3534e45acef3d21b2ccd2aeecc6cfe730d8c1393aab639f9c85a83337e8494",
+  "stage": "Completed separate compositor-synchronized visual review",
+  "completedPhase": "art-review"
+}

@@ -1,0 +1,19 @@
+{
+  "savedAt": "2026-10-04T06:48:54.372348+00:00",
+  "version": "3.0.1",
+  "status": "Validated development source; native Windows and Apple silicon release packages and hardware playtests remain required before publication.",
+  "sourceFiles": 433,
+  "checks": {
+    "gameplaySuites": 29,
+    "desktopTests": 103,
+    "productionBuild": "passed",
+    "nativeLinuxChecks": 45,
+    "synchronizedArtChecks": 6
+  },
+  "distHTMLSHA256": "9c3534e45acef3d21b2ccd2aeecc6cfe730d8c1393aab639f9c85a83337e8494",
+  "readNext": [
+    "CODEX-HANDOFF.md",
+    "QA-3.01.md",
+    "UPDATE-3.01-MAC.md"
+  ]
+}

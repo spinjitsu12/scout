@@ -5,7 +5,7 @@ This package is a native ARM64 app. Intel Macs are not supported by this build.
 
 ## Install and play
 
-1. Download `SCOUT-3.0.0-macOS-Apple-Silicon.zip` and double-click it in Finder.
+1. Download `SCOUT-3.0.1-macOS-Apple-Silicon.zip` and double-click it in Finder.
 2. Drag the extracted `SCOUT.app` into **Applications**.
 3. Open **Applications → SCOUT**. Choose one of the three save slots and create your scout.
 
@@ -28,32 +28,24 @@ The GitHub build also produces a DMG. Open it, drag SCOUT to Applications, eject
 
 SCOUT stores three independent careers in `~/Library/Application Support/SCOUT/save`. Settings → Career can export and import JSON backups, including backups made on Windows.
 
-The Mac app checks the publisher's release channel after opening. Offline or unavailable updates never block play. A newer Apple silicon app appears in Settings → Updates & offline information. **Open Mac download** opens the publisher's verified download URL. Quit SCOUT, replace only the app in Applications, and reopen it; careers stay in Application Support. The Mac app does not run the Windows update helper or replace a running app.
+The Mac app checks the publisher's release channel after opening. Offline or unavailable updates never block play. A newer Apple silicon app appears in Settings → Career → Game updates. **Open Mac download** opens the publisher's verified download URL. Quit SCOUT, replace only the app in Applications, and reopen it; careers stay in Application Support. The Mac app does not run the Windows update helper or replace a running app.
 
 ## Build through GitHub
 
 Both platforms use `.github/workflows/desktop-release.yml`. Updating this workflow on `main` automatically starts the Windows and Apple silicon builds.
 
-Upload the updated source to your existing repository, then open **Actions → Build Windows and Mac game → Run workflow**. The workflow builds Windows and Apple silicon in separate jobs. Download `SCOUT-Mac-Apple-Silicon-3.0.0` when it succeeds; it contains the app ZIP, DMG and this guide.
+Commit the updated files in your existing repository using GitHub Desktop, then click **Push origin**. On GitHub open **Actions → Build Windows and Mac game → Run workflow**. The workflow builds Windows and Apple silicon in separate jobs. Download `SCOUT-Mac-Apple-Silicon-3.0.1` when it succeeds; it contains the app ZIP, DMG and this guide.
 
 Keep your existing public repository. Publishing the workflow uploads both Windows and Mac packages to the same public, versioned release. Startup checks read that public release channel.
 
-To build on an Apple silicon Mac with Node.js 22.18 or 24 installed:
-
-```bash
-npm ci
-npm run dist:mac:dmg
-npm run verify:mac
-npm run verify:mac:archive
-npm run test:mac:smoke
-```
+For local development, open the same cloned `scout` folder in Codex. Ask it to read `AGENTS.md` and `CODEX-HANDOFF.md`, build the Apple silicon app and DMG, verify the app and delivered archive, and run the native Mac smoke check. The developer checks are listed in `README.md` for Codex to run.
 
 Packages are written to `release`. Future builds can use Apple Developer signing and notarization after the publisher supplies its own credentials; none are required for this development build.
 
 ## Verification limits
 
-The supplied ZIP has been checked for native ARM64 binaries, signature digests, archive CRCs, preserved framework symlinks and executable permissions, and complete offline asset bytes. Desktop regression tests cover Mac updates, display behavior and the startup test harness.
+The previous 3.0.0 ZIP was checked for native ARM64 binaries, signature digests, archive CRCs, preserved framework symlinks and executable permissions, and complete offline asset bytes. This 3.0.1 development checkpoint still needs fresh native packages and platform verification. Desktop regression tests cover Mac updates, display behavior and the startup test harness.
 
 GitHub run `37078613457` passed Windows packaging, native Mac signature verification, delivered ZIP verification, native save loading and fullscreen checks. Its 3D smoke check failed because the test forced SwiftShader's Vulkan renderer. The corrected smoke test uses Metal, waits for the saved-career button to become enabled, and checks actual rendered scene pixels. It captures a screenshot, the failing stage, renderer errors and GPU details when a check fails. Artifact uploads can be repeated safely when jobs are rerun.
 
-The corrected native Mac smoke check still needs a new GitHub run. A physical Apple silicon Mac playtest is also needed for first launch, pointer behavior, audio and frame rate. See `QA-3.0.md` for the checks and their limits.
+The corrected native Mac smoke check still needs a new GitHub run. A physical Apple silicon Mac playtest is also needed for first launch, pointer behavior, audio and frame rate. See `QA-3.01.md` for this checkpoint's fresh checks and remaining release gates, and `QA-3.0.md` for the previous build's evidence.

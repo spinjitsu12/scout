@@ -1,0 +1,3 @@
+# First coordinated native pass
+
+Four successful phases accumulated 37 native UI checks against the initial coordinated 3.0.1 renderer. One resolve attempt failed because the fixture required a car-entry prompt where the actual plaza context offered a campus-green thought after a successful step-out. The failed JSON, log and image are preserved. Only isolated slot 1 was restored from its genuine pending native quit checkpoint; the corrected durable foot-mode assertion then passed arrival, impound and settled restart. This pass uses Linux Electron with software SwiftShader and does not establish Mac, Windows, pointer/display or hardware FPS behavior. Later final outputs remain in the parent directory.

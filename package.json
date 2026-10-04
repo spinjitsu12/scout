@@ -1,6 +1,6 @@
 {
   "name": "scout-talent-simulator",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": true,
   "type": "module",
   "description": "A first-person open-world scout simulator with relaxed drives, explorable interiors, an acoustic soundtrack, and three offline careers.",
@@ -11,7 +11,7 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build && node electron/build-support.mjs",
     "preview": "vite preview",
-    "test": "node tests/career.mjs && node tests/game-journey.mjs && node tests/world.mjs && node tests/audio.mjs && node tests/expedition.mjs && node tests/driving.mjs && node tests/district-life.mjs && node tests/field-journey.mjs && node tests/prologue.mjs && node tests/radio.mjs && node tests/immersive-driving.mjs && node tests/immersive-career.mjs && node tests/immersive-world.mjs && node tests/immersive-driving-spatial.mjs",
+    "test": "node tests/career.mjs && node tests/game-journey.mjs && node tests/world.mjs && node tests/audio.mjs && node tests/expedition.mjs && node tests/driving.mjs && node tests/district-life.mjs && node tests/field-journey.mjs && node tests/prologue.mjs && node tests/radio.mjs && node tests/immersive-driving.mjs && node tests/immersive-career.mjs && node tests/immersive-world.mjs && node tests/immersive-driving-spatial.mjs && node tests/immersive-driving-refinement.mjs && node tests/immersive-motion.mjs && node tests/immersive-performance.mjs && node tests/immersive-region-career.mjs && node tests/immersive-art.mjs && node tests/regional-world.mjs && node tests/traffic.mjs && node tests/audio-theme.mjs && node tests/immersive-systems.mjs && node tests/immersive-pedestrians.mjs && node tests/regional-wayfinding.mjs && node tests/immersive-physics.mjs && node tests/immersive-law.mjs && node tests/audio-police.mjs && node tests/police-response.mjs",
     "desktop": "npm run build && electron .",
     "dist:win": "npm run build && electron-builder --win portable nsis --x64 --publish never",
     "package:win": "node electron/build-support.mjs && electron-builder --win portable nsis --x64 --publish never",
@@ -25,9 +25,11 @@
     "verify:release": "node scripts/verify-release.mjs",
     "verify:mac": "node scripts/verify-mac-release.mjs",
     "verify:mac:archive": "node scripts/verify-mac-archive.mjs",
-    "test:mac:smoke": "node scripts/smoke-mac-release.mjs"
+    "test:mac:smoke": "node scripts/smoke-mac-release.mjs",
+    "pretest": "node electron/build-support.mjs"
   },
   "dependencies": {
+    "cannon-es": "0.20.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "lucide-react": "1.31.0",

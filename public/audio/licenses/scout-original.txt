@@ -1,0 +1,14 @@
+SCOUT original audio
+
+License identifier: LicenseRef-SCOUT-Original
+Rights holder: the SCOUT game owner.
+
+The bundled phone-vibration.ogg sample and the procedural engine, tire, wind,
+room, distant traffic and rain sound design were created for SCOUT. They remain
+part of the game's original copyrighted work and may be included in SCOUT's
+commercial and noncommercial game builds under the game owner's rights.
+
+This notice does not place the game or its original sound design under a
+Creative Commons license. It does not change or limit the Creative Commons
+licenses applying to Scott Buckley's music, Kenney's recordings or isaiah658's
+field recording; their original credits and license notices remain attached.

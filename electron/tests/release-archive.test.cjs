@@ -5,6 +5,7 @@ const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const os = require("node:os");
 const path = require("node:path");
+const { finished } = require("node:stream/promises");
 const vm = require("node:vm");
 const { createRequire } = require("node:module");
 const { test, before, after } = require("node:test");
@@ -47,7 +48,9 @@ before(async () => {
     await fsp.writeFile(file, content);
   }
   bundle = path.join(temporary, "fixture.asar");
-  await asar.createPackage(source, bundle);
+  // ASAR 3 returns its output stream before the final filesystem writes finish.
+  // Reading immediately can see the header but missing (zero-filled) file data.
+  await finished(await asar.createPackage(source, bundle));
 });
 
 after(async () => {

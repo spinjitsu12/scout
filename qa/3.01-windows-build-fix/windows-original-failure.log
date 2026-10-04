@@ -1,0 +1,40 @@
+Run npm test 
+> scout-talent-simulator@3.0.1 pretest 
+> node electron/build-support.mjs 
+> scout-talent-simulator@3.0.1 test 
+> node tests/career.mjs && node tests/game-journey.mjs && node tests/world.mjs && node tests/audio.mjs && node tests/expedition.mjs && node tests/driving.mjs && node tests/district-life.mjs && node tests/field-journey.mjs && node tests/prologue.mjs && node tests/radio.mjs && node tests/immersive-driving.mjs && node tests/immersive-career.mjs && node tests/immersive-world.mjs && node tests/immersive-driving-spatial.mjs && node tests/immersive-driving-refinement.mjs && node tests/immersive-motion.mjs && node tests/immersive-performance.mjs && node tests/immersive-region-career.mjs && node tests/immersive-art.mjs && node tests/regional-world.mjs && node tests/traffic.mjs && node tests/audio-theme.mjs && node tests/immersive-systems.mjs && node tests/immersive-pedestrians.mjs && node tests/regional-wayfinding.mjs && node tests/immersive-physics.mjs && node tests/immersive-law.mjs && node tests/audio-police.mjs && node tests/police-response.mjs 
+PASS: 30 complete three-chapter careers, prestige gates, honest evidence, negotiations, rival deadlines, weekly payroll, assignment limits and restart retention. 
+PASS: opening journey, evidence-led offers, honest planning ranges, unknown skills, referrals, first project, offline reload/payroll, exposure/cover, bounded imported edges and malformed import rejection. 
+World navigation checks passed: chapter routes, click detours, collision sliding, diagonal speed, and phone camera mapping. 
+PASS: six complete credited composer recordings, offline MP3/Ogg integrity, portable asset paths, quiet field ambience, independent clamped sliders, preference-preserving pause/mute, bounded sources and gesture-only audio. 
+PASS: legacy migration, honest meeting/visiting, bounded snapshots, GPS, customization/preferences, paid fuel/tow, source-specific leads and prestige retention. 
+Driving checks passed: 180 actual assisted trips across all chapters and all cars, oriented collisions, safe exits, steer controls, braking, fuel consumption, and phone camera mapping. 
+District-life checks passed: all chapters' road traffic, continuous loops, route distances, compass, and route-based turn cues. 
+PASS: dream phase exports/reloads, real road driving and fuel, safe parking/walking, two first-week physical recruits, first project, paid pump, customization and prestige retention, all-chapter entrances and contact slots. 
+Prologue checks passed: persistent branching rejections, phone-to-apartment progression, driving/braking, and all apartment navigation routes. 
+PASS: three authored recording stations, rotating full-length playlists, car-only radio, independent background music, quiet chapter restoration and no sound before input. 
+Immersive compact checks passed: 0–60mph 16.52s, 0–30mph 6.90s, 30mph stop 2.48s/17.0m; true steering, reverse interlock, grounded swept body collisions, refresh-rate consistency, hidden-tab safety, gallon fuel and audio telemetry. 
+PASS: physical first-person arrivals, interior exploration, safe career reloads, real paid fuel, shared furniture collision, local right-click navigation, and dream-to-apartment reset. 
+PASS: all three continuous towns; 108 interior contact approaches; 39 readable, reachable points of interest; accessible apartment rooms; solid furniture/car bodies; animated people and phone pose. 
+Immersive physical-world checks passed: 72 parking poses, 12 venue approaches, 9 interstate journeys, all 63 road centre lines across three chapters, home/fuel access, real branch driving, grounded geometry, clear cockpit and matching visual steering. 
+Refined driving checks passed: fixed-step parity (30Hz 8.5ms, 60Hz 2.5ms, 120Hz 1.1ms), smooth speed-dependent steering, high-speed wall containment, one-shot collision damage, disabled engines, recovery, yielding props, safe legacy saves and finite input handling. 
+Smooth motion checks passed: identical 30/60/120/144Hz fixed clocks, bounded active stalls without freezing or replay, explicit hidden/pause discard, shortest-arc interpolation, exact walking distances, gentle starts and stops, diagonal normalization, refresh-independent camera damping and suspension. 
+Render quality checks passed: nominal/jitter stability, sustained >250ms and ordinary slow samples, bounded floor/cooldowns, delayed gradual 60Hz recovery with shadows, explicit pause discard, manual modes and display caps. 
+Regional career checks passed: 18 migrations, far-region durable saves, invalid mechanical state rejection, 15 paid repairs/refuels, 15 nearest-service recoveries, no remote/free service, preserved mileage/fuel/damage and native validator agreement. 
+PASS: dashboard units/warnings, clear glass shadows, connected cockpit roof geometry, correct forward/reverse wheel motion, damped gauges, visible damage/repair, GPU meadow budget and deterministic wind, animated coastal atmosphere, character animation and exact resource disposal. 
+PASS: 12×10 km region, seven settlements, 63 connected roads, 4147, 7427, 8907 m scouting drives, 702 rendered facades facing their streets, accessible services and landmarks, spatial visibility and instance cleanup. 
+Regional traffic checks passed: continuous on-road lanes, protected signals/amber clearance, red stops/green release, queue spacing and player/pedestrian yielding, normal collision damage, breakaway poles without ghost colliders, bounded population, hidden-tab stability and real Three.js integration/disposal. 
+node:internal/modules/run_main:123 
+    triggerUncaughtException( 
+    ^ 
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal: 
+19053 !== 18657 
+    at file:///D:/a/scout/scout/tests/audio-theme.mjs:41:10 { 
+  generatedMessage: true, 
+  code: 'ERR_ASSERTION', 
+  actual: 19053, 
+  expected: 18657, 
+  operator: 'strictEqual' 
+} 
+Node.js v22.18.0 
+Error: Process completed with exit code 1.

@@ -1,0 +1,146 @@
+{
+  "checkedOn": "2026-10-04",
+  "host": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "node": "v24.21.0",
+    "osRelease": "25.0.0"
+  },
+  "commands": [
+    {
+      "command": "npm ci",
+      "exitCode": 0
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "gameplaySuites": 29,
+      "evidence": "Observed full command output; no new raw gameplay log captured"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "evidence": "production-build.log"
+    },
+    {
+      "command": "npm run test:desktop",
+      "exitCode": 0,
+      "tests": 109,
+      "passed": 108,
+      "failed": 0,
+      "skipped": 1,
+      "evidence": "desktop-tests.log"
+    },
+    {
+      "command": "node --check scripts/smoke-mac-release.mjs",
+      "exitCode": 0
+    }
+  ],
+  "nativeWindowsPackaging": "Not run locally; requires fresh GitHub workflow",
+  "nativeWindowsRuntime": "Not launched; requires Windows hardware",
+  "nativeMacSmoke": "Not run locally; user reported prior Apple silicon workflow success",
+  "commitPushPublication": "None; source folder has no Git metadata and user will push",
+  "sourceFiles": [
+    {
+      "file": ".gitattributes",
+      "bytes": 534,
+      "sha256": "d57bc2f6105d2c1d67896f1dbf6b49cb20e5c8d36a28c5b253432c6f3ac6bdb8"
+    },
+    {
+      "file": "tests/audio-theme.mjs",
+      "bytes": 11991,
+      "sha256": "2c65b6b145c811943818ee3920efea8f4416b4a7af42b5e583b238e77c50e9fb"
+    },
+    {
+      "file": "electron/tests/source-checkout.test.cjs",
+      "bytes": 3673,
+      "sha256": "2e106b31d888510466a17ed0a78edec2ff7cec2d178eec0d1f57903c626ca065"
+    },
+    {
+      "file": "electron/tests/windows-packaging.test.cjs",
+      "bytes": 7216,
+      "sha256": "0d79edd7422ab9685f096430c1f2d1667443acd2d6d8920f6ef9d6fc6b744f67"
+    },
+    {
+      "file": "electron/tests/release-archive.test.cjs",
+      "bytes": 4325,
+      "sha256": "2d34f0889cded6ba565be56656b547d3e7b258772a4403156cb7fe489cf2fc0c"
+    },
+    {
+      "file": "scripts/smoke-mac-release.mjs",
+      "bytes": 15838,
+      "sha256": "992304fca55a36d90b005a33017012c7213c90e5666589957c0e574ccd2ea210"
+    },
+    {
+      "file": "CODEX-HANDOFF.md",
+      "bytes": 16754,
+      "sha256": "c9e35b0146bca7038ab6fcd322ee2dd8612b4b94dd2cb0a231c7cc529cf449d2"
+    },
+    {
+      "file": "QA-3.01.md",
+      "bytes": 12337,
+      "sha256": "4bde0b129da2a87e766fb8a1bf4218a0b3817f57bbb0473625a8d95f06594b54"
+    },
+    {
+      "file": "package.json",
+      "bytes": 3399,
+      "sha256": "4ed32e91e6d22963ed1e23a30616a1c857465f4a683ed588e66c718175b4fc47"
+    },
+    {
+      "file": "package-lock.json",
+      "bytes": 253298,
+      "sha256": "4697cdf64b58ec5384b93d7fc090f86ed0482bbf415f23050d31371e6a2af33f"
+    },
+    {
+      "file": "electron/game-engine.cjs",
+      "bytes": 85816,
+      "sha256": "4fe600db3db49975c5fdd9b4bd5a7aeeb9dcd6684a513823b2eafd9d3b7062f3"
+    },
+    {
+      "file": "electron/update-config.json",
+      "bytes": 40,
+      "sha256": "cb87f62c1ad1bfc5cf066f13521cb8aa88b8cdf75127d64d5f0ef8eea400426f"
+    }
+  ],
+  "notices": [
+    {
+      "file": "public/audio/licenses/cc-by-4.0.txt",
+      "bytes": 18657,
+      "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+      "manifestMatches": true
+    },
+    {
+      "file": "public/audio/licenses/cc0-1.0.txt",
+      "bytes": 7048,
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "manifestMatches": true
+    },
+    {
+      "file": "public/audio/foley/rpg-audio-license.txt",
+      "bytes": 478,
+      "sha256": "5735dfd72cb64cbbceda4ebc00c380c41ca680edb82ff153aa7c9ab97614c539",
+      "manifestMatches": true
+    },
+    {
+      "file": "public/audio/foley/impact-sounds-license.txt",
+      "bytes": 608,
+      "sha256": "b49aa9c56b04528b95913de13e506a0f7c5e807b9925db9bfef86af1f91120db",
+      "manifestMatches": true
+    },
+    {
+      "file": "public/audio/foley/interface-sounds-license.txt",
+      "bytes": 574,
+      "sha256": "f7966c773bbed0eca6a9c75081c44a178b38eae112724dbb5fdfbd4192d118a9",
+      "manifestMatches": true
+    },
+    {
+      "file": "public/audio/licenses/scout-original.txt",
+      "bytes": 717,
+      "sha256": "a66a10753fe23a5afabdc9e8d492b23558269141c56b49c27aaebdfc7de39352",
+      "manifestMatches": true
+    }
+  ],
+  "localOnlyNotes": [
+    "CODEX-HANDOFF.md"
+  ]
+}

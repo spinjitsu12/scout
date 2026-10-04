@@ -24,7 +24,7 @@ for (const item of [...manifest.music, ...manifest.foley]) {
   assert(item.title && item.author && item.sourceUrl && item.licenseUrl && item.attribution && item.licenseFile);
   assert.equal(item.sourceFilesModified, false);
   const bytes = await fs.readFile(path.join(root, 'public', item.file));
-  assert.equal(bytes.length, item.bytes);
+  assert.equal(bytes.length, item.bytes, `Bundled audio byte count must match its manifest: ${item.file}`);
   assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), item.sha256, `Original audio must stay intact: ${item.file}`);
   assert(manifest.licenseDocuments.some(notice => notice.file === item.licenseFile), 'Every recording has an offline license notice');
   if (item.author === 'SCOUT') {
@@ -38,8 +38,8 @@ for (const item of [...manifest.music, ...manifest.foley]) {
 }
 for (const notice of manifest.licenseDocuments) {
   const bytes = await fs.readFile(path.join(root, 'public', notice.file));
-  assert.equal(bytes.length, notice.bytes);
-  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), notice.sha256);
+  assert.equal(bytes.length, notice.bytes, `Original license bytes must stay intact across checkout and packaging: ${notice.file}`);
+  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), notice.sha256, `Original license hash must match its manifest: ${notice.file}`);
 }
 for (const region of AUDIO_REGIONS) {
   const tracks = REGIONAL_PLAYLISTS[region];

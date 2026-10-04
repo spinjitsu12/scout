@@ -5,6 +5,7 @@ import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import { execFileSync, spawn } from 'node:child_process';
+import { finished } from 'node:stream/promises';
 const require = createRequire(import.meta.url);
 const asar = require('@electron/asar');
 const plist = require('plist');
@@ -204,7 +205,9 @@ try {
   await fs.writeFile(path.join(harness, 'package.json'), JSON.stringify({ name:'scout-mac-smoke-fixture', version:metadata.version, main:'main.cjs' }));
   const copy = path.join(temporary, 'SCOUT.app');
   await fs.cp(app, copy, { recursive: true, verbatimSymlinks: true });
-  await asar.createPackage(harness, path.join(copy, 'Contents', 'Resources', 'app.asar'));
+  // ASAR 3 returns before its output stream finishes writing the private harness.
+  // Flush it before calculating integrity, signing, or launching the test copy.
+  await finished(await asar.createPackage(harness, path.join(copy, 'Contents', 'Resources', 'app.asar')));
   // A new ASAR belongs to the test copy only; refresh its integrity hash before
   // re-signing so Electron launches this private harness normally.
   const plistFile = path.join(copy, 'Contents', 'Info.plist');

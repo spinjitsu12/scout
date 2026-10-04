@@ -2,6 +2,26 @@
 
 Checked on **4 October 2026**. Package version is **3.0.1**. This is validated development source; new Windows and Apple silicon release packages still require their own native checks.
 
+## Windows build repair verification — 4 October 2026
+
+The user supplied a Windows failure at `tests/audio-theme.mjs:41` (19,053 vs 18,657 bytes) and reported that the earlier Apple silicon build passed. That Mac result has not been independently inspected in this repair. The Windows mismatch exactly equals the 396 extra CR bytes introduced into the CC BY notice by checkout line-ending conversion.
+
+Root `.gitattributes` now preserves audio/license asset bytes with `-text`, including original upstream CRLF. Manifest byte counts and SHA-256 checks remain exact. A real Git regression enables Windows CRLF conversion, verifies its control, then checks unchanged index/checkout notice bytes using the new project rules. All six corresponding committed notice blobs in the existing clone match the original assets; no notice or manifest was rewritten.
+
+The full desktop run also revealed an ASAR write-completion race. Both the archive regression fixture and the private Mac smoke archive now await the returned writable stream before reading/hash/sign/launch steps. Five new Windows packaging-hook checks exercise real PE branding/resources/native-section preservation and portable update-manifest hashing without building a desktop package locally.
+
+| Repair check | Result | Evidence |
+| --- | --- | --- |
+| Gameplay regressions | All **29 suites passed**, exit 0 | `npm test` on this Mac; recorded in `qa/3.01-windows-build-fix/verification.json` |
+| Desktop regressions including checkout and Windows packaging hooks | **108 passed**, 1 expected platform skip, 0 failed (109 discovered) | `qa/3.01-windows-build-fix/desktop-tests.log` |
+| TypeScript/Vite/native-engine production build | Passed, exit 0 | `qa/3.01-windows-build-fix/production-build.log` |
+| New Windows x64 packaged artifact/runtime | **Pending** | Fresh combined GitHub workflow after the user's push, then Windows launch |
+| New genuine native Mac smoke | **Not run locally** | Existing Mac success is user-reported; new commit still needs its own workflow |
+
+Repair host: **Darwin ARM64, Node 24.21.0**. The skipped test rejects Mac smoke on non-Apple-silicon hosts; it correctly skips on this Apple silicon host. No native application launch was attempted. Package version, dependencies, lockfile and generated native engine are unchanged. The existing large-chunk build notice remains nonfatal. Initial archive-race failures and the original Windows log are retained alongside the final passing desktop log.
+
+This source folder has no Git metadata. Per the user's instruction, fixes remain here for their own GitHub Desktop push; the separate clone was not edited. The user keeps `CODEX-HANDOFF.md` local for Codex and will not add it to GitHub; it is not a build dependency. See `qa/3.01-windows-build-fix/README.md` for exact changed files and fresh-run steps. The historical results below remain evidence for their original source/runtime and do not replace verification of the repaired Windows package.
+
 ## Current results
 
 | Check | Result | Evidence |

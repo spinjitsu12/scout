@@ -1,0 +1,17 @@
+# Keep source files consistent across macOS and Windows checkouts.
+* text=auto eol=lf
+
+# Audio, original license documents, and engine notices have recorded byte counts
+# and SHA-256 hashes. Some upstream notices intentionally contain CRLF: preserve
+# their exact bytes rather than normalizing or rewriting the original documents.
+public/audio/** -text
+public/licenses/** -text
+
+# Bundled artwork, models, fonts, and native icons are binary assets.
+*.png -text
+*.ico -text
+*.icns -text
+*.glb -text
+*.ttf -text
+*.mp3 -text
+*.ogg -text
